@@ -1,0 +1,8 @@
+C:\Users\rocco\Desktop\Magazzino\Magazzino\bin\Debug\Magazzino.exe.config
+C:\Users\rocco\Desktop\Magazzino\Magazzino\bin\Debug\Magazzino.exe
+C:\Users\rocco\Desktop\Magazzino\Magazzino\bin\Debug\Magazzino.pdb
+C:\Users\rocco\Desktop\Magazzino\Magazzino\obj\Debug\Magazzino.csproj.AssemblyReference.cache
+C:\Users\rocco\Desktop\Magazzino\Magazzino\obj\Debug\Magazzino.csproj.SuggestedBindingRedirects.cache
+C:\Users\rocco\Desktop\Magazzino\Magazzino\obj\Debug\Magazzino.csproj.CoreCompileInputs.cache
+C:\Users\rocco\Desktop\Magazzino\Magazzino\obj\Debug\Magazzino.exe
+C:\Users\rocco\Desktop\Magazzino\Magazzino\obj\Debug\Magazzino.pdb
