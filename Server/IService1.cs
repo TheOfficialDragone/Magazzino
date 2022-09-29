@@ -27,7 +27,6 @@ namespace Server
         [OperationContract]
         List<int> ListaCategorie();
 
-
         [OperationContract]
         List<int> ListaProdotti();
 

@@ -17,7 +17,7 @@ namespace Server
                 ServiceHost svcHost = new ServiceHost(typeof(Service1)); //Istanzio il servizio di tipo ServiceAgendaAziendale
                 svcHost.Open(); //Apro il servizio
 
-                Console.WriteLine("Servizio ServerAziendale aperto. Premere un tasto per interrompere...");
+                Console.WriteLine("Servizio Server aperto. Premere un tasto per interrompere...");
 
                 //Sessione.ServerAziendaleDB = new SRDBAgendaAziendale.ServiceDBAgendaAziendaleClient(); //Istanziazione client per i servizi esposti dal ServerAziendaleDB
                 //Sessione.ServerAziendaleDB.TestConnessione(); //Test connessione al server DB al fine di verificarne il funzionamento                                                                                  
@@ -31,7 +31,7 @@ namespace Server
 
             catch (Exception ex)
             {
-                Console.WriteLine("ERRORE! In ServerAziendale:" + ex.Message);
+                Console.WriteLine("ERRORE nel Server:" + ex.Message);
                 Console.ReadLine();
             }
         }
