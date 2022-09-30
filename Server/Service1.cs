@@ -1,6 +1,8 @@
 ﻿using DbManager;
+using MySql.Data.MySqlClient;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Runtime.Serialization;
@@ -12,13 +14,22 @@ namespace Server
     // NOTA: è possibile utilizzare il comando "Rinomina" del menu "Refactoring" per modificare il nome di classe "Service1" nel codice e nel file di configurazione contemporaneamente.
     public class Service1 : IService1
     {
+        #region Attributi
+        private static readonly string connectionString = ConfigurationManager.AppSettings["connectionString"];
+        private static MySqlConnection connessione = null;
+        #endregion
+
+        #region Getters & Setters
+        public static string ConnectionString => connectionString;
+        public static MySqlConnection Connessione { get => connessione; set => connessione = value; }
+        #endregion
 
         public bool CheckEmail(string email)
         {
             try
             {
                 bool risultato = true;
-                using (SqlConnection conn = new SqlConnection(InterazioneDB.ConnectionString))
+                using (SqlConnection conn = new SqlConnection(ConnectionString))
                 {
                     conn.Open();
                     using (SqlCommand command1 = conn.CreateCommand())
@@ -50,7 +61,7 @@ namespace Server
             try
             {
                 bool risultato = false;
-                using (SqlConnection conn = new SqlConnection(InterazioneDB.ConnectionString))
+                using (SqlConnection conn = new SqlConnection(ConnectionString))
                 {
                     conn.Open();
                     using (SqlCommand command1 = conn.CreateCommand())
@@ -79,7 +90,7 @@ namespace Server
             try
             {
                 string nome = null;
-                using (SqlConnection conn = new SqlConnection(InterazioneDB.ConnectionString))
+                using (SqlConnection conn = new SqlConnection(ConnectionString))
                 {
                     conn.Open();
                     using (SqlCommand command1 = conn.CreateCommand())
@@ -114,7 +125,7 @@ namespace Server
                 //creo l'oggetto da restituire
                 Articolo prodotto = new Articolo() { IDprodotto = IDProdotto };
 
-                using (SqlConnection conn = new SqlConnection(InterazioneDB.ConnectionString))
+                using (SqlConnection conn = new SqlConnection(ConnectionString))
                 {
                     conn.Open();
                     using (SqlCommand command1 = conn.CreateCommand())
@@ -155,7 +166,7 @@ namespace Server
             try
             {
                 string stato = null;
-                using (SqlConnection conn = new SqlConnection(InterazioneDB.ConnectionString))
+                using (SqlConnection conn = new SqlConnection(ConnectionString))
                 {
                     conn.Open();
                     using (SqlCommand command1 = conn.CreateCommand())
@@ -189,7 +200,7 @@ namespace Server
             {
                 List<int> lista = new List<int>();
 
-                using (SqlConnection conn = new SqlConnection(InterazioneDB.ConnectionString))
+                using (SqlConnection conn = new SqlConnection(ConnectionString))
                 {
                     conn.Open();
                     using (SqlCommand command1 = conn.CreateCommand())
@@ -222,7 +233,7 @@ namespace Server
             try
             {
                 List<int> lista = new List<int>();
-                using (SqlConnection conn = new SqlConnection(InterazioneDB.ConnectionString))
+                using (SqlConnection conn = new SqlConnection(ConnectionString))
                 {
                     conn.Open();
                     using (SqlCommand command1 = conn.CreateCommand())
@@ -258,7 +269,7 @@ namespace Server
             try
             {
                 bool risultato = false;
-                using (SqlConnection conn = new SqlConnection(InterazioneDB.ConnectionString))
+                using (SqlConnection conn = new SqlConnection(ConnectionString))
                 {
                     conn.Open();
                     using (SqlCommand command1 = conn.CreateCommand())
@@ -299,7 +310,7 @@ namespace Server
             try
             {
                 bool risultato = false;
-                using (SqlConnection conn = new SqlConnection(InterazioneDB.ConnectionString))
+                using (SqlConnection conn = new SqlConnection(ConnectionString))
                 {
                     conn.Open();
                     using (SqlCommand command1 = conn.CreateCommand())
@@ -350,7 +361,7 @@ namespace Server
             try
             {
                 bool risultato = false;
-                using (SqlConnection conn = new SqlConnection(InterazioneDB.ConnectionString))
+                using (SqlConnection conn = new SqlConnection(ConnectionString))
                 {
                     conn.Open();
                     using (SqlCommand command1 = conn.CreateCommand())
@@ -378,7 +389,7 @@ namespace Server
             try
             {
                 bool risultato = false;
-                using (SqlConnection conn = new SqlConnection(InterazioneDB.ConnectionString))
+                using (SqlConnection conn = new SqlConnection(ConnectionString))
                 {
                     conn.Open();
                     using (SqlCommand command1 = conn.CreateCommand())
@@ -426,7 +437,7 @@ namespace Server
             try
             {
                 bool risultato = false;
-                using (SqlConnection conn = new SqlConnection(InterazioneDB.ConnectionString))
+                using (SqlConnection conn = new SqlConnection(ConnectionString))
                 {
                     conn.Open();
                     using (SqlCommand command1 = conn.CreateCommand())
@@ -472,7 +483,7 @@ namespace Server
             try
             {
                 int codice = 0;
-                using (SqlConnection conn = new SqlConnection(InterazioneDB.ConnectionString))
+                using (SqlConnection conn = new SqlConnection(ConnectionString))
                 {
 
                     conn.Open();

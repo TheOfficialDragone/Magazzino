@@ -1,9 +1,11 @@
 ﻿
 using DbManager;
+using Magazzino.ServiceReference1;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.ServiceModel;
 
 namespace Client
@@ -12,7 +14,7 @@ namespace Client
     {
         static void Main(string[] args)
         {
-            Service.ShopServiceClient client = new ServiceReference1.ShopServiceClient();
+           Service1Client client = new Magazzino.ServiceReference1.Service1Client();
             
             int sceltaMenuShop = 0;
             do

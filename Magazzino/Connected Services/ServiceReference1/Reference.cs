@@ -15,11 +15,77 @@ namespace Magazzino.ServiceReference1 {
     [System.ServiceModel.ServiceContractAttribute(ConfigurationName="ServiceReference1.IService1")]
     public interface IService1 {
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService1/DoWork", ReplyAction="http://tempuri.org/IService1/DoWorkResponse")]
-        void DoWork();
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService1/CheckEmail", ReplyAction="http://tempuri.org/IService1/CheckEmailResponse")]
+        bool CheckEmail(string email);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService1/DoWork", ReplyAction="http://tempuri.org/IService1/DoWorkResponse")]
-        System.Threading.Tasks.Task DoWorkAsync();
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService1/CheckEmail", ReplyAction="http://tempuri.org/IService1/CheckEmailResponse")]
+        System.Threading.Tasks.Task<bool> CheckEmailAsync(string email);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService1/EliminaProdotto", ReplyAction="http://tempuri.org/IService1/EliminaProdottoResponse")]
+        bool EliminaProdotto(int id);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService1/EliminaProdotto", ReplyAction="http://tempuri.org/IService1/EliminaProdottoResponse")]
+        System.Threading.Tasks.Task<bool> EliminaProdottoAsync(int id);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService1/GetCategoria", ReplyAction="http://tempuri.org/IService1/GetCategoriaResponse")]
+        string GetCategoria(int id);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService1/GetCategoria", ReplyAction="http://tempuri.org/IService1/GetCategoriaResponse")]
+        System.Threading.Tasks.Task<string> GetCategoriaAsync(int id);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService1/GetProdotto", ReplyAction="http://tempuri.org/IService1/GetProdottoResponse")]
+        DbManager.Articolo GetProdotto(int IDProdotto);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService1/GetProdotto", ReplyAction="http://tempuri.org/IService1/GetProdottoResponse")]
+        System.Threading.Tasks.Task<DbManager.Articolo> GetProdottoAsync(int IDProdotto);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService1/ListaCategorie", ReplyAction="http://tempuri.org/IService1/ListaCategorieResponse")]
+        int[] ListaCategorie();
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService1/ListaCategorie", ReplyAction="http://tempuri.org/IService1/ListaCategorieResponse")]
+        System.Threading.Tasks.Task<int[]> ListaCategorieAsync();
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService1/ListaProdotti", ReplyAction="http://tempuri.org/IService1/ListaProdottiResponse")]
+        int[] ListaProdotti();
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService1/ListaProdotti", ReplyAction="http://tempuri.org/IService1/ListaProdottiResponse")]
+        System.Threading.Tasks.Task<int[]> ListaProdottiAsync();
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService1/ModificaPassword", ReplyAction="http://tempuri.org/IService1/ModificaPasswordResponse")]
+        bool ModificaPassword(string email, string psw);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService1/ModificaPassword", ReplyAction="http://tempuri.org/IService1/ModificaPasswordResponse")]
+        System.Threading.Tasks.Task<bool> ModificaPasswordAsync(string email, string psw);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService1/ModificaProdotto", ReplyAction="http://tempuri.org/IService1/ModificaProdottoResponse")]
+        bool ModificaProdotto(DbManager.Articolo prodottoDaModificare);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService1/ModificaProdotto", ReplyAction="http://tempuri.org/IService1/ModificaProdottoResponse")]
+        System.Threading.Tasks.Task<bool> ModificaProdottoAsync(DbManager.Articolo prodottoDaModificare);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService1/NuovaCategoria", ReplyAction="http://tempuri.org/IService1/NuovaCategoriaResponse")]
+        bool NuovaCategoria(string nome);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService1/NuovaCategoria", ReplyAction="http://tempuri.org/IService1/NuovaCategoriaResponse")]
+        System.Threading.Tasks.Task<bool> NuovaCategoriaAsync(string nome);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService1/NuovoProdotto", ReplyAction="http://tempuri.org/IService1/NuovoProdottoResponse")]
+        bool NuovoProdotto(DbManager.Articolo nuovo);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService1/NuovoProdotto", ReplyAction="http://tempuri.org/IService1/NuovoProdottoResponse")]
+        System.Threading.Tasks.Task<bool> NuovoProdottoAsync(DbManager.Articolo nuovo);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService1/Signin", ReplyAction="http://tempuri.org/IService1/SigninResponse")]
+        bool Signin(DbManager.Utente nuovo);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService1/Signin", ReplyAction="http://tempuri.org/IService1/SigninResponse")]
+        System.Threading.Tasks.Task<bool> SigninAsync(DbManager.Utente nuovo);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService1/UserLogin", ReplyAction="http://tempuri.org/IService1/UserLoginResponse")]
+        int UserLogin(DbManager.Login user);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService1/UserLogin", ReplyAction="http://tempuri.org/IService1/UserLoginResponse")]
+        System.Threading.Tasks.Task<int> UserLoginAsync(DbManager.Login user);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -49,12 +115,100 @@ namespace Magazzino.ServiceReference1 {
                 base(binding, remoteAddress) {
         }
         
-        public void DoWork() {
-            base.Channel.DoWork();
+        public bool CheckEmail(string email) {
+            return base.Channel.CheckEmail(email);
         }
         
-        public System.Threading.Tasks.Task DoWorkAsync() {
-            return base.Channel.DoWorkAsync();
+        public System.Threading.Tasks.Task<bool> CheckEmailAsync(string email) {
+            return base.Channel.CheckEmailAsync(email);
+        }
+        
+        public bool EliminaProdotto(int id) {
+            return base.Channel.EliminaProdotto(id);
+        }
+        
+        public System.Threading.Tasks.Task<bool> EliminaProdottoAsync(int id) {
+            return base.Channel.EliminaProdottoAsync(id);
+        }
+        
+        public string GetCategoria(int id) {
+            return base.Channel.GetCategoria(id);
+        }
+        
+        public System.Threading.Tasks.Task<string> GetCategoriaAsync(int id) {
+            return base.Channel.GetCategoriaAsync(id);
+        }
+        
+        public DbManager.Articolo GetProdotto(int IDProdotto) {
+            return base.Channel.GetProdotto(IDProdotto);
+        }
+        
+        public System.Threading.Tasks.Task<DbManager.Articolo> GetProdottoAsync(int IDProdotto) {
+            return base.Channel.GetProdottoAsync(IDProdotto);
+        }
+        
+        public int[] ListaCategorie() {
+            return base.Channel.ListaCategorie();
+        }
+        
+        public System.Threading.Tasks.Task<int[]> ListaCategorieAsync() {
+            return base.Channel.ListaCategorieAsync();
+        }
+        
+        public int[] ListaProdotti() {
+            return base.Channel.ListaProdotti();
+        }
+        
+        public System.Threading.Tasks.Task<int[]> ListaProdottiAsync() {
+            return base.Channel.ListaProdottiAsync();
+        }
+        
+        public bool ModificaPassword(string email, string psw) {
+            return base.Channel.ModificaPassword(email, psw);
+        }
+        
+        public System.Threading.Tasks.Task<bool> ModificaPasswordAsync(string email, string psw) {
+            return base.Channel.ModificaPasswordAsync(email, psw);
+        }
+        
+        public bool ModificaProdotto(DbManager.Articolo prodottoDaModificare) {
+            return base.Channel.ModificaProdotto(prodottoDaModificare);
+        }
+        
+        public System.Threading.Tasks.Task<bool> ModificaProdottoAsync(DbManager.Articolo prodottoDaModificare) {
+            return base.Channel.ModificaProdottoAsync(prodottoDaModificare);
+        }
+        
+        public bool NuovaCategoria(string nome) {
+            return base.Channel.NuovaCategoria(nome);
+        }
+        
+        public System.Threading.Tasks.Task<bool> NuovaCategoriaAsync(string nome) {
+            return base.Channel.NuovaCategoriaAsync(nome);
+        }
+        
+        public bool NuovoProdotto(DbManager.Articolo nuovo) {
+            return base.Channel.NuovoProdotto(nuovo);
+        }
+        
+        public System.Threading.Tasks.Task<bool> NuovoProdottoAsync(DbManager.Articolo nuovo) {
+            return base.Channel.NuovoProdottoAsync(nuovo);
+        }
+        
+        public bool Signin(DbManager.Utente nuovo) {
+            return base.Channel.Signin(nuovo);
+        }
+        
+        public System.Threading.Tasks.Task<bool> SigninAsync(DbManager.Utente nuovo) {
+            return base.Channel.SigninAsync(nuovo);
+        }
+        
+        public int UserLogin(DbManager.Login user) {
+            return base.Channel.UserLogin(user);
+        }
+        
+        public System.Threading.Tasks.Task<int> UserLoginAsync(DbManager.Login user) {
+            return base.Channel.UserLoginAsync(user);
         }
     }
 }

@@ -90,7 +90,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Articolo.cs" />
-    <Compile Include="InterazioneDB.cs" />
     <Compile Include="IService1.cs" />
     <Compile Include="Login.cs" />
     <Compile Include="Program.cs" />

@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:tns="http://schemas.datacontract.org/2004/07/DbManager" elementFormDefault="qualified" targetNamespace="http://schemas.datacontract.org/2004/07/DbManager" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:complexType name="Articolo">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Categoria" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Descrizione" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Disponibilita" type="xs:boolean" />
+      <xs:element minOccurs="0" name="IDprodotto" type="xs:int" />
+      <xs:element minOccurs="0" name="Nome" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Prezzo" type="xs:double" />
+      <xs:element minOccurs="0" name="Quantita" type="xs:int" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="Articolo" nillable="true" type="tns:Articolo" />
+  <xs:complexType name="Utente">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Cap" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Cognome" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Data_nascita" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="Email" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Indirizzo" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Nome" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Psw" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Telefono" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="Utente" nillable="true" type="tns:Utente" />
+  <xs:complexType name="Login">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Email" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Password" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="Login" nillable="true" type="tns:Login" />
+</xs:schema>

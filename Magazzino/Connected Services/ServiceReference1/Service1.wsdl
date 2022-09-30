@@ -3,24 +3,236 @@
   <wsdl:types>
     <xsd:schema targetNamespace="http://tempuri.org/Imports">
       <xsd:import schemaLocation="http://localhost:8733/Design_Time_Addresses/Server/Service1/?xsd=xsd0" namespace="http://tempuri.org/" />
+      <xsd:import schemaLocation="http://localhost:8733/Design_Time_Addresses/Server/Service1/?xsd=xsd1" namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
+      <xsd:import schemaLocation="http://localhost:8733/Design_Time_Addresses/Server/Service1/?xsd=xsd2" namespace="http://schemas.datacontract.org/2004/07/DbManager" />
+      <xsd:import schemaLocation="http://localhost:8733/Design_Time_Addresses/Server/Service1/?xsd=xsd3" namespace="http://schemas.microsoft.com/2003/10/Serialization/Arrays" />
     </xsd:schema>
   </wsdl:types>
-  <wsdl:message name="IService1_DoWork_InputMessage">
-    <wsdl:part name="parameters" element="tns:DoWork" />
+  <wsdl:message name="IService1_CheckEmail_InputMessage">
+    <wsdl:part name="parameters" element="tns:CheckEmail" />
   </wsdl:message>
-  <wsdl:message name="IService1_DoWork_OutputMessage">
-    <wsdl:part name="parameters" element="tns:DoWorkResponse" />
+  <wsdl:message name="IService1_CheckEmail_OutputMessage">
+    <wsdl:part name="parameters" element="tns:CheckEmailResponse" />
+  </wsdl:message>
+  <wsdl:message name="IService1_EliminaProdotto_InputMessage">
+    <wsdl:part name="parameters" element="tns:EliminaProdotto" />
+  </wsdl:message>
+  <wsdl:message name="IService1_EliminaProdotto_OutputMessage">
+    <wsdl:part name="parameters" element="tns:EliminaProdottoResponse" />
+  </wsdl:message>
+  <wsdl:message name="IService1_GetCategoria_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetCategoria" />
+  </wsdl:message>
+  <wsdl:message name="IService1_GetCategoria_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetCategoriaResponse" />
+  </wsdl:message>
+  <wsdl:message name="IService1_GetProdotto_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetProdotto" />
+  </wsdl:message>
+  <wsdl:message name="IService1_GetProdotto_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetProdottoResponse" />
+  </wsdl:message>
+  <wsdl:message name="IService1_ListaCategorie_InputMessage">
+    <wsdl:part name="parameters" element="tns:ListaCategorie" />
+  </wsdl:message>
+  <wsdl:message name="IService1_ListaCategorie_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ListaCategorieResponse" />
+  </wsdl:message>
+  <wsdl:message name="IService1_ListaProdotti_InputMessage">
+    <wsdl:part name="parameters" element="tns:ListaProdotti" />
+  </wsdl:message>
+  <wsdl:message name="IService1_ListaProdotti_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ListaProdottiResponse" />
+  </wsdl:message>
+  <wsdl:message name="IService1_ModificaPassword_InputMessage">
+    <wsdl:part name="parameters" element="tns:ModificaPassword" />
+  </wsdl:message>
+  <wsdl:message name="IService1_ModificaPassword_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ModificaPasswordResponse" />
+  </wsdl:message>
+  <wsdl:message name="IService1_ModificaProdotto_InputMessage">
+    <wsdl:part name="parameters" element="tns:ModificaProdotto" />
+  </wsdl:message>
+  <wsdl:message name="IService1_ModificaProdotto_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ModificaProdottoResponse" />
+  </wsdl:message>
+  <wsdl:message name="IService1_NuovaCategoria_InputMessage">
+    <wsdl:part name="parameters" element="tns:NuovaCategoria" />
+  </wsdl:message>
+  <wsdl:message name="IService1_NuovaCategoria_OutputMessage">
+    <wsdl:part name="parameters" element="tns:NuovaCategoriaResponse" />
+  </wsdl:message>
+  <wsdl:message name="IService1_NuovoProdotto_InputMessage">
+    <wsdl:part name="parameters" element="tns:NuovoProdotto" />
+  </wsdl:message>
+  <wsdl:message name="IService1_NuovoProdotto_OutputMessage">
+    <wsdl:part name="parameters" element="tns:NuovoProdottoResponse" />
+  </wsdl:message>
+  <wsdl:message name="IService1_Signin_InputMessage">
+    <wsdl:part name="parameters" element="tns:Signin" />
+  </wsdl:message>
+  <wsdl:message name="IService1_Signin_OutputMessage">
+    <wsdl:part name="parameters" element="tns:SigninResponse" />
+  </wsdl:message>
+  <wsdl:message name="IService1_UserLogin_InputMessage">
+    <wsdl:part name="parameters" element="tns:UserLogin" />
+  </wsdl:message>
+  <wsdl:message name="IService1_UserLogin_OutputMessage">
+    <wsdl:part name="parameters" element="tns:UserLoginResponse" />
   </wsdl:message>
   <wsdl:portType name="IService1">
-    <wsdl:operation name="DoWork">
-      <wsdl:input wsaw:Action="http://tempuri.org/IService1/DoWork" message="tns:IService1_DoWork_InputMessage" />
-      <wsdl:output wsaw:Action="http://tempuri.org/IService1/DoWorkResponse" message="tns:IService1_DoWork_OutputMessage" />
+    <wsdl:operation name="CheckEmail">
+      <wsdl:input wsaw:Action="http://tempuri.org/IService1/CheckEmail" message="tns:IService1_CheckEmail_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IService1/CheckEmailResponse" message="tns:IService1_CheckEmail_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="EliminaProdotto">
+      <wsdl:input wsaw:Action="http://tempuri.org/IService1/EliminaProdotto" message="tns:IService1_EliminaProdotto_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IService1/EliminaProdottoResponse" message="tns:IService1_EliminaProdotto_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetCategoria">
+      <wsdl:input wsaw:Action="http://tempuri.org/IService1/GetCategoria" message="tns:IService1_GetCategoria_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IService1/GetCategoriaResponse" message="tns:IService1_GetCategoria_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetProdotto">
+      <wsdl:input wsaw:Action="http://tempuri.org/IService1/GetProdotto" message="tns:IService1_GetProdotto_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IService1/GetProdottoResponse" message="tns:IService1_GetProdotto_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ListaCategorie">
+      <wsdl:input wsaw:Action="http://tempuri.org/IService1/ListaCategorie" message="tns:IService1_ListaCategorie_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IService1/ListaCategorieResponse" message="tns:IService1_ListaCategorie_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ListaProdotti">
+      <wsdl:input wsaw:Action="http://tempuri.org/IService1/ListaProdotti" message="tns:IService1_ListaProdotti_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IService1/ListaProdottiResponse" message="tns:IService1_ListaProdotti_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ModificaPassword">
+      <wsdl:input wsaw:Action="http://tempuri.org/IService1/ModificaPassword" message="tns:IService1_ModificaPassword_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IService1/ModificaPasswordResponse" message="tns:IService1_ModificaPassword_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ModificaProdotto">
+      <wsdl:input wsaw:Action="http://tempuri.org/IService1/ModificaProdotto" message="tns:IService1_ModificaProdotto_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IService1/ModificaProdottoResponse" message="tns:IService1_ModificaProdotto_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="NuovaCategoria">
+      <wsdl:input wsaw:Action="http://tempuri.org/IService1/NuovaCategoria" message="tns:IService1_NuovaCategoria_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IService1/NuovaCategoriaResponse" message="tns:IService1_NuovaCategoria_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="NuovoProdotto">
+      <wsdl:input wsaw:Action="http://tempuri.org/IService1/NuovoProdotto" message="tns:IService1_NuovoProdotto_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IService1/NuovoProdottoResponse" message="tns:IService1_NuovoProdotto_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="Signin">
+      <wsdl:input wsaw:Action="http://tempuri.org/IService1/Signin" message="tns:IService1_Signin_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IService1/SigninResponse" message="tns:IService1_Signin_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="UserLogin">
+      <wsdl:input wsaw:Action="http://tempuri.org/IService1/UserLogin" message="tns:IService1_UserLogin_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IService1/UserLoginResponse" message="tns:IService1_UserLogin_OutputMessage" />
     </wsdl:operation>
   </wsdl:portType>
   <wsdl:binding name="BasicHttpBinding_IService1" type="tns:IService1">
     <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
-    <wsdl:operation name="DoWork">
-      <soap:operation soapAction="http://tempuri.org/IService1/DoWork" style="document" />
+    <wsdl:operation name="CheckEmail">
+      <soap:operation soapAction="http://tempuri.org/IService1/CheckEmail" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="EliminaProdotto">
+      <soap:operation soapAction="http://tempuri.org/IService1/EliminaProdotto" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetCategoria">
+      <soap:operation soapAction="http://tempuri.org/IService1/GetCategoria" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetProdotto">
+      <soap:operation soapAction="http://tempuri.org/IService1/GetProdotto" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ListaCategorie">
+      <soap:operation soapAction="http://tempuri.org/IService1/ListaCategorie" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ListaProdotti">
+      <soap:operation soapAction="http://tempuri.org/IService1/ListaProdotti" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ModificaPassword">
+      <soap:operation soapAction="http://tempuri.org/IService1/ModificaPassword" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ModificaProdotto">
+      <soap:operation soapAction="http://tempuri.org/IService1/ModificaProdotto" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="NuovaCategoria">
+      <soap:operation soapAction="http://tempuri.org/IService1/NuovaCategoria" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="NuovoProdotto">
+      <soap:operation soapAction="http://tempuri.org/IService1/NuovoProdotto" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Signin">
+      <soap:operation soapAction="http://tempuri.org/IService1/Signin" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UserLogin">
+      <soap:operation soapAction="http://tempuri.org/IService1/UserLogin" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>

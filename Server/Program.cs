@@ -18,11 +18,6 @@ namespace Server
                 svcHost.Open(); //Apro il servizio
 
                 Console.WriteLine("Servizio Server aperto. Premere un tasto per interrompere...");
-
-                //Sessione.ServerAziendaleDB = new SRDBAgendaAziendale.ServiceDBAgendaAziendaleClient(); //Istanziazione client per i servizi esposti dal ServerAziendaleDB
-                //Sessione.ServerAziendaleDB.TestConnessione(); //Test connessione al server DB al fine di verificarne il funzionamento                                                                                  
-
-                Console.WriteLine("Istanzazione client ServerAziendaleDB e test connessione a ServerAziendaleDB effettuata");
                 Console.ReadLine();
 
                 svcHost.Close();
