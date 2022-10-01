@@ -49,7 +49,7 @@ namespace Server
         int UserLogin(Login user);
 
         [OperationContract]
-        List<string> ListaClienti();
+        List<string> ListaMagazzinieri();
 
         [OperationContract]
         Utente GetMagazziniere(string id);

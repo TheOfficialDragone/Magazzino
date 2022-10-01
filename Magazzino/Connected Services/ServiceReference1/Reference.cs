@@ -87,11 +87,11 @@ namespace Magazzino.ServiceReference1 {
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService1/UserLogin", ReplyAction="http://tempuri.org/IService1/UserLoginResponse")]
         System.Threading.Tasks.Task<int> UserLoginAsync(Server.Login user);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService1/ListaClienti", ReplyAction="http://tempuri.org/IService1/ListaClientiResponse")]
-        string[] ListaClienti();
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService1/ListaMagazzinieri", ReplyAction="http://tempuri.org/IService1/ListaMagazzinieriResponse")]
+        string[] ListaMagazzinieri();
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService1/ListaClienti", ReplyAction="http://tempuri.org/IService1/ListaClientiResponse")]
-        System.Threading.Tasks.Task<string[]> ListaClientiAsync();
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService1/ListaMagazzinieri", ReplyAction="http://tempuri.org/IService1/ListaMagazzinieriResponse")]
+        System.Threading.Tasks.Task<string[]> ListaMagazzinieriAsync();
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService1/GetMagazziniere", ReplyAction="http://tempuri.org/IService1/GetMagazziniereResponse")]
         Server.Utente GetMagazziniere(string id);
@@ -241,12 +241,12 @@ namespace Magazzino.ServiceReference1 {
             return base.Channel.UserLoginAsync(user);
         }
         
-        public string[] ListaClienti() {
-            return base.Channel.ListaClienti();
+        public string[] ListaMagazzinieri() {
+            return base.Channel.ListaMagazzinieri();
         }
         
-        public System.Threading.Tasks.Task<string[]> ListaClientiAsync() {
-            return base.Channel.ListaClientiAsync();
+        public System.Threading.Tasks.Task<string[]> ListaMagazzinieriAsync() {
+            return base.Channel.ListaMagazzinieriAsync();
         }
         
         public Server.Utente GetMagazziniere(string id) {

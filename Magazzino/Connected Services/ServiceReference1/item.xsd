@@ -167,15 +167,15 @@
       </xs:sequence>
     </xs:complexType>
   </xs:element>
-  <xs:element name="ListaClienti">
+  <xs:element name="ListaMagazzinieri">
     <xs:complexType>
       <xs:sequence />
     </xs:complexType>
   </xs:element>
-  <xs:element name="ListaClientiResponse">
+  <xs:element name="ListaMagazzinieriResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q8="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="ListaClientiResult" nillable="true" type="q8:ArrayOfstring" />
+        <xs:element xmlns:q8="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="ListaMagazzinieriResult" nillable="true" type="q8:ArrayOfstring" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>

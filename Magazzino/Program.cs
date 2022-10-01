@@ -520,11 +520,11 @@ namespace Client
                                                 
                                                 case 2:
                                                     Console.Clear();
-                                                    if (client.ListaClienti().Count() > 0)
+                                                    if (client.ListaMagazzinieri().Count() > 0)
                                                     {
                                                         Console.WriteLine("***GESTIONE MAGAZZINIERE***");
                                                         //lista dei magazzinieri
-                                                        foreach (var c in client.ListaClienti())
+                                                        foreach (var c in client.ListaMagazzinieri())
                                                         {
                                                             Console.WriteLine(client.GetMagazziniere(c).Email + " - " + client.GetMagazziniere(c).Nome + 
                                                                 " - " + client.GetMagazziniere(c).Cognome + " - " + client.GetMagazziniere(c).Telefono);

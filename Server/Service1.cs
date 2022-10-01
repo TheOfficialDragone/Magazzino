@@ -510,11 +510,11 @@ namespace Server
         /// Lista dei magazzinieri
         /// </summary>
         /// <returns>Lista dei nomi dei magazzinieri </returns>
-        public List<string> ListaClienti()
+        public List<string> ListaMagazzinieri()
         {
             try
             {
-                List<string> listaClienti = new List<string>();
+                List<string> listaMagazzinieri = new List<string>();
 
                 using (SqlConnection conn = new SqlConnection(connectionString))
                 {
@@ -526,14 +526,14 @@ namespace Server
                         {
                             while (reader.Read())
                             {
-                                listaClienti.Add(reader.GetString(0).TrimEnd().ToUpper());
+                                listaMagazzinieri.Add(reader.GetString(0).TrimEnd().ToUpper());
                             }
                         }
                     }
                     conn.Close();
                 }
                 //restituisco la lista degli identificativi dei clienti
-                return listaClienti;
+                return listaMagazzinieri;
             }
             catch (Exception)
             {
