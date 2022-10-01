@@ -46,9 +46,10 @@ CREATE TABLE composizione (
 );
 
 CREATE TABLE utente (
-  IDcliente int(11) NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  IDutente int(11) NOT NULL AUTO_INCREMENT PRIMARY KEY,
   nome text NOT NULL,
   cognome text NOT NULL,
+  email text NOT NULL,
   indirizzo text NOT NULL,
   data_nascita date NOT NULL,
   telefono text NOT NULL,
