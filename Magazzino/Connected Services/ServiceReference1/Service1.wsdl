@@ -80,6 +80,24 @@
   <wsdl:message name="IService1_UserLogin_OutputMessage">
     <wsdl:part name="parameters" element="tns:UserLoginResponse" />
   </wsdl:message>
+  <wsdl:message name="IService1_ListaClienti_InputMessage">
+    <wsdl:part name="parameters" element="tns:ListaClienti" />
+  </wsdl:message>
+  <wsdl:message name="IService1_ListaClienti_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ListaClientiResponse" />
+  </wsdl:message>
+  <wsdl:message name="IService1_GetCliente_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetCliente" />
+  </wsdl:message>
+  <wsdl:message name="IService1_GetCliente_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetClienteResponse" />
+  </wsdl:message>
+  <wsdl:message name="IService1_ListaProdottiDisponibili_InputMessage">
+    <wsdl:part name="parameters" element="tns:ListaProdottiDisponibili" />
+  </wsdl:message>
+  <wsdl:message name="IService1_ListaProdottiDisponibili_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ListaProdottiDisponibiliResponse" />
+  </wsdl:message>
   <wsdl:portType name="IService1">
     <wsdl:operation name="CheckEmail">
       <wsdl:input wsaw:Action="http://tempuri.org/IService1/CheckEmail" message="tns:IService1_CheckEmail_InputMessage" />
@@ -128,6 +146,18 @@
     <wsdl:operation name="UserLogin">
       <wsdl:input wsaw:Action="http://tempuri.org/IService1/UserLogin" message="tns:IService1_UserLogin_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IService1/UserLoginResponse" message="tns:IService1_UserLogin_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ListaClienti">
+      <wsdl:input wsaw:Action="http://tempuri.org/IService1/ListaClienti" message="tns:IService1_ListaClienti_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IService1/ListaClientiResponse" message="tns:IService1_ListaClienti_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetCliente">
+      <wsdl:input wsaw:Action="http://tempuri.org/IService1/GetCliente" message="tns:IService1_GetCliente_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IService1/GetClienteResponse" message="tns:IService1_GetCliente_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ListaProdottiDisponibili">
+      <wsdl:input wsaw:Action="http://tempuri.org/IService1/ListaProdottiDisponibili" message="tns:IService1_ListaProdottiDisponibili_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IService1/ListaProdottiDisponibiliResponse" message="tns:IService1_ListaProdottiDisponibili_OutputMessage" />
     </wsdl:operation>
   </wsdl:portType>
   <wsdl:binding name="BasicHttpBinding_IService1" type="tns:IService1">
@@ -233,6 +263,33 @@
     </wsdl:operation>
     <wsdl:operation name="UserLogin">
       <soap:operation soapAction="http://tempuri.org/IService1/UserLogin" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ListaClienti">
+      <soap:operation soapAction="http://tempuri.org/IService1/ListaClienti" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetCliente">
+      <soap:operation soapAction="http://tempuri.org/IService1/GetCliente" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ListaProdottiDisponibili">
+      <soap:operation soapAction="http://tempuri.org/IService1/ListaProdottiDisponibili" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>

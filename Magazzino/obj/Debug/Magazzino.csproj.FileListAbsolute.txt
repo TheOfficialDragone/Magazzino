@@ -6,3 +6,4 @@ C:\Users\rocco\Desktop\Magazzino\Magazzino\obj\Debug\Magazzino.csproj.SuggestedB
 C:\Users\rocco\Desktop\Magazzino\Magazzino\obj\Debug\Magazzino.csproj.CoreCompileInputs.cache
 C:\Users\rocco\Desktop\Magazzino\Magazzino\obj\Debug\Magazzino.exe
 C:\Users\rocco\Desktop\Magazzino\Magazzino\obj\Debug\Magazzino.pdb
+C:\Users\rocco\Desktop\Magazzino\Magazzino\obj\Debug\Magazzino.exe.config

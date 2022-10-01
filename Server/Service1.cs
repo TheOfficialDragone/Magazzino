@@ -1,6 +1,7 @@
 ﻿using DbManager;
 using MySql.Data.MySqlClient;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Data.SqlClient;
@@ -512,6 +513,217 @@ namespace Server
             {
                 throw new Exception();
             }
+
+
+
         }
+
+        /// <summary>
+        /// Lista dei magazzinieri
+        /// </summary>
+        /// <returns>Lista degli identificativi dei clienti</returns>
+        public List<string> ListaClienti()
+        {
+            try
+            {
+                List<string> listaClienti = new List<string>();
+
+                using (SqlConnection conn = new SqlConnection(connectionString))
+                {
+                    conn.Open();
+                    using (SqlCommand command1 = conn.CreateCommand())
+                    {
+                        command1.CommandText = "SELECT email FROM cliente";
+                        using (SqlDataReader reader = command1.ExecuteReader())
+                        {
+                            while (reader.Read())
+                            {
+                                listaClienti.Add(reader.GetString(0).TrimEnd().ToUpper());
+                            }
+                        }
+                    }
+                    conn.Close();
+                }
+                //restituisco la lista degli identificativi dei clienti
+                return listaClienti;
+            }
+            catch (Exception)
+            {
+                throw new Exception();
+            }
+        }
+
+        /// <summary>
+        /// Dati del cliente
+        /// </summary>
+        /// <param name="id">Identificativo del magazziniere</param>
+        /// <returns>Oggetto Utente contenente i dati del cliente</returns>
+        public Utente GetMagazziniere(string id)
+        {
+            try
+            {
+                //creo l'oggetto Utente da restituire
+                Utente cliente = new Utente() { Email = id };
+
+                using (SqlConnection conn = new SqlConnection(ConnectionString))
+                {
+                    conn.Open();
+                    using (SqlCommand command1 = conn.CreateCommand())
+                    {
+                        command1.CommandText = "SELECT * FROM cliente WHERE email='" + id.Trim().ToLower() + "'";
+                        using (SqlDataReader reader = command1.ExecuteReader())
+                        {
+                            while (reader.Read())
+                            {
+                                cliente.Email = reader.GetString(0).TrimEnd().ToUpper();
+                                cliente.Nome = reader.GetString(1).TrimEnd().ToUpper();
+                                cliente.Cognome = reader.GetString(2).TrimEnd().ToUpper();
+                                cliente.Indirizzo = reader.GetString(3).TrimEnd().ToUpper();
+                                cliente.Data_nascita = reader.GetDateTime(4);
+                                cliente.Telefono = reader.GetString(5).TrimEnd().ToUpper();
+                                cliente.Cap = reader.GetString(6).TrimEnd().ToUpper();
+                            }
+                        }
+                    }
+                    conn.Close();
+                }
+                //restituisco il magazziniere
+                return cliente;
+            }
+            catch (Exception)
+            {
+                throw new Exception();
+            }
+        }
+
+        /// <summary>
+        /// Lista dei prodotti disponibili
+        /// </summary>
+        /// <returns>Lista degli identificativi dei prodotti disponibili</returns>
+        public List<int> ListaProdottiDisponibili()
+        {
+            try
+            {
+                List<int> lista = new List<int>();
+
+                using (SqlConnection conn = new SqlConnection(connectionString))
+                {
+                    conn.Open();
+                    using (SqlCommand command1 = conn.CreateCommand())
+                    {
+                        command1.CommandText = "SELECT IDprodotto FROM prodotto WHERE disponibilita=1 ORDER BY IDcategoria,nome";
+                        using (SqlDataReader reader = command1.ExecuteReader())
+                        {
+                            while (reader.Read())
+                            {
+                                lista.Add(reader.GetInt32(0));
+                            }
+                        }
+                    }
+                    conn.Close();
+                }
+                //restituisco la lista degli identificativi dei prodotto disponibili
+                return lista;
+            }
+            catch (Exception)
+            {
+                throw new Exception();
+            }
+        }
+
+        /// <summary>
+        /// Aumenta le giacenze di un prodotto tramite l'id
+        /// </summary>
+        /// <returns>risultato true or false a seconda dell'esito</returns>
+        public bool AumentaGiacenze(int id, int quantita)
+        {
+            try
+            {
+                bool risultato = false;
+                using (SqlConnection conn = new SqlConnection(ConnectionString))
+                {
+                    conn.Open();
+                    using (SqlCommand command1 = conn.CreateCommand())
+                    {
+                        command1.CommandText = "UPDATE prodotto SET disponibilita = disponibilita +' "
+                            + quantita
+                            + " ' WHERE idprodotto = "
+                            + id
+                            + " ' ";
+                        using (SqlDataReader reader = command1.ExecuteReader());
+                    }
+                    conn.Close();
+                }
+                return risultato;
+            }
+            catch (Exception)
+            {
+                throw new Exception();
+            }
+        }
+
+        /// <summary>
+        /// Dimuniisce le giacenze di un prodotto tramite l'id
+        /// </summary>
+        /// <returns>risultato true or false a seconda dell'esito</returns>
+        public bool DiminuisciGiacenze(int id, int quantita)
+        {
+            int attuale = 0;
+            try
+            {
+                bool risultato = false;
+
+                using (SqlConnection conn = new SqlConnection(ConnectionString))
+                {
+                    conn.Open();
+
+                    using (SqlCommand command0 = conn.CreateCommand())
+                    {
+                        //controlla numero giacenze
+                        command0.CommandText = "SELECT disponibilita from prodotto where idprodotto ='" + id + "'";
+                        using (SqlDataReader reader = command0.ExecuteReader())
+                        {
+                            while (reader.Read())
+                            {
+                                attuale = reader.GetInt32(0);
+                            }
+
+                        }
+
+                        if (attuale < quantita)
+                        {
+                            Console.WriteLine("impossibile diminuire giacenze, numero troppo alto");
+
+                            return risultato; //false perchè att < quantita e non è possibile
+                        }
+                        else
+                        {
+
+                            using (SqlCommand command1 = conn.CreateCommand())
+                            {
+                                command1.CommandText = "UPDATE prodotto SET disponibilita = disponibilita -' "
+                                    + quantita
+                                    + " ' WHERE idprodotto = "
+                                    + id
+                                    + " ' ";
+                                using (SqlDataReader reader = command1.ExecuteReader()) ;
+                            }
+                            conn.Close();
+                            risultato = true;
+                        }
+                        return risultato;
+                    }
+                }
+            }
+            catch (Exception)
+            {
+                throw new Exception();
+            }
+        }
+
     }
+
+    
+
+    
 }

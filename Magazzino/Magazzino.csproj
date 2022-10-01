@@ -70,6 +70,7 @@
     </None>
     <None Include="Connected Services\ServiceReference1\Service1.wsdl" />
     <None Include="Properties\DataSources\DbManager.Articolo.datasource" />
+    <None Include="Properties\DataSources\DbManager.Utente.datasource" />
   </ItemGroup>
   <ItemGroup>
     <WCFMetadata Include="Connected Services\" />

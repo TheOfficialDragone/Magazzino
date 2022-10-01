@@ -48,5 +48,21 @@ namespace Server
         [OperationContract]
         int UserLogin(Login user);
 
+        [OperationContract]
+        List<string> ListaClienti();
+
+        [OperationContract]
+        Utente GetMagazziniere(string id);
+
+        [OperationContract]
+        List<int> ListaProdottiDisponibili();
+
+        [OperationContract]
+        bool AumentaGiacenze(int id,int quantita);
+
+        [OperationContract]
+        bool DiminuisciGiacenze(int id, int quantita);
+
+
     }
 }

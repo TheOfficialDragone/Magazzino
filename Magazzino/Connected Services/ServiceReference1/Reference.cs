@@ -86,6 +86,24 @@ namespace Magazzino.ServiceReference1 {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService1/UserLogin", ReplyAction="http://tempuri.org/IService1/UserLoginResponse")]
         System.Threading.Tasks.Task<int> UserLoginAsync(DbManager.Login user);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService1/ListaClienti", ReplyAction="http://tempuri.org/IService1/ListaClientiResponse")]
+        string[] ListaClienti();
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService1/ListaClienti", ReplyAction="http://tempuri.org/IService1/ListaClientiResponse")]
+        System.Threading.Tasks.Task<string[]> ListaClientiAsync();
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService1/GetMagazziniere", ReplyAction="http://tempuri.org/IService1/GetClienteResponse")]
+        DbManager.Utente GetCliente(string id);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService1/GetMagazziniere", ReplyAction="http://tempuri.org/IService1/GetClienteResponse")]
+        System.Threading.Tasks.Task<DbManager.Utente> GetClienteAsync(string id);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService1/ListaProdottiDisponibili", ReplyAction="http://tempuri.org/IService1/ListaProdottiDisponibiliResponse")]
+        int[] ListaProdottiDisponibili();
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService1/ListaProdottiDisponibili", ReplyAction="http://tempuri.org/IService1/ListaProdottiDisponibiliResponse")]
+        System.Threading.Tasks.Task<int[]> ListaProdottiDisponibiliAsync();
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -209,6 +227,30 @@ namespace Magazzino.ServiceReference1 {
         
         public System.Threading.Tasks.Task<int> UserLoginAsync(DbManager.Login user) {
             return base.Channel.UserLoginAsync(user);
+        }
+        
+        public string[] ListaClienti() {
+            return base.Channel.ListaClienti();
+        }
+        
+        public System.Threading.Tasks.Task<string[]> ListaClientiAsync() {
+            return base.Channel.ListaClientiAsync();
+        }
+        
+        public DbManager.Utente GetMagazziniere(string id) {
+            return base.Channel.GetMagazziniere(id);
+        }
+        
+        public System.Threading.Tasks.Task<DbManager.Utente> GetClienteAsync(string id) {
+            return base.Channel.GetClienteAsync(id);
+        }
+        
+        public int[] ListaProdottiDisponibili() {
+            return base.Channel.ListaProdottiDisponibili();
+        }
+        
+        public System.Threading.Tasks.Task<int[]> ListaProdottiDisponibiliAsync() {
+            return base.Channel.ListaProdottiDisponibiliAsync();
         }
     }
 }
