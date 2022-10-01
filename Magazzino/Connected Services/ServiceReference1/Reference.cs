@@ -34,10 +34,10 @@ namespace Magazzino.ServiceReference1 {
         System.Threading.Tasks.Task<string> GetCategoriaAsync(int id);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService1/GetProdotto", ReplyAction="http://tempuri.org/IService1/GetProdottoResponse")]
-        DbManager.Articolo GetProdotto(int IDProdotto);
+        Server.Articolo GetProdotto(int IDProdotto);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService1/GetProdotto", ReplyAction="http://tempuri.org/IService1/GetProdottoResponse")]
-        System.Threading.Tasks.Task<DbManager.Articolo> GetProdottoAsync(int IDProdotto);
+        System.Threading.Tasks.Task<Server.Articolo> GetProdottoAsync(int IDProdotto);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService1/ListaCategorie", ReplyAction="http://tempuri.org/IService1/ListaCategorieResponse")]
         int[] ListaCategorie();
@@ -58,10 +58,10 @@ namespace Magazzino.ServiceReference1 {
         System.Threading.Tasks.Task<bool> ModificaPasswordAsync(string email, string psw);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService1/ModificaProdotto", ReplyAction="http://tempuri.org/IService1/ModificaProdottoResponse")]
-        bool ModificaProdotto(DbManager.Articolo prodottoDaModificare);
+        bool ModificaProdotto(Server.Articolo prodottoDaModificare);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService1/ModificaProdotto", ReplyAction="http://tempuri.org/IService1/ModificaProdottoResponse")]
-        System.Threading.Tasks.Task<bool> ModificaProdottoAsync(DbManager.Articolo prodottoDaModificare);
+        System.Threading.Tasks.Task<bool> ModificaProdottoAsync(Server.Articolo prodottoDaModificare);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService1/NuovaCategoria", ReplyAction="http://tempuri.org/IService1/NuovaCategoriaResponse")]
         bool NuovaCategoria(string nome);
@@ -70,22 +70,22 @@ namespace Magazzino.ServiceReference1 {
         System.Threading.Tasks.Task<bool> NuovaCategoriaAsync(string nome);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService1/NuovoProdotto", ReplyAction="http://tempuri.org/IService1/NuovoProdottoResponse")]
-        bool NuovoProdotto(DbManager.Articolo nuovo);
+        bool NuovoProdotto(Server.Articolo nuovo);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService1/NuovoProdotto", ReplyAction="http://tempuri.org/IService1/NuovoProdottoResponse")]
-        System.Threading.Tasks.Task<bool> NuovoProdottoAsync(DbManager.Articolo nuovo);
+        System.Threading.Tasks.Task<bool> NuovoProdottoAsync(Server.Articolo nuovo);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService1/Signin", ReplyAction="http://tempuri.org/IService1/SigninResponse")]
-        bool Signin(DbManager.Utente nuovo);
+        bool Signin(Server.Utente nuovo);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService1/Signin", ReplyAction="http://tempuri.org/IService1/SigninResponse")]
-        System.Threading.Tasks.Task<bool> SigninAsync(DbManager.Utente nuovo);
+        System.Threading.Tasks.Task<bool> SigninAsync(Server.Utente nuovo);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService1/UserLogin", ReplyAction="http://tempuri.org/IService1/UserLoginResponse")]
-        int UserLogin(DbManager.Login user);
+        int UserLogin(Server.Login user);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService1/UserLogin", ReplyAction="http://tempuri.org/IService1/UserLoginResponse")]
-        System.Threading.Tasks.Task<int> UserLoginAsync(DbManager.Login user);
+        System.Threading.Tasks.Task<int> UserLoginAsync(Server.Login user);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService1/ListaClienti", ReplyAction="http://tempuri.org/IService1/ListaClientiResponse")]
         string[] ListaClienti();
@@ -93,17 +93,29 @@ namespace Magazzino.ServiceReference1 {
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService1/ListaClienti", ReplyAction="http://tempuri.org/IService1/ListaClientiResponse")]
         System.Threading.Tasks.Task<string[]> ListaClientiAsync();
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService1/GetMagazziniere", ReplyAction="http://tempuri.org/IService1/GetClienteResponse")]
-        DbManager.Utente GetCliente(string id);
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService1/GetMagazziniere", ReplyAction="http://tempuri.org/IService1/GetMagazziniereResponse")]
+        Server.Utente GetMagazziniere(string id);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService1/GetMagazziniere", ReplyAction="http://tempuri.org/IService1/GetClienteResponse")]
-        System.Threading.Tasks.Task<DbManager.Utente> GetClienteAsync(string id);
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService1/GetMagazziniere", ReplyAction="http://tempuri.org/IService1/GetMagazziniereResponse")]
+        System.Threading.Tasks.Task<Server.Utente> GetMagazziniereAsync(string id);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService1/ListaProdottiDisponibili", ReplyAction="http://tempuri.org/IService1/ListaProdottiDisponibiliResponse")]
         int[] ListaProdottiDisponibili();
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService1/ListaProdottiDisponibili", ReplyAction="http://tempuri.org/IService1/ListaProdottiDisponibiliResponse")]
         System.Threading.Tasks.Task<int[]> ListaProdottiDisponibiliAsync();
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService1/AumentaGiacenze", ReplyAction="http://tempuri.org/IService1/AumentaGiacenzeResponse")]
+        bool AumentaGiacenze(int id, int quantita);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService1/AumentaGiacenze", ReplyAction="http://tempuri.org/IService1/AumentaGiacenzeResponse")]
+        System.Threading.Tasks.Task<bool> AumentaGiacenzeAsync(int id, int quantita);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService1/DiminuisciGiacenze", ReplyAction="http://tempuri.org/IService1/DiminuisciGiacenzeResponse")]
+        bool DiminuisciGiacenze(int id, int quantita);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService1/DiminuisciGiacenze", ReplyAction="http://tempuri.org/IService1/DiminuisciGiacenzeResponse")]
+        System.Threading.Tasks.Task<bool> DiminuisciGiacenzeAsync(int id, int quantita);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -157,11 +169,11 @@ namespace Magazzino.ServiceReference1 {
             return base.Channel.GetCategoriaAsync(id);
         }
         
-        public DbManager.Articolo GetProdotto(int IDProdotto) {
+        public Server.Articolo GetProdotto(int IDProdotto) {
             return base.Channel.GetProdotto(IDProdotto);
         }
         
-        public System.Threading.Tasks.Task<DbManager.Articolo> GetProdottoAsync(int IDProdotto) {
+        public System.Threading.Tasks.Task<Server.Articolo> GetProdottoAsync(int IDProdotto) {
             return base.Channel.GetProdottoAsync(IDProdotto);
         }
         
@@ -189,11 +201,11 @@ namespace Magazzino.ServiceReference1 {
             return base.Channel.ModificaPasswordAsync(email, psw);
         }
         
-        public bool ModificaProdotto(DbManager.Articolo prodottoDaModificare) {
+        public bool ModificaProdotto(Server.Articolo prodottoDaModificare) {
             return base.Channel.ModificaProdotto(prodottoDaModificare);
         }
         
-        public System.Threading.Tasks.Task<bool> ModificaProdottoAsync(DbManager.Articolo prodottoDaModificare) {
+        public System.Threading.Tasks.Task<bool> ModificaProdottoAsync(Server.Articolo prodottoDaModificare) {
             return base.Channel.ModificaProdottoAsync(prodottoDaModificare);
         }
         
@@ -205,27 +217,27 @@ namespace Magazzino.ServiceReference1 {
             return base.Channel.NuovaCategoriaAsync(nome);
         }
         
-        public bool NuovoProdotto(DbManager.Articolo nuovo) {
+        public bool NuovoProdotto(Server.Articolo nuovo) {
             return base.Channel.NuovoProdotto(nuovo);
         }
         
-        public System.Threading.Tasks.Task<bool> NuovoProdottoAsync(DbManager.Articolo nuovo) {
+        public System.Threading.Tasks.Task<bool> NuovoProdottoAsync(Server.Articolo nuovo) {
             return base.Channel.NuovoProdottoAsync(nuovo);
         }
         
-        public bool Signin(DbManager.Utente nuovo) {
+        public bool Signin(Server.Utente nuovo) {
             return base.Channel.Signin(nuovo);
         }
         
-        public System.Threading.Tasks.Task<bool> SigninAsync(DbManager.Utente nuovo) {
+        public System.Threading.Tasks.Task<bool> SigninAsync(Server.Utente nuovo) {
             return base.Channel.SigninAsync(nuovo);
         }
         
-        public int UserLogin(DbManager.Login user) {
+        public int UserLogin(Server.Login user) {
             return base.Channel.UserLogin(user);
         }
         
-        public System.Threading.Tasks.Task<int> UserLoginAsync(DbManager.Login user) {
+        public System.Threading.Tasks.Task<int> UserLoginAsync(Server.Login user) {
             return base.Channel.UserLoginAsync(user);
         }
         
@@ -237,12 +249,12 @@ namespace Magazzino.ServiceReference1 {
             return base.Channel.ListaClientiAsync();
         }
         
-        public DbManager.Utente GetMagazziniere(string id) {
+        public Server.Utente GetMagazziniere(string id) {
             return base.Channel.GetMagazziniere(id);
         }
         
-        public System.Threading.Tasks.Task<DbManager.Utente> GetClienteAsync(string id) {
-            return base.Channel.GetClienteAsync(id);
+        public System.Threading.Tasks.Task<Server.Utente> GetMagazziniereAsync(string id) {
+            return base.Channel.GetMagazziniereAsync(id);
         }
         
         public int[] ListaProdottiDisponibili() {
@@ -251,6 +263,22 @@ namespace Magazzino.ServiceReference1 {
         
         public System.Threading.Tasks.Task<int[]> ListaProdottiDisponibiliAsync() {
             return base.Channel.ListaProdottiDisponibiliAsync();
+        }
+        
+        public bool AumentaGiacenze(int id, int quantita) {
+            return base.Channel.AumentaGiacenze(id, quantita);
+        }
+        
+        public System.Threading.Tasks.Task<bool> AumentaGiacenzeAsync(int id, int quantita) {
+            return base.Channel.AumentaGiacenzeAsync(id, quantita);
+        }
+        
+        public bool DiminuisciGiacenze(int id, int quantita) {
+            return base.Channel.DiminuisciGiacenze(id, quantita);
+        }
+        
+        public System.Threading.Tasks.Task<bool> DiminuisciGiacenzeAsync(int id, int quantita) {
+            return base.Channel.DiminuisciGiacenzeAsync(id, quantita);
         }
     }
 }

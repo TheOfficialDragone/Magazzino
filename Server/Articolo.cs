@@ -1,6 +1,6 @@
 ﻿using System.Runtime.Serialization;
 
-namespace DbManager
+namespace Server
 {
     [DataContract]
     public class Articolo

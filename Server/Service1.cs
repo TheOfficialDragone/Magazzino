@@ -1,4 +1,4 @@
-﻿using DbManager;
+﻿
 using MySql.Data.MySqlClient;
 using System;
 using System.Collections;
@@ -9,7 +9,6 @@ using System.Linq;
 using System.Runtime.Serialization;
 using System.ServiceModel;
 using System.Text;
-
 namespace Server
 {
     // NOTA: è possibile utilizzare il comando "Rinomina" del menu "Refactoring" per modificare il nome di classe "Service1" nel codice e nel file di configurazione contemporaneamente.
@@ -35,7 +34,7 @@ namespace Server
                     conn.Open();
                     using (SqlCommand command1 = conn.CreateCommand())
                     {
-                        command1.CommandText = "SELECT * FROM cliente WHERE cliente.email='" + email.Trim().ToLower() + "'";
+                        command1.CommandText = "SELECT * FROM magazziniere WHERE magazziniere.email='" + email.Trim().ToLower() + "'";
                         using (SqlDataReader reader = command1.ExecuteReader())
                         {
                             if (reader.HasRows)
@@ -53,7 +52,7 @@ namespace Server
         }
 
         /// <summary>
-        /// Elimina un prodotto (lo rende indisponibile)
+        /// Elimina un prodotto 
         /// </summary>
         /// <param name="id">Identificativo del prodotto da eliminare</param>
         /// <returns>True se il prodotto viene eliminato con successo. False in caso contrario</returns>
@@ -66,7 +65,8 @@ namespace Server
                 {
                     conn.Open();
                     using (SqlCommand command1 = conn.CreateCommand())
-                    {
+                    {   
+                        //cancellare il prodotto dal db mantenedo la categoria
                         command1.CommandText = "UPDATE prodotto SET disponibilita=0 WHERE IDprodotto=" + id;
                         if (command1.ExecuteNonQuery() > 0)
                             risultato = true;
@@ -131,8 +131,7 @@ namespace Server
                     conn.Open();
                     using (SqlCommand command1 = conn.CreateCommand())
                     {
-                        command1.CommandText = "SELECT prodotto.*, categoria.nome_categoria FROM prodotto, categoria " +
-                                               "WHERE prodotto.IDcategoria=categoria.IDcategoria AND IDprodotto=" + IDProdotto;
+                        command1.CommandText = "SELECT prodotto.*, categoria.nome_categoria FROM prodotto, categoria " + "WHERE prodotto.IDcategoria=categoria.IDcategoria AND IDprodotto=" + IDProdotto;
                         using (SqlDataReader reader = command1.ExecuteReader())
                         {
                             while (reader.Read())
@@ -162,7 +161,8 @@ namespace Server
         /// </summary>
         /// <param name="id">Identificativo dello stato dell'ordine</param>
         /// <returns>Stringa contenente lo stato</returns>
-        public string GetStatoOrdine(int id)
+       /* 
+          public string GetStatoOrdine(int id)
         {
             try
             {
@@ -190,7 +190,8 @@ namespace Server
                 throw new Exception();
             }
         }
-
+       */
+        
         /// <summary>
         /// Lista delle categorie
         /// </summary>
@@ -228,22 +229,23 @@ namespace Server
         /// <summary>
         /// Lista dei prodotti
         /// </summary>
-        /// <returns>Lsta degli identificativi dei prodotti</returns>
+        /// <returns>Lista dei dei prodotti con dispo > 0</returns>
         public List<int> ListaProdotti()
         {
             try
-            {
+            {   
+                //lista stringhe no interi 
                 List<int> lista = new List<int>();
                 using (SqlConnection conn = new SqlConnection(ConnectionString))
                 {
                     conn.Open();
                     using (SqlCommand command1 = conn.CreateCommand())
-                    {
+                    {   //select nome from prodotto where disponibilita > 0
                         command1.CommandText = "SELECT IDprodotto FROM prodotto";
                         using (SqlDataReader reader = command1.ExecuteReader())
                         {
                             while (reader.Read())
-                            {
+                            { //stile stringa
                                 lista.Add(reader.GetInt32(0));
                             }
                         }
@@ -276,7 +278,7 @@ namespace Server
                     using (SqlCommand command1 = conn.CreateCommand())
                     {
                         int idLogin = 0;
-                        command1.CommandText = "SELECT IDlogin FROM cliente WHERE email='" + email.Trim().ToLower() + "'";
+                        command1.CommandText = "SELECT IDlogin FROM magazziniere WHERE email='" + email.Trim().ToLower() + "'";
                         using (SqlDataReader reader = command1.ExecuteReader())
                         {
                             while (reader.Read())
@@ -332,13 +334,8 @@ namespace Server
                         else
                             descrizione = prodottoDaModificare.Descrizione.Trim().ToLower();
 
-                        command1.CommandText = "UPDATE prodotto SET " +
-                                                "nome='" + prodottoDaModificare.Nome.Trim().ToLower() + "', " +
-                                                "descrizione='" + descrizione + "', " +
-                                                "disponibilita=" + disp +
-                                                ", prezzo=" + prodottoDaModificare.Prezzo.ToString().Replace(",", ".") +
-                                                ", IDcategoria=" + id_cat +
-                                               " WHERE IDprodotto=" + prodottoDaModificare.IDprodotto;
+                        command1.CommandText = "UPDATE prodotto SET " + "nome='" + prodottoDaModificare.Nome.Trim().ToLower() + "', " + "descrizione='" + descrizione + "', " + "disponibilita=" + disp + ", prezzo=" + prodottoDaModificare.Prezzo.ToString().Replace(",", ".") + ", IDcategoria=" + id_cat + " WHERE IDprodotto=" + prodottoDaModificare.IDprodotto;
+
                         if (command1.ExecuteNonQuery() > 0)
                             risultato = true;
                     }
@@ -411,10 +408,8 @@ namespace Server
                         else
                             descrizione = nuovo.Descrizione.Trim().ToLower();
 
-                        command1.CommandText = "INSERT INTO prodotto(nome,descrizione,disponibilita,prezzo,IDcategoria) " +
-                                               "VALUES( " + "'" + nuovo.Nome.Trim().ToLower() + "','" +
-                                                descrizione + "'," + disp + "," +
-                                                nuovo.Prezzo.ToString().Replace(",", ".") + "," + id_cat + ")";
+                        command1.CommandText = "INSERT INTO prodotto(nome,descrizione,disponibilita,prezzo,IDcategoria) " + "VALUES( " + "'" + nuovo.Nome.Trim().ToLower() + "','" + descrizione + "'," + disp + "," + nuovo.Prezzo.ToString().Replace(",", ".") + "," + id_cat + ")";
+
                         if (command1.ExecuteNonQuery() > 0)
                             risultato = true;
                     }
@@ -429,7 +424,7 @@ namespace Server
         }
 
         /// <summary>
-        /// Registrazione cliente
+        /// Registrazione magazziniere
         /// </summary>
         /// <param name="nuovo">Oggetto di tipo Utente</param>
         /// <returns>True se l'utente è stato creato con successo. False in caso contrario</returns>
@@ -455,11 +450,8 @@ namespace Server
                                     id = reader.GetInt32(0);
                                 }
                             }
-                            command1.CommandText = "INSERT INTO cliente(email,nome,cognome,indirizzo,data_nascita,telefono,IDcitta,IDlogin) " +
-                                                   "VALUES('" + nuovo.Email.Trim().ToLower() +
-                                                    "','" + nuovo.Nome.Trim().ToLower() + "','" + nuovo.Cognome.Trim().ToLower() +
-                                                    "','" + nuovo.Indirizzo.Trim().ToLower() + "','" + nuovo.Data_nascita +
-                                                    "','" + nuovo.Telefono.Trim() + "','" + nuovo.Cap + "'," + id + ")";
+                            command1.CommandText = "INSERT INTO magazziniere(email,nome,cognome,indirizzo,data_nascita,telefono,IDcitta,IDlogin) " + "VALUES('" + nuovo.Email.Trim().ToLower() + "','" + nuovo.Nome.Trim().ToLower() + "','" + nuovo.Cognome.Trim().ToLower() + "','" + nuovo.Indirizzo.Trim().ToLower() + "','" + nuovo.Data_nascita + "','" + nuovo.Telefono.Trim() + "','" + nuovo.Cap + "'," + id + ")";
+
                             if (command1.ExecuteNonQuery() > 0)
                                 risultato = true;
                         }
@@ -475,10 +467,10 @@ namespace Server
         }
 
         /// <summary>
-        /// Login utente
+        /// Login utente magazziniere o ADMIN
         /// </summary>
         /// <param name="user">Oggetto di tipo Login</param>
-        /// <returns>0 se le credenziali sono errate. 1 se l'accesso è stato effettuato dall'admin. 2 se l'accesso è stato effettuato dal cliente</returns>
+        /// <returns>0 se le credenziali sono errate. 1 se l'accesso è stato effettuato dall'admin. 2 se l'accesso è stato effettuato dal magazziniere</returns>
         public int UserLogin(Login user)
         {
             try
@@ -490,15 +482,14 @@ namespace Server
                     conn.Open();
                     using (SqlCommand command1 = conn.CreateCommand())
                     {
-                        command1.CommandText = "SELECT * FROM account JOIN amministratore ON account.IDlogin=amministratore.IDlogin " +
-                                               "WHERE amministratore.email='" + user.Email.Trim().ToLower() + "' AND account.password='" + user.Password + "'";
+                        command1.CommandText = "SELECT * FROM account JOIN amministratore ON account.IDlogin=amministratore.IDlogin " + "WHERE amministratore.email='" + user.Email.Trim().ToLower() + "' AND account.password='" + user.Password + "'";
+
                         using (SqlDataReader reader = command1.ExecuteReader())
                         {
                             if (reader.HasRows)
                                 codice = 1;
                         }
-                        command1.CommandText = "SELECT * FROM account JOIN cliente ON account.IDlogin=cliente.IDlogin " +
-                                               "WHERE cliente.email='" + user.Email.Trim().ToLower() + "' AND account.password='" + user.Password + "'";
+                        command1.CommandText = "SELECT * FROM account JOIN magazziniere ON account.IDlogin=magazziniere.IDlogin " + "WHERE magazziniere.email='" + user.Email.Trim().ToLower() + "' AND account.password='" + user.Password + "'";
                         using (SqlDataReader reader = command1.ExecuteReader())
                         {
                             if (reader.HasRows)
@@ -513,15 +504,12 @@ namespace Server
             {
                 throw new Exception();
             }
-
-
-
         }
 
         /// <summary>
         /// Lista dei magazzinieri
         /// </summary>
-        /// <returns>Lista degli identificativi dei clienti</returns>
+        /// <returns>Lista dei nomi dei magazzinieri </returns>
         public List<string> ListaClienti()
         {
             try
@@ -533,7 +521,7 @@ namespace Server
                     conn.Open();
                     using (SqlCommand command1 = conn.CreateCommand())
                     {
-                        command1.CommandText = "SELECT email FROM cliente";
+                        command1.CommandText = "SELECT email FROM magazziniere";
                         using (SqlDataReader reader = command1.ExecuteReader())
                         {
                             while (reader.Read())
@@ -554,41 +542,41 @@ namespace Server
         }
 
         /// <summary>
-        /// Dati del cliente
+        /// Dati del magazziniere
         /// </summary>
         /// <param name="id">Identificativo del magazziniere</param>
-        /// <returns>Oggetto Utente contenente i dati del cliente</returns>
+        /// <returns>Oggetto Utente contenente i dati del magazziniere</returns>
         public Utente GetMagazziniere(string id)
         {
             try
             {
                 //creo l'oggetto Utente da restituire
-                Utente cliente = new Utente() { Email = id };
+                Utente magazziniere = new Utente() { Email = id };
 
                 using (SqlConnection conn = new SqlConnection(ConnectionString))
                 {
                     conn.Open();
                     using (SqlCommand command1 = conn.CreateCommand())
                     {
-                        command1.CommandText = "SELECT * FROM cliente WHERE email='" + id.Trim().ToLower() + "'";
+                        command1.CommandText = "SELECT * FROM utente WHERE email='" + id.Trim().ToLower() + "'";
                         using (SqlDataReader reader = command1.ExecuteReader())
                         {
                             while (reader.Read())
                             {
-                                cliente.Email = reader.GetString(0).TrimEnd().ToUpper();
-                                cliente.Nome = reader.GetString(1).TrimEnd().ToUpper();
-                                cliente.Cognome = reader.GetString(2).TrimEnd().ToUpper();
-                                cliente.Indirizzo = reader.GetString(3).TrimEnd().ToUpper();
-                                cliente.Data_nascita = reader.GetDateTime(4);
-                                cliente.Telefono = reader.GetString(5).TrimEnd().ToUpper();
-                                cliente.Cap = reader.GetString(6).TrimEnd().ToUpper();
+                                magazziniere.Email = reader.GetString(0).TrimEnd().ToUpper();
+                                magazziniere.Nome = reader.GetString(1).TrimEnd().ToUpper();
+                                magazziniere.Cognome = reader.GetString(2).TrimEnd().ToUpper();
+                                magazziniere.Indirizzo = reader.GetString(3).TrimEnd().ToUpper();
+                                magazziniere.Data_nascita = reader.GetDateTime(4);
+                                magazziniere.Telefono = reader.GetString(5).TrimEnd().ToUpper();
+                                magazziniere.Cap = reader.GetString(6).TrimEnd().ToUpper();
                             }
                         }
                     }
                     conn.Close();
                 }
                 //restituisco il magazziniere
-                return cliente;
+                return magazziniere;
             }
             catch (Exception)
             {
@@ -611,6 +599,7 @@ namespace Server
                     conn.Open();
                     using (SqlCommand command1 = conn.CreateCommand())
                     {
+                        // verso TODO: aggiornare query per la formula corretta di disponibilità
                         command1.CommandText = "SELECT IDprodotto FROM prodotto WHERE disponibilita=1 ORDER BY IDcategoria,nome";
                         using (SqlDataReader reader = command1.ExecuteReader())
                         {
@@ -635,6 +624,9 @@ namespace Server
         /// Aumenta le giacenze di un prodotto tramite l'id
         /// </summary>
         /// <returns>risultato true or false a seconda dell'esito</returns>
+        /// 
+
+        
         public bool AumentaGiacenze(int id, int quantita)
         {
             try
@@ -645,11 +637,7 @@ namespace Server
                     conn.Open();
                     using (SqlCommand command1 = conn.CreateCommand())
                     {
-                        command1.CommandText = "UPDATE prodotto SET disponibilita = disponibilita +' "
-                            + quantita
-                            + " ' WHERE idprodotto = "
-                            + id
-                            + " ' ";
+                        command1.CommandText = "UPDATE prodotto SET disponibilita = disponibilita +' " + quantita + " ' WHERE IDProdotto = " + id + " ' ";
                         using (SqlDataReader reader = command1.ExecuteReader());
                     }
                     conn.Close();
@@ -680,7 +668,7 @@ namespace Server
                     using (SqlCommand command0 = conn.CreateCommand())
                     {
                         //controlla numero giacenze
-                        command0.CommandText = "SELECT disponibilita from prodotto where idprodotto ='" + id + "'";
+                        command0.CommandText = "SELECT disponibilita from prodotto where IDProdotto ='" + id + "'";
                         using (SqlDataReader reader = command0.ExecuteReader())
                         {
                             while (reader.Read())
@@ -693,20 +681,15 @@ namespace Server
                         if (attuale < quantita)
                         {
                             Console.WriteLine("impossibile diminuire giacenze, numero troppo alto");
-
                             return risultato; //false perchè att < quantita e non è possibile
                         }
                         else
                         {
-
                             using (SqlCommand command1 = conn.CreateCommand())
                             {
-                                command1.CommandText = "UPDATE prodotto SET disponibilita = disponibilita -' "
-                                    + quantita
-                                    + " ' WHERE idprodotto = "
-                                    + id
-                                    + " ' ";
+                                command1.CommandText = "UPDATE prodotto SET disponibilita = disponibilita -' " + quantita + " ' WHERE IDProdotto = " + id + " ' ";
                                 using (SqlDataReader reader = command1.ExecuteReader()) ;
+
                             }
                             conn.Close();
                             risultato = true;
@@ -722,8 +705,4 @@ namespace Server
         }
 
     }
-
-    
-
-    
 }

@@ -4,7 +4,7 @@
     <xsd:schema targetNamespace="http://tempuri.org/Imports">
       <xsd:import schemaLocation="http://localhost:8733/Design_Time_Addresses/Server/Service1/?xsd=xsd0" namespace="http://tempuri.org/" />
       <xsd:import schemaLocation="http://localhost:8733/Design_Time_Addresses/Server/Service1/?xsd=xsd1" namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
-      <xsd:import schemaLocation="http://localhost:8733/Design_Time_Addresses/Server/Service1/?xsd=xsd2" namespace="http://schemas.datacontract.org/2004/07/DbManager" />
+      <xsd:import schemaLocation="http://localhost:8733/Design_Time_Addresses/Server/Service1/?xsd=xsd2" namespace="http://schemas.datacontract.org/2004/07/Server" />
       <xsd:import schemaLocation="http://localhost:8733/Design_Time_Addresses/Server/Service1/?xsd=xsd3" namespace="http://schemas.microsoft.com/2003/10/Serialization/Arrays" />
     </xsd:schema>
   </wsdl:types>
@@ -86,17 +86,29 @@
   <wsdl:message name="IService1_ListaClienti_OutputMessage">
     <wsdl:part name="parameters" element="tns:ListaClientiResponse" />
   </wsdl:message>
-  <wsdl:message name="IService1_GetCliente_InputMessage">
-    <wsdl:part name="parameters" element="tns:GetCliente" />
+  <wsdl:message name="IService1_GetMagazziniere_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetMagazziniere" />
   </wsdl:message>
-  <wsdl:message name="IService1_GetCliente_OutputMessage">
-    <wsdl:part name="parameters" element="tns:GetClienteResponse" />
+  <wsdl:message name="IService1_GetMagazziniere_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetMagazziniereResponse" />
   </wsdl:message>
   <wsdl:message name="IService1_ListaProdottiDisponibili_InputMessage">
     <wsdl:part name="parameters" element="tns:ListaProdottiDisponibili" />
   </wsdl:message>
   <wsdl:message name="IService1_ListaProdottiDisponibili_OutputMessage">
     <wsdl:part name="parameters" element="tns:ListaProdottiDisponibiliResponse" />
+  </wsdl:message>
+  <wsdl:message name="IService1_AumentaGiacenze_InputMessage">
+    <wsdl:part name="parameters" element="tns:AumentaGiacenze" />
+  </wsdl:message>
+  <wsdl:message name="IService1_AumentaGiacenze_OutputMessage">
+    <wsdl:part name="parameters" element="tns:AumentaGiacenzeResponse" />
+  </wsdl:message>
+  <wsdl:message name="IService1_DiminuisciGiacenze_InputMessage">
+    <wsdl:part name="parameters" element="tns:DiminuisciGiacenze" />
+  </wsdl:message>
+  <wsdl:message name="IService1_DiminuisciGiacenze_OutputMessage">
+    <wsdl:part name="parameters" element="tns:DiminuisciGiacenzeResponse" />
   </wsdl:message>
   <wsdl:portType name="IService1">
     <wsdl:operation name="CheckEmail">
@@ -151,13 +163,21 @@
       <wsdl:input wsaw:Action="http://tempuri.org/IService1/ListaClienti" message="tns:IService1_ListaClienti_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IService1/ListaClientiResponse" message="tns:IService1_ListaClienti_OutputMessage" />
     </wsdl:operation>
-    <wsdl:operation name="GetCliente">
-      <wsdl:input wsaw:Action="http://tempuri.org/IService1/GetCliente" message="tns:IService1_GetCliente_InputMessage" />
-      <wsdl:output wsaw:Action="http://tempuri.org/IService1/GetClienteResponse" message="tns:IService1_GetCliente_OutputMessage" />
+    <wsdl:operation name="GetMagazziniere">
+      <wsdl:input wsaw:Action="http://tempuri.org/IService1/GetMagazziniere" message="tns:IService1_GetMagazziniere_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IService1/GetMagazziniereResponse" message="tns:IService1_GetMagazziniere_OutputMessage" />
     </wsdl:operation>
     <wsdl:operation name="ListaProdottiDisponibili">
       <wsdl:input wsaw:Action="http://tempuri.org/IService1/ListaProdottiDisponibili" message="tns:IService1_ListaProdottiDisponibili_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IService1/ListaProdottiDisponibiliResponse" message="tns:IService1_ListaProdottiDisponibili_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="AumentaGiacenze">
+      <wsdl:input wsaw:Action="http://tempuri.org/IService1/AumentaGiacenze" message="tns:IService1_AumentaGiacenze_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IService1/AumentaGiacenzeResponse" message="tns:IService1_AumentaGiacenze_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="DiminuisciGiacenze">
+      <wsdl:input wsaw:Action="http://tempuri.org/IService1/DiminuisciGiacenze" message="tns:IService1_DiminuisciGiacenze_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IService1/DiminuisciGiacenzeResponse" message="tns:IService1_DiminuisciGiacenze_OutputMessage" />
     </wsdl:operation>
   </wsdl:portType>
   <wsdl:binding name="BasicHttpBinding_IService1" type="tns:IService1">
@@ -279,8 +299,8 @@
         <soap:body use="literal" />
       </wsdl:output>
     </wsdl:operation>
-    <wsdl:operation name="GetCliente">
-      <soap:operation soapAction="http://tempuri.org/IService1/GetCliente" style="document" />
+    <wsdl:operation name="GetMagazziniere">
+      <soap:operation soapAction="http://tempuri.org/IService1/GetMagazziniere" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>
@@ -290,6 +310,24 @@
     </wsdl:operation>
     <wsdl:operation name="ListaProdottiDisponibili">
       <soap:operation soapAction="http://tempuri.org/IService1/ListaProdottiDisponibili" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="AumentaGiacenze">
+      <soap:operation soapAction="http://tempuri.org/IService1/AumentaGiacenze" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="DiminuisciGiacenze">
+      <soap:operation soapAction="http://tempuri.org/IService1/DiminuisciGiacenze" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>

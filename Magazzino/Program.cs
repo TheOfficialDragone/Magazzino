@@ -1,5 +1,4 @@
-﻿using DbManager;
-using Magazzino.ServiceReference1;
+﻿using Magazzino.ServiceReference1;
 using Server;
 using System;
 using System.Collections.Generic;
