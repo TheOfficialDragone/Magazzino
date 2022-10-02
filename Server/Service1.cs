@@ -665,6 +665,10 @@ namespace Server
                 {
                     conn.Open();
 
+                    // controllo della correttezza della quantita spostato nel program
+                    // in seguito a un'attenta riflessione avvenuta in doccia
+                    
+                    /*
                     using (SqlCommand command0 = conn.CreateCommand())
                     {
                         //controlla numero giacenze
@@ -685,6 +689,7 @@ namespace Server
                         }
                         else
                         {
+                            */
                             using (SqlCommand command1 = conn.CreateCommand())
                             {
                                 command1.CommandText = "UPDATE prodotto SET disponibilita = disponibilita -' " + quantita + " ' WHERE IDProdotto = " + id + " ' ";
