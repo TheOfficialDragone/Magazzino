@@ -638,7 +638,7 @@ namespace Server
                     using (SqlCommand command1 = conn.CreateCommand())
                     {
                         command1.CommandText = "UPDATE prodotto SET disponibilita = disponibilita +' " + quantita + " ' WHERE IDProdotto = " + id + " ' ";
-                        using (SqlDataReader reader = command1.ExecuteReader());
+                        using (SqlDataReader reader = command1.ExecuteReader()); //necessario? da warning
                     }
                     conn.Close();
                 }
@@ -656,7 +656,7 @@ namespace Server
         /// <returns>risultato true or false a seconda dell'esito</returns>
         public bool DiminuisciGiacenze(int id, int quantita)
         {
-            int attuale = 0;
+            // int attuale = 0;
             try
             {
                 bool risultato = false;
@@ -667,7 +667,7 @@ namespace Server
 
                     // controllo della correttezza della quantita spostato nel program
                     // in seguito a un'attenta riflessione avvenuta in doccia
-                    
+
                     /*
                     using (SqlCommand command0 = conn.CreateCommand())
                     {
@@ -689,25 +689,27 @@ namespace Server
                         }
                         else
                         {
-                            */
-                            using (SqlCommand command1 = conn.CreateCommand())
-                            {
-                                command1.CommandText = "UPDATE prodotto SET disponibilita = disponibilita -' " + quantita + " ' WHERE IDProdotto = " + id + " ' ";
-                                using (SqlDataReader reader = command1.ExecuteReader()) ;
+                        */
 
-                            }
-                            conn.Close();
-                            risultato = true;
-                        }
-                        return risultato;
+                    using (SqlCommand command1 = conn.CreateCommand())
+                    {
+                        command1.CommandText = "UPDATE prodotto SET disponibilita = disponibilita -' " + quantita + " ' WHERE IDProdotto = " + id + " ' ";
+                        using (SqlDataReader reader = command1.ExecuteReader()) ; // necessario? da warning
+
                     }
+                    conn.Close();
+                    risultato = true;
                 }
-            }
-            catch (Exception)
+                return risultato;
+
+            }catch (Exception)
             {
                 throw new Exception();
             }
+           
         }
-
+            
     }
+
+    
 }

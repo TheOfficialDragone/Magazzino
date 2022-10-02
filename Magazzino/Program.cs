@@ -631,17 +631,17 @@ namespace Client
 
                                                      try
                                                      {
-                                                        idRiduci = Convert.ToInt32(Console.ReadLine());
+                                                        int idRiduci = Convert.ToInt32(Console.ReadLine());
                                                         if (client.ListaProdotti().Contains(idRiduci))
                                                             {
                                                                 // allora chiedo di quanto ridurlo
                                                                 Console.WriteLine("Inserire di quanto si vuole ridurre la quantità");
-                                                                quantitaRiduzione = Convert.ToInt32(Console.ReadLine());
+                                                                int quantitaRiduzione = Convert.ToInt32(Console.ReadLine());
                                                                 if (quantitaRiduzione > 0)
                                                                 {
                                                                     // controllo se la quantita ridotta è maggiore della giacenza
-                                                                    if (quantitaRiduzione > client.GetProdotto(idRiduci).disponibilita)
-                                                                    {
+                                                                    if (quantitaRiduzione > client.GetProdotto(idRiduci).disponibilita) //disponibilita è un bool attenzione, valutare modifca in int
+                                                                {
                                                                         Console.WriteLine("La quantità da ridurre è maggiore della giacenza");
                                                                         Console.WriteLine("\nPremi un tasto per continuare");
                                                                         Console.ReadKey();
@@ -649,7 +649,7 @@ namespace Client
                                                                     else
                                                                     {
                                                                         // allora posso ridurre la giacenza
-                                                                        client.DiminuisciGiacenza(idRiduci, quantitaRiduzione);
+                                                                        client.DiminuisciGiacenze(idRiduci, quantitaRiduzione);
                                                                         Console.WriteLine("Giacenza ridotta");
                                                                         Console.WriteLine("\nPremi un tasto per continuare");
                                                                         Console.ReadKey();
@@ -662,7 +662,7 @@ namespace Client
                                                                     Console.ReadKey();
                                                                 }
                                                                 Console.Clear();
-                                                                if (client.DiminuisciGiacenza(idRiduci, quantitaRiduzione))
+                                                                if (client.DiminuisciGiacenze(idRiduci, quantitaRiduzione))
                                                                     Console.WriteLine("Quantità diminuita!");
                                                                 else
                                                                     Console.WriteLine("Errore: diminuzione della quantità non riuscita!");
