@@ -13,8 +13,8 @@ namespace Client
     {
         static void Main(string[] args)
         {
-           Service1Client client = new Magazzino.ServiceReference1.Service1Client();
-           
+            Service1Client client = new Magazzino.ServiceReference1.Service1Client();
+
             int sceltaMenuShop = 0;
             do
             {
@@ -24,7 +24,7 @@ namespace Client
                 Console.WriteLine("2.Registrati");
                 Console.WriteLine("3.Esci");
 
-              
+
 
                 Console.WriteLine("Scelta: ");
                 try
@@ -64,7 +64,7 @@ namespace Client
                                 Email = email.Trim(), //rimuovo gli spazi
                                 Password = psw
                             };
-                            
+
                             int code = client.UserLogin(login); //invio i dati al server e assegno un codice di ritorno
 
                             switch (code)
@@ -75,7 +75,7 @@ namespace Client
                                     Console.WriteLine("\nPremi un tasto per continuare");
                                     Console.ReadKey();
                                     break;
-                                
+
                                 //admin
                                 case 1:
                                     Console.Clear();
@@ -134,12 +134,12 @@ namespace Client
                                                                         //stampo tutti i prodotti
                                                                         foreach (var p in client.ListaProdotti())
                                                                         {
-                                                                            if (client.GetProdotto(p).Quantita >=1)
+                                                                            if (client.GetProdotto(p).Quantita >= 1)
                                                                                 disponibile = "DISPONIBILE";
                                                                             else
                                                                                 disponibile = "NON DISPONIBILE";
                                                                             // TODO: verificare query ed eventuali modifiche
-                                                                            Console.WriteLine(client.GetProdotto(p).IDprodotto + " - " + client.GetProdotto(p).Nome + " - " + String.Format("{0:0.00}", client.GetProdotto(p).Prezzo) + " euro - " + disponibile + " - "+ client.GetProdotto(p).Quantita + "-" + client.GetProdotto(p).Categoria);
+                                                                            Console.WriteLine(client.GetProdotto(p).IDprodotto + " - " + client.GetProdotto(p).Nome + " - " + String.Format("{0:0.00}", client.GetProdotto(p).Prezzo) + " euro - " + disponibile + " - " + client.GetProdotto(p).Quantita + "-" + client.GetProdotto(p).Categoria);
                                                                         }
                                                                     }
                                                                     else
@@ -148,7 +148,7 @@ namespace Client
                                                                     Console.WriteLine("\nPremi un tasto per continuare");
                                                                     Console.ReadKey();
                                                                     break;
-                                                                //lista categorie
+                                                                //lista categorie    
                                                                 case 2:
                                                                     Console.Clear();
                                                                     if (client.ListaCategorie().Count() > 0)
@@ -169,7 +169,8 @@ namespace Client
                                                                     break;
                                                                 //aggiungi UN NUOVO prodotto
                                                                 case 3:
-                                                                    if (client.ListaCategorie().Count() > 0) {
+                                                                    if (client.ListaCategorie().Count() > 0)
+                                                                    {
                                                                         string nomeNuovoProdotto;
                                                                         //nome prodotto
                                                                         do
@@ -261,8 +262,8 @@ namespace Client
                                                                             Nome = nomeNuovoProdotto,
                                                                             Prezzo = prezzoNuovoProdotto,
                                                                             Descrizione = descrizioneNuovoProdotto,
-                                                                            Categoria = client.GetCategoria(categoriaNuovoProdotto)
-                                                                            quantita = quantitaNuovoProdotto
+                                                                            Categoria = client.GetCategoria(categoriaNuovoProdotto),
+                                                                            Quantita = quantitaNuovoProdotto
                                                                         };
 
                                                                         if (client.NuovoProdotto(nuovoProdotto))
@@ -279,8 +280,10 @@ namespace Client
                                                                         }
                                                                         Console.WriteLine("Devi prima creare una categoria!");
 
-                                                                    Console.WriteLine("\nPremi un tasto per continuare");
-                                                                    Console.ReadKey();
+                                                                        Console.WriteLine("\nPremi un tasto per continuare");
+                                                                        Console.ReadKey();
+
+                                                                    }
                                                                     break;
 
                                                                 //aggiungi categoria
@@ -317,6 +320,7 @@ namespace Client
                                                                     Console.WriteLine("\nPremi un tasto per continuare");
                                                                     Console.ReadKey();
                                                                     break;
+                                                            
 
                                                                 //modifica prodotto
                                                                 case 5:
@@ -329,12 +333,12 @@ namespace Client
 
                                                                         foreach (var p in client.ListaProdotti())
                                                                         {
-                                                                            if (client.GetProdotto(p).Disponibilita)
+                                                                            if (client.GetProdotto(p).Quantita > 0)
                                                                                 disponibile = "DISPONIBILE";
                                                                             else
                                                                                 disponibile = "NON DISPONIBILE";
 
-                                                                                // verificare conversioni e cose stampate
+                                                                            // verificare conversioni e cose stampate
                                                                             Console.WriteLine(client.GetProdotto(p).IDprodotto + " - " + client.GetProdotto(p).Nome + " - " + String.Format("{0:0.00}", client.GetProdotto(p).Prezzo) + " euro - " + disponibile + " - " + client.GetProdotto(p).Categoria);
                                                                         }
                                                                         Console.WriteLine("\nInserisci codice prodotto da modificare: ");
@@ -354,7 +358,7 @@ namespace Client
                                                                                     Console.WriteLine("Prodotto: " + prodottoDaModificare.IDprodotto);
                                                                                     Console.WriteLine("1.Nome: " + prodottoDaModificare.Nome);
                                                                                     Console.WriteLine("2.Descrizione: " + prodottoDaModificare.Descrizione);
-                                                                                    Console.WriteLine("3.Disponibilità: " + prodottoDaModificare.Disponibilita);
+                                                                                    //Console.WriteLine("3.Disponibilità: " + prodottoDaModificare.Disponibilita);
                                                                                     Console.WriteLine("4.Prezzo: " + String.Format("{0:0.00}", prodottoDaModificare.Prezzo) + " euro");
                                                                                     Console.WriteLine("5.Categoria: " + prodottoDaModificare.Categoria);
                                                                                     Console.WriteLine("\n6.Annulla");
@@ -390,12 +394,14 @@ namespace Client
 
                                                                                                 prodottoDaModificare.Descrizione = descrizioneModifica;
                                                                                                 break;
+                                                                                            /*
                                                                                             case 3:
                                                                                                 if (prodottoDaModificare.Disponibilita)
                                                                                                     prodottoDaModificare.Disponibilita = false;
                                                                                                 else
                                                                                                     prodottoDaModificare.Disponibilita = true;
                                                                                                 break;
+                                                                                            */
                                                                                             case 4:
                                                                                                 double prezzoModifica = 0;
                                                                                                 //modifica prezzo
@@ -490,7 +496,7 @@ namespace Client
                                                                         Console.WriteLine("***ELIMINA PRODOTTO***");
                                                                         foreach (var p in client.ListaProdotti())
                                                                         {
-                                                                            if (client.GetProdotto(p).Disponibilita)
+                                                                            if (client.GetProdotto(p).Quantita > 0)
                                                                                 disponibile = "DISPONIBILE";
                                                                             else
                                                                                 disponibile = "NON DISPONIBILE";
@@ -516,7 +522,8 @@ namespace Client
                                                                         {
                                                                             Console.WriteLine("Scelta non valida!");
                                                                         }
-                                                                    }else
+                                                                    }
+                                                                    else
                                                                         Console.WriteLine("Non hai creato nessun prodotto");
 
                                                                     Console.WriteLine("\nPremi un tasto per continuare");
@@ -539,7 +546,7 @@ namespace Client
                                                 //gestione magazzinieri
 
                                                 // controllare coerenza campi ed entita
-                                                
+
                                                 case 2:
                                                     Console.Clear();
                                                     if (client.ListaMagazzinieri().Count() > 0)
@@ -548,7 +555,7 @@ namespace Client
                                                         //lista dei magazzinieri
                                                         foreach (var c in client.ListaMagazzinieri())
                                                         {
-                                                            Console.WriteLine(client.GetMagazziniere(c).Email + " - " + client.GetMagazziniere(c).Nome + 
+                                                            Console.WriteLine(client.GetMagazziniere(c).Email + " - " + client.GetMagazziniere(c).Nome +
                                                                 " - " + client.GetMagazziniere(c).Cognome + " - " + client.GetMagazziniere(c).Telefono);
                                                         }
                                                     }
@@ -558,7 +565,7 @@ namespace Client
                                                     Console.WriteLine("\nPremi un tasto per continuare");
                                                     Console.ReadKey();
                                                     break;
-                                                
+
                                                 case 3:
                                                     break;
                                             }
@@ -591,8 +598,8 @@ namespace Client
                                         Console.WriteLine("3.Diminuisci giacenza");
                                         Console.WriteLine("4.Il mio profilo"); // visualizza informazioni del profilo, no modifica
                                         Console.WriteLine("5.Esci");
-                                        
-                                        
+
+
                                         Console.WriteLine("Scelta: ");
                                         try
                                         {
@@ -641,53 +648,53 @@ namespace Client
 
                                                     Console.WriteLine("\nInserire l'id del prodotto di cui si vuole diminuire la quantità");
 
-                                                     try
-                                                     {
+                                                    try
+                                                    {
                                                         int idRiduci = Convert.ToInt32(Console.ReadLine());
                                                         if (client.ListaProdotti().Contains(idRiduci))
+                                                        {
+                                                            // allora chiedo di quanto ridurlo
+                                                            Console.WriteLine("Inserire di quanto si vuole ridurre la quantità");
+                                                            int quantitaRiduzione = Convert.ToInt32(Console.ReadLine());
+                                                            if (quantitaRiduzione > 0)
                                                             {
-                                                                // allora chiedo di quanto ridurlo
-                                                                Console.WriteLine("Inserire di quanto si vuole ridurre la quantità");
-                                                                int quantitaRiduzione = Convert.ToInt32(Console.ReadLine());
-                                                                if (quantitaRiduzione > 0)
+                                                                // controllo se la quantita ridotta è maggiore della giacenza
+                                                                if (quantitaRiduzione > client.GetProdotto(idRiduci).Quantita)
                                                                 {
-                                                                    // controllo se la quantita ridotta è maggiore della giacenza
-                                                                    if (quantitaRiduzione > client.GetProdotto(idRiduci).Quantita) 
-                                                                    {
-                                                                        Console.WriteLine("La quantità da ridurre è maggiore della giacenza");
-                                                                        Console.WriteLine("\nPremi un tasto per continuare");
-                                                                        Console.ReadKey();
-                                                                    } 
-                                                                    else
-                                                                    {
-                                                                        // allora posso ridurre la giacenza
-                                                                        client.DiminuisciGiacenze(idRiduci, quantitaRiduzione);
-                                                                        Console.WriteLine("Giacenza ridotta");
-                                                                        Console.WriteLine("\nPremi un tasto per continuare");
-                                                                        Console.ReadKey();
-                                                                    }
-                                                                   
-                                                                }
-                                                                else
-                                                                {
-                                                                    Console.WriteLine("La quantità da ridurre deve essere maggiore di 0");
+                                                                    Console.WriteLine("La quantità da ridurre è maggiore della giacenza");
                                                                     Console.WriteLine("\nPremi un tasto per continuare");
                                                                     Console.ReadKey();
                                                                 }
-                                                                Console.Clear();
-                                                                if (client.DiminuisciGiacenze(idRiduci, quantitaRiduzione))
-                                                                    Console.WriteLine("Quantità diminuita!");
                                                                 else
-                                                                    Console.WriteLine("Errore: diminuzione della quantità non riuscita!");
+                                                                {
+                                                                    // allora posso ridurre la giacenza
+                                                                    client.DiminuisciGiacenze(idRiduci, quantitaRiduzione);
+                                                                    Console.WriteLine("Giacenza ridotta");
+                                                                    Console.WriteLine("\nPremi un tasto per continuare");
+                                                                    Console.ReadKey();
+                                                                }
+
                                                             }
+                                                            else
+                                                            {
+                                                                Console.WriteLine("La quantità da ridurre deve essere maggiore di 0");
+                                                                Console.WriteLine("\nPremi un tasto per continuare");
+                                                                Console.ReadKey();
+                                                            }
+                                                            Console.Clear();
+                                                            if (client.DiminuisciGiacenze(idRiduci, quantitaRiduzione))
+                                                                Console.WriteLine("Quantità diminuita!");
+                                                            else
+                                                                Console.WriteLine("Errore: diminuzione della quantità non riuscita!");
+                                                        }
                                                         else
                                                             Console.WriteLine("Codice prodotto non valido!");
-                                                        }
+                                                    }
                                                     catch (FormatException)
-                                                        {
-                                                            Console.WriteLine("Scelta non valida!");
-                                                        }
-                                                         
+                                                    {
+                                                        Console.WriteLine("Scelta non valida!");
+                                                    }
+
                                                     break;
 
                                                 case 4:

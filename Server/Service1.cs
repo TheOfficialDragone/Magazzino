@@ -9,6 +9,8 @@ using System.Linq;
 using System.Runtime.Serialization;
 using System.ServiceModel;
 using System.Text;
+
+
 namespace Server
 {
     // NOTA: è possibile utilizzare il comando "Rinomina" del menu "Refactoring" per modificare il nome di classe "Service1" nel codice e nel file di configurazione contemporaneamente.
@@ -136,10 +138,10 @@ namespace Server
                         {
                             while (reader.Read())
                             {
+                                // controllare ordine campi in tabella db
                                 prodotto.Nome = reader.GetString(1).TrimEnd().ToUpper();
                                 prodotto.Descrizione = reader.GetString(2).TrimEnd().ToUpper();
-
-                                prodotto.Disponibilita = reader.GetBoolean(3);
+                                prodotto.Quantita = reader.GetInt32(3);
                                 prodotto.Prezzo = reader.GetDouble(4);
                                 prodotto.Categoria = reader.GetString(6).TrimEnd().ToUpper();
                             }
@@ -327,7 +329,7 @@ namespace Server
                                 id_cat = reader.GetInt32(0);
                             }
                         }
-                        int disp = Convert.ToInt32(prodottoDaModificare.Disponibilita);
+                        int disp = Convert.ToInt32(prodottoDaModificare.Quantita);
                         string descrizione;
                         if (prodottoDaModificare.Descrizione == null)
                             descrizione = "...";
@@ -401,7 +403,7 @@ namespace Server
                                 id_cat = reader.GetInt32(0);
                             }
                         }
-                        int disp = Convert.ToInt32(nuovo.Disponibilita);
+                        int disp = Convert.ToInt32(nuovo.Quantita);
                         string descrizione;
                         if (nuovo.Descrizione == null)
                             descrizione = "...";

@@ -13,12 +13,6 @@ namespace Server
         
         [DataMember]
         public string Descrizione { get; set; }
-       
-        /*
-          [DataMember]
-          public bool Disponibilita { get; set; } 
-        */
-        
         
         [DataMember]
         public double Prezzo { get; set; }
