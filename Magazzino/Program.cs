@@ -641,11 +641,11 @@ namespace Client
                                                                 {
                                                                     // controllo se la quantita ridotta è maggiore della giacenza
                                                                     if (quantitaRiduzione > client.GetProdotto(idRiduci).disponibilita) //disponibilita è un bool attenzione, valutare modifca in int
-                                                                {
+                                                                    {
                                                                         Console.WriteLine("La quantità da ridurre è maggiore della giacenza");
                                                                         Console.WriteLine("\nPremi un tasto per continuare");
                                                                         Console.ReadKey();
-                                                                    }
+                                                                    } 
                                                                     else
                                                                     {
                                                                         // allora posso ridurre la giacenza
@@ -654,6 +654,7 @@ namespace Client
                                                                         Console.WriteLine("\nPremi un tasto per continuare");
                                                                         Console.ReadKey();
                                                                     }
+                                                                   
                                                                 }
                                                                 else
                                                                 {
