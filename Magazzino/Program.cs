@@ -235,36 +235,48 @@ namespace Client
 
                                                                         // TODO verificare funzionamento con campi db attuali
                                                                         char disponibilitaNuovoProdotto;
-                                                                        //disponibilità prodotto
+
+                                                                        // chiedi di inserire quantità del prodotto e aggiungilo al db
+                                                                        int quantitaNuovoProdotto = 0;
                                                                         do
                                                                         {
                                                                             Console.Clear();
                                                                             Console.WriteLine("***AGGIUNGI PRODOTTO***");
-                                                                            Console.WriteLine("Il prodotto è disponibile? (s/n)");
-                                                                            disponibilitaNuovoProdotto = Convert.ToChar(Console.ReadLine());
+                                                                            Console.WriteLine("Inserisci la quantità del prodotto: ");
+                                                                            try
+                                                                            {
+                                                                                quantitaNuovoProdotto = Convert.ToInt32(Console.ReadLine());
+                                                                            }
+                                                                            catch (FormatException)
+                                                                            {
+                                                                                Console.WriteLine("Quantità non valida!");
+                                                                                Console.WriteLine("\nPremi un tasto per riprovare");
+                                                                                Console.ReadKey();
+                                                                            }
+                                                                        } while (quantitaNuovoProdotto < 0);
 
-                                                                        } while (disponibilitaNuovoProdotto != 's' && disponibilitaNuovoProdotto != 'n');
-
-                                                                        //creo il nuovo prodotto
+                                                                        // aggiungi il prodotto al db
                                                                         Articolo nuovoProdotto = new Articolo
                                                                         {
                                                                             Nome = nomeNuovoProdotto,
                                                                             Prezzo = prezzoNuovoProdotto,
                                                                             Descrizione = descrizioneNuovoProdotto,
                                                                             Categoria = client.GetCategoria(categoriaNuovoProdotto)
+                                                                            quantita = quantitaNuovoProdotto
                                                                         };
-                                                                        if (disponibilitaNuovoProdotto == 's')
-                                                                            nuovoProdotto.Disponibilita = true;
-                                                                        else
-                                                                            nuovoProdotto.Disponibilita = false;
 
-                                                                        Console.Clear();
-                                                                        //salvo il nuovo prodotto nel server
                                                                         if (client.NuovoProdotto(nuovoProdotto))
-                                                                            Console.WriteLine("Prodotto aggiunto!");
+                                                                        {
+                                                                            Console.WriteLine("Prodotto aggiunto con successo!");
+                                                                            Console.WriteLine("\nPremi un tasto per continuare");
+                                                                            Console.ReadKey();
+                                                                        }
                                                                         else
-                                                                            Console.WriteLine("Errore: prodotto non aggiunto!");
-                                                                    }else
+                                                                        {
+                                                                            Console.WriteLine("Errore nell'aggiunta del prodotto!");
+                                                                            Console.WriteLine("\nPremi un tasto per continuare");
+                                                                            Console.ReadKey();
+                                                                        }
                                                                         Console.WriteLine("Devi prima creare una categoria!");
 
                                                                     Console.WriteLine("\nPremi un tasto per continuare");
