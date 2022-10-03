@@ -134,12 +134,12 @@ namespace Client
                                                                         //stampo tutti i prodotti
                                                                         foreach (var p in client.ListaProdotti())
                                                                         {
-                                                                            if (client.GetProdotto(p).Disponibilita)
+                                                                            if (client.GetProdotto(p).Quantita >=1)
                                                                                 disponibile = "DISPONIBILE";
                                                                             else
                                                                                 disponibile = "NON DISPONIBILE";
                                                                             // TODO: verificare query ed eventuali modifiche
-                                                                            Console.WriteLine(client.GetProdotto(p).IDprodotto + " - " + client.GetProdotto(p).Nome + " - " + String.Format("{0:0.00}", client.GetProdotto(p).Prezzo) + " euro - " + disponibile + " - " + client.GetProdotto(p).Categoria);
+                                                                            Console.WriteLine(client.GetProdotto(p).IDprodotto + " - " + client.GetProdotto(p).Nome + " - " + String.Format("{0:0.00}", client.GetProdotto(p).Prezzo) + " euro - " + disponibile + " - "+ client.GetProdotto(p).Quantita + "-" + client.GetProdotto(p).Categoria);
                                                                         }
                                                                     }
                                                                     else
@@ -640,7 +640,7 @@ namespace Client
                                                                 if (quantitaRiduzione > 0)
                                                                 {
                                                                     // controllo se la quantita ridotta è maggiore della giacenza
-                                                                    if (quantitaRiduzione > client.GetProdotto(idRiduci).disponibilita) //disponibilita è un bool attenzione, valutare modifca in int
+                                                                    if (quantitaRiduzione > client.GetProdotto(idRiduci).Quantita) 
                                                                     {
                                                                         Console.WriteLine("La quantità da ridurre è maggiore della giacenza");
                                                                         Console.WriteLine("\nPremi un tasto per continuare");

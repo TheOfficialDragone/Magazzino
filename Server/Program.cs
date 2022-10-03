@@ -17,7 +17,8 @@ namespace Server
                 ServiceHost svcHost = new ServiceHost(typeof(Service1)); //Istanzio il servizio di tipo ServiceAgendaAziendale
                 svcHost.Open(); //Apro il servizio
 
-                Console.WriteLine("Servizio Server aperto. Premere un tasto per interrompere...");
+                Console.WriteLine("Servizio Server aperto.");
+                Console.WriteLine("Premere un tasto per chiuere il server");
                 Console.ReadLine();
 
                 svcHost.Close();
