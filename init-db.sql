@@ -1,5 +1,5 @@
 DROP DATABASE IF EXISTS magazzino;
-CREATE DATABASE if NOt EXISTS magazzino;
+CREATE DATABASE if NOT EXISTS magazzino;
 
 USE magazzino;
 
