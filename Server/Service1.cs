@@ -573,7 +573,8 @@ namespace Server
                 using (MySqlCommand command1 = conn.CreateCommand())
                 {
                     command1.CommandText = "UPDATE prodotto SET disponibilita = disponibilita +' " + quantita + " ' WHERE IDProdotto = " + id + " ' ";
-                    using (MySqlDataReader reader = command1.ExecuteReader()) ; //necessario? da warning
+                    using (MySqlDataReader reader = command1.ExecuteReader()); //necessario? da warning
+                    risultato = true;
                 }
                 return risultato;
             }
@@ -625,10 +626,10 @@ namespace Server
                     using (MySqlCommand command1 = conn.CreateCommand())
                     {
                         command1.CommandText = "UPDATE prodotto SET disponibilita = disponibilita -' " + quantita + " ' WHERE IDProdotto = " + id + " ' ";
-                        using (SqlDataReader reader = command1.ExecuteReader()) ; // necessario? da warning
+                        using (MySqlDataReader reader = command1.ExecuteReader()) ; // necessario? da warning
 
                     }
-                    conn.Close();
+                    
                     risultato = true;
                 
                 return risultato;

@@ -235,7 +235,7 @@ namespace Client
                                                                         } while (client.ListaCategorie().Contains(categoriaNuovoProdotto) == false);
 
                                                                         // TODO verificare funzionamento con campi db attuali
-                                                                        char disponibilitaNuovoProdotto;
+                                                                       
 
                                                                         // chiedi di inserire quantità del prodotto e aggiungilo al db
                                                                         int quantitaNuovoProdotto = 0;
