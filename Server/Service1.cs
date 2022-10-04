@@ -17,21 +17,25 @@ namespace Server
     public class Service1 : IService1
     {
         #region Attributi
+        // dico di prendere i parametri della connectionstring dal file di configiurazione app.config
         private static readonly string connectionString = ConfigurationManager.AppSettings["connectionString"];
+        // inializzo la connessione di tipo mysql
         private static MySqlConnection connessione = null;
         #endregion
 
         #region Getters & Setters
+        // definisco la connectionstring come quella definita ereditata in precedenza
         public static string ConnectionString => connectionString;
         public static MySqlConnection Connessione { get => connessione; set => connessione = value; }
         #endregion
+
 
         public bool CheckEmail(string email)
         {
             try
             {
                 bool risultato = true;
-                using (SqlConnection conn = new SqlConnection(ConnectionString))
+                using (conn = new MySqlConnection(ConnectionString))
                 {
                     conn.Open();
                     using (SqlCommand command1 = conn.CreateCommand())
@@ -432,10 +436,13 @@ namespace Server
         /// <returns>True se l'utente è stato creato con successo. False in caso contrario</returns>
         public bool Signin(Utente nuovo)
         {
+
+          // tipo di query: <nomeConnessioneVar> = new MySqlConnection(<connStringVar>)
+          );
             try
             {
                 bool risultato = false;
-                using (SqlConnection conn = new SqlConnection(ConnectionString))
+                using (conn = new MySqlConnection(ConnectionString))
                 {
                     conn.Open();
                     using (SqlCommand command1 = conn.CreateCommand())
