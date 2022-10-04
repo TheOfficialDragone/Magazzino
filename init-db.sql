@@ -45,7 +45,7 @@ CREATE TABLE composizione (
   Foreign Key (fk_ordine) REFERENCES ordine(IDordine) ON DELETE CASCADE
 );
 
-CREATE TABLE utente (
+CREATE TABLE magazziniere(
   IDutente int(11) NOT NULL AUTO_INCREMENT PRIMARY KEY,
   nome text NOT NULL,
   cognome text NOT NULL,

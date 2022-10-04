@@ -725,7 +725,7 @@ namespace Client
                                                                     Console.WriteLine("Nome: " + profilo.Nome);
                                                                     Console.WriteLine("Cognome: " + profilo.Cognome);
                                                                     Console.WriteLine("Data nascita: " + profilo.Data_nascita.ToString("d", CultureInfo.CreateSpecificCulture("es-ES")));
-                                                                    Console.WriteLine("Indirizzo: " + profilo.Indirizzo + ", " + profilo.Cap);
+                                                                    Console.WriteLine("Indirizzo: " + profilo.Indirizzo);
                                                                     Console.WriteLine("Telefono: " + profilo.Telefono);
 
                                                                     Console.WriteLine("\nPremi un tasto per continuare");

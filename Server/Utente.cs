@@ -27,7 +27,6 @@ namespace Server
         [DataMember]
         public DateTime Data_nascita { get; set; }
         
-        [DataMember]
-        public string Cap { get; set; }
+        
     }
 }

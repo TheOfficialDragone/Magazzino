@@ -411,7 +411,7 @@ namespace Server
                                 id = reader.GetInt32(0);
                             }
                         }
-                        command1.CommandText = "INSERT INTO magazziniere(email,nome,cognome,indirizzo,data_nascita,telefono,IDcitta,IDlogin) " + "VALUES('" + nuovo.Email.Trim().ToLower() + "','" + nuovo.Nome.Trim().ToLower() + "','" + nuovo.Cognome.Trim().ToLower() + "','" + nuovo.Indirizzo.Trim().ToLower() + "','" + nuovo.Data_nascita + "','" + nuovo.Telefono.Trim() + "','" + nuovo.Cap + "'," + id + ")";
+                        command1.CommandText = "INSERT INTO magazziniere(email,nome,cognome,indirizzo,data_nascita,telefono,IDcitta,IDlogin) " + "VALUES('" + nuovo.Email.Trim().ToLower() + "','" + nuovo.Nome.Trim().ToLower() + "','" + nuovo.Cognome.Trim().ToLower() + "','" + nuovo.Indirizzo.Trim().ToLower() + "','" + nuovo.Data_nascita + "','" + nuovo.Telefono.Trim() + "',')";
 
                         if (command1.ExecuteNonQuery() > 0)
                             risultato = true;
@@ -514,7 +514,6 @@ namespace Server
                             magazziniere.Indirizzo = reader.GetString(3).TrimEnd().ToUpper();
                             magazziniere.Data_nascita = reader.GetDateTime(4);
                             magazziniere.Telefono = reader.GetString(5).TrimEnd().ToUpper();
-                            magazziniere.Cap = reader.GetString(6).TrimEnd().ToUpper();
                         }
                     }
                 }
