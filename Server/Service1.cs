@@ -20,13 +20,13 @@ namespace Server
         // dico di prendere i parametri della connectionstring dal file di configiurazione app.config
         private static readonly string connectionString = ConfigurationManager.AppSettings["connectionString"];
         // inializzo la connessione di tipo mysql
-        private static MySqlConnection connessione = null;
+        private static MySqlConnection conn = null;
         #endregion
 
         #region Getters & Setters
         // definisco la connectionstring come quella definita ereditata in precedenza
         public static string ConnectionString => connectionString;
-        public static MySqlConnection Connessione { get => connessione; set => connessione = value; }
+        public static MySqlConnection Conn { get => conn; set => conn = value; }
         #endregion
 
 
@@ -35,19 +35,14 @@ namespace Server
             try
             {
                 bool risultato = true;
-                using (conn = new MySqlConnection(ConnectionString))
+                using (MySqlCommand command1 = conn.CreateCommand())
                 {
-                    conn.Open();
-                    using (SqlCommand command1 = conn.CreateCommand())
+                    command1.CommandText = "SELECT * FROM magazziniere WHERE magazziniere.email='" + email.Trim().ToLower() + "'";
+                    using (MySqlDataReader reader = command1.ExecuteReader())
                     {
-                        command1.CommandText = "SELECT * FROM magazziniere WHERE magazziniere.email='" + email.Trim().ToLower() + "'";
-                        using (SqlDataReader reader = command1.ExecuteReader())
-                        {
-                            if (reader.HasRows)
-                                risultato = false;
-                        }
+                        if (reader.HasRows)
+                            risultato = false;
                     }
-                    conn.Close();
                 }
                 return risultato;
             }
@@ -67,18 +62,16 @@ namespace Server
             try
             {
                 bool risultato = false;
-                using (SqlConnection conn = new SqlConnection(ConnectionString))
-                {
-                    conn.Open();
-                    using (SqlCommand command1 = conn.CreateCommand())
+                
+                    using (MySqlCommand command1 = conn.CreateCommand())
                     {   
                         //cancellare il prodotto dal db mantenedo la categoria
                         command1.CommandText = "UPDATE prodotto SET disponibilita=0 WHERE IDprodotto=" + id;
                         if (command1.ExecuteNonQuery() > 0)
                             risultato = true;
                     }
-                    conn.Close();
-                }
+                   
+                
                 return risultato;
             }
             catch (Exception)
@@ -97,21 +90,16 @@ namespace Server
             try
             {
                 string nome = null;
-                using (SqlConnection conn = new SqlConnection(ConnectionString))
+                using (MySqlCommand command1 = conn.CreateCommand())
                 {
-                    conn.Open();
-                    using (SqlCommand command1 = conn.CreateCommand())
+                    command1.CommandText = "SELECT nome_categoria FROM categoria WHERE IDcategoria=" + id;
+                    using (MySqlDataReader reader = command1.ExecuteReader())
                     {
-                        command1.CommandText = "SELECT nome_categoria FROM categoria WHERE IDcategoria=" + id;
-                        using (SqlDataReader reader = command1.ExecuteReader())
+                        while (reader.Read())
                         {
-                            while (reader.Read())
-                            {
-                                nome = reader.GetString(0).TrimEnd().ToUpper();
-                            }
+                            nome = reader.GetString(0).TrimEnd().ToUpper();
                         }
                     }
-                    conn.Close();
                 }
                 return nome;
             }
@@ -132,26 +120,21 @@ namespace Server
                 //creo l'oggetto da restituire
                 Articolo prodotto = new Articolo() { IDprodotto = IDProdotto };
 
-                using (SqlConnection conn = new SqlConnection(ConnectionString))
+                using (MySqlCommand command1 = conn.CreateCommand())
                 {
-                    conn.Open();
-                    using (SqlCommand command1 = conn.CreateCommand())
+                    command1.CommandText = "SELECT prodotto.*, categoria.nome_categoria FROM prodotto, categoria " + "WHERE prodotto.IDcategoria=categoria.IDcategoria AND IDprodotto=" + IDProdotto;
+                    using (MySqlDataReader reader = command1.ExecuteReader())
                     {
-                        command1.CommandText = "SELECT prodotto.*, categoria.nome_categoria FROM prodotto, categoria " + "WHERE prodotto.IDcategoria=categoria.IDcategoria AND IDprodotto=" + IDProdotto;
-                        using (SqlDataReader reader = command1.ExecuteReader())
+                        while (reader.Read())
                         {
-                            while (reader.Read())
-                            {
-                                // controllare ordine campi in tabella db
-                                prodotto.Nome = reader.GetString(1).TrimEnd().ToUpper();
-                                prodotto.Descrizione = reader.GetString(2).TrimEnd().ToUpper();
-                                prodotto.Quantita = reader.GetInt32(3);
-                                prodotto.Prezzo = reader.GetDouble(4);
-                                prodotto.Categoria = reader.GetString(6).TrimEnd().ToUpper();
-                            }
+                            // controllare ordine campi in tabella db
+                            prodotto.Nome = reader.GetString(1).TrimEnd().ToUpper();
+                            prodotto.Descrizione = reader.GetString(2).TrimEnd().ToUpper();
+                            prodotto.Quantita = reader.GetInt32(3);
+                            prodotto.Prezzo = reader.GetDouble(4);
+                            prodotto.Categoria = reader.GetString(6).TrimEnd().ToUpper();
                         }
                     }
-                    conn.Close();
                 }
                 //restituisco il prodotto
                 return prodotto;
@@ -160,6 +143,8 @@ namespace Server
             {
                 throw new Exception();
             }
+
+           
         }
 
         /// <summary>
@@ -208,21 +193,16 @@ namespace Server
             {
                 List<int> lista = new List<int>();
 
-                using (SqlConnection conn = new SqlConnection(ConnectionString))
+                using (MySqlCommand command1 = conn.CreateCommand())
                 {
-                    conn.Open();
-                    using (SqlCommand command1 = conn.CreateCommand())
+                    command1.CommandText = "SELECT IDcategoria FROM categoria";
+                    using (MySqlDataReader reader = command1.ExecuteReader())
                     {
-                        command1.CommandText = "SELECT IDcategoria FROM categoria";
-                        using (SqlDataReader reader = command1.ExecuteReader())
+                        while (reader.Read())
                         {
-                            while (reader.Read())
-                            {
-                                lista.Add(reader.GetInt32(0));
-                            }
+                            lista.Add(reader.GetInt32(0));
                         }
                     }
-                    conn.Close();
                 }
                 //restituisco la lista degli identificativi delle categorie
                 return lista;
@@ -242,21 +222,17 @@ namespace Server
             {   
                 //lista stringhe no interi 
                 List<int> lista = new List<int>();
-                using (SqlConnection conn = new SqlConnection(ConnectionString))
-                {
-                    conn.Open();
-                    using (SqlCommand command1 = conn.CreateCommand())
-                    {   //select nome from prodotto where disponibilita > 0
-                        command1.CommandText = "SELECT IDprodotto FROM prodotto";
-                        using (SqlDataReader reader = command1.ExecuteReader())
-                        {
-                            while (reader.Read())
-                            { //stile stringa
-                                lista.Add(reader.GetInt32(0));
-                            }
+                using (MySqlCommand command1 = conn.CreateCommand())
+                {   //select nome from prodotto where disponibilita > 0
+
+                    command1.CommandText = "SELECT IDprodotto FROM prodotto";
+                    using (MySqlDataReader reader = command1.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        { //stile stringa
+                            lista.Add(reader.GetInt32(0));
                         }
                     }
-                    conn.Close();
                 }
                 //restituisco la lista degli identificativi dei prodotti
                 return lista;
@@ -278,28 +254,23 @@ namespace Server
             try
             {
                 bool risultato = false;
-                using (SqlConnection conn = new SqlConnection(ConnectionString))
+                using (MySqlCommand command1 = conn.CreateCommand())
                 {
-                    conn.Open();
-                    using (SqlCommand command1 = conn.CreateCommand())
+                    int idLogin = 0;
+                    command1.CommandText = "SELECT IDlogin FROM magazziniere WHERE email='" + email.Trim().ToLower() + "'";
+                    using (MySqlDataReader reader = command1.ExecuteReader())
                     {
-                        int idLogin = 0;
-                        command1.CommandText = "SELECT IDlogin FROM magazziniere WHERE email='" + email.Trim().ToLower() + "'";
-                        using (SqlDataReader reader = command1.ExecuteReader())
+                        while (reader.Read())
                         {
-                            while (reader.Read())
-                            {
-                                idLogin = reader.GetInt32(0);
-                            }
+                            idLogin = reader.GetInt32(0);
                         }
-
-                        command1.CommandText = "UPDATE account SET " +
-                                                "password='" + psw + "' " +
-                                               "WHERE IDlogin=" + idLogin;
-                        if (command1.ExecuteNonQuery() > 0)
-                            risultato = true;
                     }
-                    conn.Close();
+
+                    command1.CommandText = "UPDATE account SET " +
+                                            "password='" + psw + "' " +
+                                           "WHERE IDlogin=" + idLogin;
+                    if (command1.ExecuteNonQuery() > 0)
+                        risultato = true;
                 }
                 return risultato;
             }
@@ -319,33 +290,28 @@ namespace Server
             try
             {
                 bool risultato = false;
-                using (SqlConnection conn = new SqlConnection(ConnectionString))
+                using (MySqlCommand command1 = conn.CreateCommand())
                 {
-                    conn.Open();
-                    using (SqlCommand command1 = conn.CreateCommand())
+                    int id_cat = 0;
+                    command1.CommandText = "SELECT IDcategoria FROM categoria WHERE nome_categoria='" + prodottoDaModificare.Categoria.Trim().ToLower() + "'";
+                    using (MySqlDataReader reader = command1.ExecuteReader())
                     {
-                        int id_cat = 0;
-                        command1.CommandText = "SELECT IDcategoria FROM categoria WHERE nome_categoria='" + prodottoDaModificare.Categoria.Trim().ToLower() + "'";
-                        using (SqlDataReader reader = command1.ExecuteReader())
+                        while (reader.Read())
                         {
-                            while (reader.Read())
-                            {
-                                id_cat = reader.GetInt32(0);
-                            }
+                            id_cat = reader.GetInt32(0);
                         }
-                        int disp = Convert.ToInt32(prodottoDaModificare.Quantita);
-                        string descrizione;
-                        if (prodottoDaModificare.Descrizione == null)
-                            descrizione = "...";
-                        else
-                            descrizione = prodottoDaModificare.Descrizione.Trim().ToLower();
-
-                        command1.CommandText = "UPDATE prodotto SET " + "nome='" + prodottoDaModificare.Nome.Trim().ToLower() + "', " + "descrizione='" + descrizione + "', " + "disponibilita=" + disp + ", prezzo=" + prodottoDaModificare.Prezzo.ToString().Replace(",", ".") + ", IDcategoria=" + id_cat + " WHERE IDprodotto=" + prodottoDaModificare.IDprodotto;
-
-                        if (command1.ExecuteNonQuery() > 0)
-                            risultato = true;
                     }
-                    conn.Close();
+                    int disp = Convert.ToInt32(prodottoDaModificare.Quantita);
+                    string descrizione;
+                    if (prodottoDaModificare.Descrizione == null)
+                        descrizione = "...";
+                    else
+                        descrizione = prodottoDaModificare.Descrizione.Trim().ToLower();
+
+                    command1.CommandText = "UPDATE prodotto SET " + "nome='" + prodottoDaModificare.Nome.Trim().ToLower() + "', " + "descrizione='" + descrizione + "', " + "disponibilita=" + disp + ", prezzo=" + prodottoDaModificare.Prezzo.ToString().Replace(",", ".") + ", IDcategoria=" + id_cat + " WHERE IDprodotto=" + prodottoDaModificare.IDprodotto;
+
+                    if (command1.ExecuteNonQuery() > 0)
+                        risultato = true;
                 }
                 return risultato;
             }
@@ -365,16 +331,11 @@ namespace Server
             try
             {
                 bool risultato = false;
-                using (SqlConnection conn = new SqlConnection(ConnectionString))
+                using (MySqlCommand command1 = conn.CreateCommand())
                 {
-                    conn.Open();
-                    using (SqlCommand command1 = conn.CreateCommand())
-                    {
-                        command1.CommandText = "INSERT INTO categoria(nome_categoria) VALUES('" + nome.Trim().ToLower() + "')";
-                        if (command1.ExecuteNonQuery() > 0)
-                            risultato = true;
-                    }
-                    conn.Close();
+                    command1.CommandText = "INSERT INTO categoria(nome_categoria) VALUES('" + nome.Trim().ToLower() + "')";
+                    if (command1.ExecuteNonQuery() > 0)
+                        risultato = true;
                 }
                 return risultato;
             }
@@ -393,33 +354,28 @@ namespace Server
             try
             {
                 bool risultato = false;
-                using (SqlConnection conn = new SqlConnection(ConnectionString))
+                using (MySqlCommand command1 = conn.CreateCommand())
                 {
-                    conn.Open();
-                    using (SqlCommand command1 = conn.CreateCommand())
+                    int id_cat = 0;
+                    command1.CommandText = "SELECT IDcategoria FROM categoria WHERE nome_categoria='" + nuovo.Categoria.Trim().ToLower() + "'";
+                    using (MySqlDataReader reader = command1.ExecuteReader())
                     {
-                        int id_cat = 0;
-                        command1.CommandText = "SELECT IDcategoria FROM categoria WHERE nome_categoria='" + nuovo.Categoria.Trim().ToLower() + "'";
-                        using (SqlDataReader reader = command1.ExecuteReader())
+                        while (reader.Read())
                         {
-                            while (reader.Read())
-                            {
-                                id_cat = reader.GetInt32(0);
-                            }
+                            id_cat = reader.GetInt32(0);
                         }
-                        int disp = Convert.ToInt32(nuovo.Quantita);
-                        string descrizione;
-                        if (nuovo.Descrizione == null)
-                            descrizione = "...";
-                        else
-                            descrizione = nuovo.Descrizione.Trim().ToLower();
-
-                        command1.CommandText = "INSERT INTO prodotto(nome,descrizione,disponibilita,prezzo,IDcategoria) " + "VALUES( " + "'" + nuovo.Nome.Trim().ToLower() + "','" + descrizione + "'," + disp + "," + nuovo.Prezzo.ToString().Replace(",", ".") + "," + id_cat + ")";
-
-                        if (command1.ExecuteNonQuery() > 0)
-                            risultato = true;
                     }
-                    conn.Close();
+                    int disp = Convert.ToInt32(nuovo.Quantita);
+                    string descrizione;
+                    if (nuovo.Descrizione == null)
+                        descrizione = "...";
+                    else
+                        descrizione = nuovo.Descrizione.Trim().ToLower();
+
+                    command1.CommandText = "INSERT INTO prodotto(nome,descrizione,disponibilita,prezzo,IDcategoria) " + "VALUES( " + "'" + nuovo.Nome.Trim().ToLower() + "','" + descrizione + "'," + disp + "," + nuovo.Prezzo.ToString().Replace(",", ".") + "," + id_cat + ")";
+
+                    if (command1.ExecuteNonQuery() > 0)
+                        risultato = true;
                 }
                 return risultato;
             }
@@ -437,35 +393,29 @@ namespace Server
         public bool Signin(Utente nuovo)
         {
 
-          // tipo di query: <nomeConnessioneVar> = new MySqlConnection(<connStringVar>)
-          );
+          // tipo di query: <nomeConnessioneVar> = new MySqlConnection(<connStringVar>
             try
             {
                 bool risultato = false;
-                using (conn = new MySqlConnection(ConnectionString))
+                using (MySqlCommand command1 = conn.CreateCommand())
                 {
-                    conn.Open();
-                    using (SqlCommand command1 = conn.CreateCommand())
+                    command1.CommandText = "INSERT INTO account(password) VALUES('" + nuovo.Psw + "')";
+                    if (command1.ExecuteNonQuery() > 0)
                     {
-                        command1.CommandText = "INSERT INTO account(password) VALUES('" + nuovo.Psw + "')";
-                        if (command1.ExecuteNonQuery() > 0)
+                        command1.CommandText = "SELECT MAX(account.IDlogin) FROM account";
+                        int id = 0;
+                        using (MySqlDataReader reader = command1.ExecuteReader())
                         {
-                            command1.CommandText = "SELECT MAX(account.IDlogin) FROM account";
-                            int id = 0;
-                            using (SqlDataReader reader = command1.ExecuteReader())
+                            while (reader.Read())
                             {
-                                while (reader.Read())
-                                {
-                                    id = reader.GetInt32(0);
-                                }
+                                id = reader.GetInt32(0);
                             }
-                            command1.CommandText = "INSERT INTO magazziniere(email,nome,cognome,indirizzo,data_nascita,telefono,IDcitta,IDlogin) " + "VALUES('" + nuovo.Email.Trim().ToLower() + "','" + nuovo.Nome.Trim().ToLower() + "','" + nuovo.Cognome.Trim().ToLower() + "','" + nuovo.Indirizzo.Trim().ToLower() + "','" + nuovo.Data_nascita + "','" + nuovo.Telefono.Trim() + "','" + nuovo.Cap + "'," + id + ")";
-
-                            if (command1.ExecuteNonQuery() > 0)
-                                risultato = true;
                         }
+                        command1.CommandText = "INSERT INTO magazziniere(email,nome,cognome,indirizzo,data_nascita,telefono,IDcitta,IDlogin) " + "VALUES('" + nuovo.Email.Trim().ToLower() + "','" + nuovo.Nome.Trim().ToLower() + "','" + nuovo.Cognome.Trim().ToLower() + "','" + nuovo.Indirizzo.Trim().ToLower() + "','" + nuovo.Data_nascita + "','" + nuovo.Telefono.Trim() + "','" + nuovo.Cap + "'," + id + ")";
+
+                        if (command1.ExecuteNonQuery() > 0)
+                            risultato = true;
                     }
-                    conn.Close();
                 }
                 return risultato;
             }
@@ -485,29 +435,23 @@ namespace Server
             try
             {
                 int codice = 0;
-                using (SqlConnection conn = new SqlConnection(ConnectionString))
+                using (MySqlCommand command1 = conn.CreateCommand())
                 {
+                    command1.CommandText = "SELECT * FROM account JOIN amministratore ON account.IDlogin=amministratore.IDlogin " + "WHERE amministratore.email='" + user.Email.Trim().ToLower() + "' AND account.password='" + user.Password + "'";
 
-                    conn.Open();
-                    using (SqlCommand command1 = conn.CreateCommand())
+                    using (MySqlDataReader reader = command1.ExecuteReader())
                     {
-                        command1.CommandText = "SELECT * FROM account JOIN amministratore ON account.IDlogin=amministratore.IDlogin " + "WHERE amministratore.email='" + user.Email.Trim().ToLower() + "' AND account.password='" + user.Password + "'";
-
-                        using (SqlDataReader reader = command1.ExecuteReader())
-                        {
-                            if (reader.HasRows)
-                                codice = 1;
-                        }
-                        command1.CommandText = "SELECT * FROM account JOIN magazziniere ON account.IDlogin=magazziniere.IDlogin " + "WHERE magazziniere.email='" + user.Email.Trim().ToLower() + "' AND account.password='" + user.Password + "'";
-                        using (SqlDataReader reader = command1.ExecuteReader())
-                        {
-                            if (reader.HasRows)
-                                codice = 2;
-                        }
+                        if (reader.HasRows)
+                            codice = 1;
                     }
-                    conn.Close();
+                    command1.CommandText = "SELECT * FROM account JOIN magazziniere ON account.IDlogin=magazziniere.IDlogin " + "WHERE magazziniere.email='" + user.Email.Trim().ToLower() + "' AND account.password='" + user.Password + "'";
+                    using (MySqlDataReader reader = command1.ExecuteReader())
+                    {
+                        if (reader.HasRows)
+                            codice = 2;
+                    }
+                    return codice;
                 }
-                return codice;
             }
             catch (Exception)
             {
@@ -525,21 +469,16 @@ namespace Server
             {
                 List<string> listaMagazzinieri = new List<string>();
 
-                using (SqlConnection conn = new SqlConnection(connectionString))
+                using (MySqlCommand command1 = conn.CreateCommand())
                 {
-                    conn.Open();
-                    using (SqlCommand command1 = conn.CreateCommand())
+                    command1.CommandText = "SELECT email FROM magazziniere";
+                    using (MySqlDataReader reader = command1.ExecuteReader())
                     {
-                        command1.CommandText = "SELECT email FROM magazziniere";
-                        using (SqlDataReader reader = command1.ExecuteReader())
+                        while (reader.Read())
                         {
-                            while (reader.Read())
-                            {
-                                listaMagazzinieri.Add(reader.GetString(0).TrimEnd().ToUpper());
-                            }
+                            listaMagazzinieri.Add(reader.GetString(0).TrimEnd().ToUpper());
                         }
                     }
-                    conn.Close();
                 }
                 //restituisco la lista degli identificativi dei clienti
                 return listaMagazzinieri;
@@ -562,27 +501,22 @@ namespace Server
                 //creo l'oggetto Utente da restituire
                 Utente magazziniere = new Utente() { Email = id };
 
-                using (SqlConnection conn = new SqlConnection(ConnectionString))
+                using (MySqlCommand command1 = conn.CreateCommand())
                 {
-                    conn.Open();
-                    using (SqlCommand command1 = conn.CreateCommand())
+                    command1.CommandText = "SELECT * FROM utente WHERE email='" + id.Trim().ToLower() + "'";
+                    using (MySqlDataReader reader = command1.ExecuteReader())
                     {
-                        command1.CommandText = "SELECT * FROM utente WHERE email='" + id.Trim().ToLower() + "'";
-                        using (SqlDataReader reader = command1.ExecuteReader())
+                        while (reader.Read())
                         {
-                            while (reader.Read())
-                            {
-                                magazziniere.Email = reader.GetString(0).TrimEnd().ToUpper();
-                                magazziniere.Nome = reader.GetString(1).TrimEnd().ToUpper();
-                                magazziniere.Cognome = reader.GetString(2).TrimEnd().ToUpper();
-                                magazziniere.Indirizzo = reader.GetString(3).TrimEnd().ToUpper();
-                                magazziniere.Data_nascita = reader.GetDateTime(4);
-                                magazziniere.Telefono = reader.GetString(5).TrimEnd().ToUpper();
-                                magazziniere.Cap = reader.GetString(6).TrimEnd().ToUpper();
-                            }
+                            magazziniere.Email = reader.GetString(0).TrimEnd().ToUpper();
+                            magazziniere.Nome = reader.GetString(1).TrimEnd().ToUpper();
+                            magazziniere.Cognome = reader.GetString(2).TrimEnd().ToUpper();
+                            magazziniere.Indirizzo = reader.GetString(3).TrimEnd().ToUpper();
+                            magazziniere.Data_nascita = reader.GetDateTime(4);
+                            magazziniere.Telefono = reader.GetString(5).TrimEnd().ToUpper();
+                            magazziniere.Cap = reader.GetString(6).TrimEnd().ToUpper();
                         }
                     }
-                    conn.Close();
                 }
                 //restituisco il magazziniere
                 return magazziniere;
@@ -603,22 +537,17 @@ namespace Server
             {
                 List<int> lista = new List<int>();
 
-                using (SqlConnection conn = new SqlConnection(connectionString))
+                using (MySqlCommand command1 = conn.CreateCommand())
                 {
-                    conn.Open();
-                    using (SqlCommand command1 = conn.CreateCommand())
+                    // verso TODO: aggiornare query per la formula corretta di disponibilità
+                    command1.CommandText = "SELECT IDprodotto FROM prodotto WHERE disponibilita=1 ORDER BY IDcategoria,nome";
+                    using (MySqlDataReader reader = command1.ExecuteReader())
                     {
-                        // verso TODO: aggiornare query per la formula corretta di disponibilità
-                        command1.CommandText = "SELECT IDprodotto FROM prodotto WHERE disponibilita=1 ORDER BY IDcategoria,nome";
-                        using (SqlDataReader reader = command1.ExecuteReader())
+                        while (reader.Read())
                         {
-                            while (reader.Read())
-                            {
-                                lista.Add(reader.GetInt32(0));
-                            }
+                            lista.Add(reader.GetInt32(0));
                         }
                     }
-                    conn.Close();
                 }
                 //restituisco la lista degli identificativi dei prodotto disponibili
                 return lista;
@@ -641,15 +570,10 @@ namespace Server
             try
             {
                 bool risultato = false;
-                using (SqlConnection conn = new SqlConnection(ConnectionString))
+                using (MySqlCommand command1 = conn.CreateCommand())
                 {
-                    conn.Open();
-                    using (SqlCommand command1 = conn.CreateCommand())
-                    {
-                        command1.CommandText = "UPDATE prodotto SET disponibilita = disponibilita +' " + quantita + " ' WHERE IDProdotto = " + id + " ' ";
-                        using (SqlDataReader reader = command1.ExecuteReader()); //necessario? da warning
-                    }
-                    conn.Close();
+                    command1.CommandText = "UPDATE prodotto SET disponibilita = disponibilita +' " + quantita + " ' WHERE IDProdotto = " + id + " ' ";
+                    using (MySqlDataReader reader = command1.ExecuteReader()) ; //necessario? da warning
                 }
                 return risultato;
             }
@@ -670,9 +594,7 @@ namespace Server
             {
                 bool risultato = false;
 
-                using (SqlConnection conn = new SqlConnection(ConnectionString))
-                {
-                    conn.Open();
+                
 
                     // controllo della correttezza della quantita spostato nel program
                     // in seguito a un'attenta riflessione avvenuta in doccia
@@ -700,7 +622,7 @@ namespace Server
                         {
                         */
 
-                    using (SqlCommand command1 = conn.CreateCommand())
+                    using (MySqlCommand command1 = conn.CreateCommand())
                     {
                         command1.CommandText = "UPDATE prodotto SET disponibilita = disponibilita -' " + quantita + " ' WHERE IDProdotto = " + id + " ' ";
                         using (SqlDataReader reader = command1.ExecuteReader()) ; // necessario? da warning
@@ -708,7 +630,7 @@ namespace Server
                     }
                     conn.Close();
                     risultato = true;
-                }
+                
                 return risultato;
 
             }catch (Exception)

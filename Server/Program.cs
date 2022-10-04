@@ -5,6 +5,7 @@ using System.ServiceModel.Channels;
 using System.ServiceModel;
 using System.Text;
 using System.Threading.Tasks;
+using MySql.Data.MySqlClient;
 
 namespace Server
 {
@@ -16,6 +17,11 @@ namespace Server
             {
                 ServiceHost svcHost = new ServiceHost(typeof(Service1)); //Istanzio il servizio di tipo ServiceAgendaAziendale
                 svcHost.Open(); //Apro il servizio
+
+                Service1.Conn = new MySqlConnection(Service1.ConnectionString);
+                Service1.Conn.Open();
+
+
 
                 Console.WriteLine("Servizio Server aperto.");
                 Console.WriteLine("Premere un tasto per chiuere il server");
