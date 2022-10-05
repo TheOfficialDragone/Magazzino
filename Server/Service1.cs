@@ -411,7 +411,7 @@ namespace Server
                                 id = reader.GetInt32(0);
                             }
                         }
-                        command1.CommandText = "INSERT INTO magazziniere(email,nome,cognome,indirizzo,data_nascita,telefono,IDcitta,IDlogin) " + "VALUES('" + nuovo.Email.Trim().ToLower() + "','" + nuovo.Nome.Trim().ToLower() + "','" + nuovo.Cognome.Trim().ToLower() + "','" + nuovo.Indirizzo.Trim().ToLower() + "','" + nuovo.Data_nascita + "','" + nuovo.Telefono.Trim() + "')";
+                        command1.CommandText = "INSERT INTO account(nome,cognome,email,indirizzo,data_nascita,telefono,TipoAccount) " + "VALUES('"nuovo.Nome.Trim().ToLower() + "','" + nuovo.Cognome.Trim().ToLower() + "','" + nuovo.email.Trim().ToLower() + "','"  + nuovo.Indirizzo.Trim().ToLower() + "','" + nuovo.Data_nascita + "','" + nuovo.Telefono.Trim() + "')";
 
                         if (command1.ExecuteNonQuery() > 0)
                             risultato = true;
@@ -444,7 +444,20 @@ namespace Server
                         if (reader.HasRows)
                             // allora esiste un utente con quelle credenziali
                             // ora controlla se è admin o no
+                            // se è admin allora codice = 1
+                            // se non è admin allora codice = 2
+
+                          if (reader.Read())
+                            {
+                                if (reader.GetInt(7) == 1)
+                                    codice = 1;
+                                // l'utente loggato è un admin
+                                // altrimenti un magazziniere
+                                else
+                                    codice = 2;
+                            }
                     }
+                    // se invece non vengono restituite righe vuol dire che le credenziali sono errate
                     return codice;
                 }
             }
@@ -466,7 +479,7 @@ namespace Server
 
                 using (MySqlCommand command1 = conn.CreateCommand())
                 {
-                    command1.CommandText = "SELECT email FROM magazziniere";
+                    command1.CommandText = "SELECT email FROM account";
                     using (MySqlDataReader reader = command1.ExecuteReader())
                     {
                         while (reader.Read())
@@ -498,17 +511,17 @@ namespace Server
 
                 using (MySqlCommand command1 = conn.CreateCommand())
                 {
-                    command1.CommandText = "SELECT * FROM utente WHERE email='" + id.Trim().ToLower() + "'";
+                    command1.CommandText = "SELECT * FROM account WHERE email='" + id.Trim().ToLower() + "'";
                     using (MySqlDataReader reader = command1.ExecuteReader())
                     {
                         while (reader.Read())
                         {
-                            magazziniere.Email = reader.GetString(0).TrimEnd().ToUpper();
+                            magazziniere.Email = reader.GetString(3).TrimEnd().ToUpper();
                             magazziniere.Nome = reader.GetString(1).TrimEnd().ToUpper();
                             magazziniere.Cognome = reader.GetString(2).TrimEnd().ToUpper();
-                            magazziniere.Indirizzo = reader.GetString(3).TrimEnd().ToUpper();
-                            magazziniere.Data_nascita = reader.GetDateTime(4);
-                            magazziniere.Telefono = reader.GetString(5).TrimEnd().ToUpper();
+                            magazziniere.Indirizzo = reader.GetString(4).TrimEnd().ToUpper();
+                            magazziniere.Data_nascita = reader.GetDateTime(5);
+                            magazziniere.Telefono = reader.GetString(6).TrimEnd().ToUpper();
                         }
                     }
                 }
@@ -534,12 +547,13 @@ namespace Server
                 using (MySqlCommand command1 = conn.CreateCommand())
                 {
                     // verso TODO: aggiornare query per la formula corretta di disponibilità
-                    command1.CommandText = "SELECT IDprodotto FROM prodotto WHERE disponibilita=1 ORDER BY IDcategoria,nome";
+                    command1.CommandText = "SELECT IDprodotto FROM prodotto WHERE disponibilita > 0 ORDER BY IDcategoria,nome";
                     using (MySqlDataReader reader = command1.ExecuteReader())
                     {
                         while (reader.Read())
                         {
                             lista.Add(reader.GetInt32(0));
+                            // aggiungere altri campi?
                         }
                     }
                 }
