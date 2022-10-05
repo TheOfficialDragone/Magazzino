@@ -43,7 +43,7 @@ Nello specifico, le prime relazioni tra entità sono risultate essere le seguent
 In seguito alla lettura delle relazioni sopracitate, si è rivelato necessario l'inserimento di entità aggiuntive, al fine di gestire le relazioni di tipo N-N tra quelle esistenti.
 
 - Composizione: al fine di gestire la relazione N a N tra prodotti e ordini
-- Account e Amministratore: per distuinguere i permessi dagli utenti base, intesi come utilizzatori di primo livello dell'applicativo
+- Account  Amministratore: possiede un flag con un valore particolare che permette di distinguerlo in fase di login. È possibile la coesistenza di più amministratori.
 
 Una volta incluse le entità sopracitate, una prima bozza di schema logico è risultata essere la seguente:
 
@@ -59,19 +59,6 @@ Lo schema è stato quindi tradotto in linguaggio SQL per creare le tabelle con i
 CREATE DATABASE IF NOT EXISTS magazzino;
 
 USE magazzino;
-
-CREATE TABLE account (
-  IDlogin int(10) NOT NULL AUTO_INCREMENT PRIMARY KEY,
-  password varchar(255) NOT NULL
-);
-
-CREATE TABLE amministratore (
-  email varchar(50) NOT NULL PRIMARY KEY,
-  nome text NOT NULL,
-  cognome text NOT NULL,
-  fk_login int(10) NOT NULL,
-  Foreign Key (fk_login) REFERENCES account(IDlogin) ON DELETE CASCADE
-);
 
 CREATE TABLE categoria (
   IDcategoria int(11) NOT NULL AUTO_INCREMENT PRIMARY KEY,
@@ -102,15 +89,16 @@ CREATE TABLE composizione (
   Foreign Key (fk_ordine) REFERENCES ordine(IDordine) ON DELETE CASCADE
 );
 
-CREATE TABLE utente (
+CREATE TABLE account (
   IDutente int(11) NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  password varchar(255) NOT NULL,
   nome text NOT NULL,
   cognome text NOT NULL,
   email text NOT NULL,
   indirizzo text NOT NULL,
   data_nascita date NOT NULL,
   telefono text NOT NULL,
-  fk_login int(10) NOT NULL,
+  TipoAccount int(1) NOT NULL,
   Foreign Key (fk_login) REFERENCES account(IDlogin) ON DELETE CASCADE
  );
 ```
