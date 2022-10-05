@@ -75,11 +75,11 @@ namespace Magazzino.ServiceReference1 {
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService1/NuovoProdotto", ReplyAction="http://tempuri.org/IService1/NuovoProdottoResponse")]
         System.Threading.Tasks.Task<bool> NuovoProdottoAsync(Server.Articolo nuovo);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService1/Signin", ReplyAction="http://tempuri.org/IService1/SigninResponse")]
-        bool Signin(Server.Utente nuovo);
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService1/Registrazione", ReplyAction="http://tempuri.org/IService1/RegistrazioneResponse")]
+        bool Registrazione(Server.Utente nuovo);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService1/Signin", ReplyAction="http://tempuri.org/IService1/SigninResponse")]
-        System.Threading.Tasks.Task<bool> SigninAsync(Server.Utente nuovo);
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService1/Registrazione", ReplyAction="http://tempuri.org/IService1/RegistrazioneResponse")]
+        System.Threading.Tasks.Task<bool> RegistrazioneAsync(Server.Utente nuovo);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService1/UserLogin", ReplyAction="http://tempuri.org/IService1/UserLoginResponse")]
         int UserLogin(Server.Login user);
@@ -225,12 +225,12 @@ namespace Magazzino.ServiceReference1 {
             return base.Channel.NuovoProdottoAsync(nuovo);
         }
         
-        public bool Signin(Server.Utente nuovo) {
-            return base.Channel.Signin(nuovo);
+        public bool Registrazione(Server.Utente nuovo) {
+            return base.Channel.Registrazione(nuovo);
         }
         
-        public System.Threading.Tasks.Task<bool> SigninAsync(Server.Utente nuovo) {
-            return base.Channel.SigninAsync(nuovo);
+        public System.Threading.Tasks.Task<bool> RegistrazioneAsync(Server.Utente nuovo) {
+            return base.Channel.RegistrazioneAsync(nuovo);
         }
         
         public int UserLogin(Server.Login user) {

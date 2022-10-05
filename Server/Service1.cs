@@ -37,7 +37,7 @@ namespace Server
                 bool risultato = true;
                 using (MySqlCommand command1 = conn.CreateCommand())
                 {
-                    command1.CommandText = "SELECT * FROM magazziniere WHERE magazziniere.email='" + email.Trim().ToLower() + "'";
+                    command1.CommandText = "SELECT * FROM account WHERE email='" + email.Trim().ToLower() + "'";
                     using (MySqlDataReader reader = command1.ExecuteReader())
                     {
                         if (reader.HasRows)
@@ -92,7 +92,7 @@ namespace Server
                 string nome = null;
                 using (MySqlCommand command1 = conn.CreateCommand())
                 {
-                    command1.CommandText = "SELECT nome_categoria FROM categoria WHERE IDcategoria=" + id;
+                    command1.CommandText = "SELECT nome FROM categoria WHERE IDcategoria=" + id;
                     using (MySqlDataReader reader = command1.ExecuteReader())
                     {
                         while (reader.Read())
@@ -122,7 +122,7 @@ namespace Server
 
                 using (MySqlCommand command1 = conn.CreateCommand())
                 {
-                    command1.CommandText = "SELECT prodotto.*, categoria.nome_categoria FROM prodotto, categoria " + "WHERE prodotto.IDcategoria=categoria.IDcategoria AND IDprodotto=" + IDProdotto;
+                    command1.CommandText = "SELECT prodotto.*, categoria.nome FROM prodotto, categoria " + "WHERE prodotto.IDcategoria=categoria.IDcategoria AND IDprodotto=" + IDProdotto;
                     using (MySqlDataReader reader = command1.ExecuteReader())
                     {
                         while (reader.Read())
@@ -257,7 +257,7 @@ namespace Server
                 using (MySqlCommand command1 = conn.CreateCommand())
                 {
                     int idLogin = 0;
-                    command1.CommandText = "SELECT IDlogin FROM magazziniere WHERE email='" + email.Trim().ToLower() + "'";
+                    command1.CommandText = "SELECT IDlogin FROM account WHERE email='" + email.Trim().ToLower() + "'";
                     using (MySqlDataReader reader = command1.ExecuteReader())
                     {
                         while (reader.Read())
@@ -293,7 +293,7 @@ namespace Server
                 using (MySqlCommand command1 = conn.CreateCommand())
                 {
                     int id_cat = 0;
-                    command1.CommandText = "SELECT IDcategoria FROM categoria WHERE nome_categoria='" + prodottoDaModificare.Categoria.Trim().ToLower() + "'";
+                    command1.CommandText = "SELECT IDcategoria FROM categoria WHERE nome='" + prodottoDaModificare.Categoria.Trim().ToLower() + "'";
                     using (MySqlDataReader reader = command1.ExecuteReader())
                     {
                         while (reader.Read())
@@ -333,7 +333,7 @@ namespace Server
                 bool risultato = false;
                 using (MySqlCommand command1 = conn.CreateCommand())
                 {
-                    command1.CommandText = "INSERT INTO categoria(nome_categoria) VALUES('" + nome.Trim().ToLower() + "')";
+                    command1.CommandText = "INSERT INTO categoria(nome) VALUES('" + nome.Trim().ToLower() + "')";
                     if (command1.ExecuteNonQuery() > 0)
                         risultato = true;
                 }
@@ -357,7 +357,7 @@ namespace Server
                 using (MySqlCommand command1 = conn.CreateCommand())
                 {
                     int id_cat = 0;
-                    command1.CommandText = "SELECT IDcategoria FROM categoria WHERE nome_categoria='" + nuovo.Categoria.Trim().ToLower() + "'";
+                    command1.CommandText = "SELECT IDcategoria FROM categoria WHERE nome='" + nuovo.Categoria.Trim().ToLower() + "'";
                     using (MySqlDataReader reader = command1.ExecuteReader())
                     {
                         while (reader.Read())
@@ -390,7 +390,7 @@ namespace Server
         /// </summary>
         /// <param name="nuovo">Oggetto di tipo Utente</param>
         /// <returns>True se l'utente è stato creato con successo. False in caso contrario</returns>
-        public bool Signin(Utente nuovo)
+        public bool Registrazione(Utente nuovo)
         {
 
           // tipo di query: <nomeConnessioneVar> = new MySqlConnection(<connStringVar>
@@ -399,23 +399,23 @@ namespace Server
                 bool risultato = false;
                 using (MySqlCommand command1 = conn.CreateCommand())
                 {
-                    command1.CommandText = "INSERT INTO account(password) VALUES('" + nuovo.Psw + "')";
-                    if (command1.ExecuteNonQuery() > 0)
+                
+                    /*
+                    command1.CommandText = "SELECT MAX(account.IDutente) FROM account";
+                    int id = 0;
+                    using (MySqlDataReader reader = command1.ExecuteReader())
                     {
-                        command1.CommandText = "SELECT MAX(account.IDlogin) FROM account";
-                        int id = 0;
-                        using (MySqlDataReader reader = command1.ExecuteReader())
+                        while (reader.Read())
                         {
-                            while (reader.Read())
-                            {
-                                id = reader.GetInt32(0);
-                            }
+                            id = reader.GetInt32(0);
                         }
-                        command1.CommandText = "INSERT INTO account(nome,cognome,email,indirizzo,data_nascita,telefono,TipoAccount) " + "VALUES('"nuovo.Nome.Trim().ToLower() + "','" + nuovo.Cognome.Trim().ToLower() + "','" + nuovo.email.Trim().ToLower() + "','"  + nuovo.Indirizzo.Trim().ToLower() + "','" + nuovo.Data_nascita + "','" + nuovo.Telefono.Trim() + "')";
-
-                        if (command1.ExecuteNonQuery() > 0)
-                            risultato = true;
                     }
+                    */
+                    command1.CommandText = "INSERT INTO account(password,nome,cognome,email,indirizzo,data_nascita,telefono,TipoAccount) " + "VALUES('"+nuovo.Psw + "','"+nuovo.Nome.Trim().ToLower() + "','" + nuovo.Cognome.Trim().ToLower() + "','" + nuovo.Email.Trim().ToLower() + "','"  + nuovo.Indirizzo.Trim().ToLower() + "','" + nuovo.Data_nascita + "','" + nuovo.Telefono.Trim() + "', '2')";
+
+                    if (command1.ExecuteNonQuery() > 0)
+                        risultato = true;
+                    
                 }
                 return risultato;
             }
@@ -448,14 +448,14 @@ namespace Server
                             // se non è admin allora codice = 2
 
                           if (reader.Read())
-                            {
-                                if (reader.GetInt(7) == 1)
+                          {
+                                if (reader.GetInt32(7) == 1)
                                     codice = 1;
                                 // l'utente loggato è un admin
                                 // altrimenti un magazziniere
                                 else
-                                    codice = 2;
-                            }
+                                    codice = 2;  //metto 2 perchè ho gia controllato esistenza utente
+                          }
                     }
                     // se invece non vengono restituite righe vuol dire che le credenziali sono errate
                     return codice;
@@ -478,8 +478,9 @@ namespace Server
                 List<string> listaMagazzinieri = new List<string>();
 
                 using (MySqlCommand command1 = conn.CreateCommand())
-                {
-                    command1.CommandText = "SELECT email FROM account";
+                {   
+                    //ottengo email solo magazzinieri
+                    command1.CommandText = "SELECT email FROM account WHERE TipoAccount = 2";
                     using (MySqlDataReader reader = command1.ExecuteReader())
                     {
                         while (reader.Read())
@@ -547,7 +548,7 @@ namespace Server
                 using (MySqlCommand command1 = conn.CreateCommand())
                 {
                     // verso TODO: aggiornare query per la formula corretta di disponibilità
-                    command1.CommandText = "SELECT IDprodotto FROM prodotto WHERE disponibilita > 0 ORDER BY IDcategoria,nome";
+                    command1.CommandText = "SELECT IDprodotto FROM prodotto WHERE quantita > 0 ORDER BY IDcategoria,nome";
                     using (MySqlDataReader reader = command1.ExecuteReader())
                     {
                         while (reader.Read())

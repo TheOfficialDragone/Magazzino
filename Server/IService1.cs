@@ -43,7 +43,7 @@ namespace Server
         bool NuovoProdotto(Articolo nuovo);
 
         [OperationContract]
-        bool Signin(Utente nuovo);
+        bool Registrazione(Utente nuovo);
 
         [OperationContract]
         int UserLogin(Login user);

@@ -940,7 +940,7 @@ namespace Client
 
                                 Console.Clear();
 
-                                if (client.Signin(nuovo))
+                                if (client.Registrazione(nuovo))
                                     Console.WriteLine("Registrazione completata con successo!");
                                 else
                                     Console.WriteLine("Errore: registrazione non riuscita!");

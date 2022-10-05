@@ -34,11 +34,12 @@ CREATE TABLE composizione (
 
 CREATE TABLE account(
   IDutente int(11) NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  password varchar(255) NOT NULL,
   nome text NOT NULL,
   cognome text NOT NULL,
   email text NOT NULL,
   indirizzo text NOT NULL,
   data_nascita date NOT NULL,
   telefono text NOT NULL,
-  TipoAccount int(10) NOT NULL,
- );
+  TipoAccount int(10) NOT NULL
+ )

@@ -68,11 +68,11 @@
   <wsdl:message name="IService1_NuovoProdotto_OutputMessage">
     <wsdl:part name="parameters" element="tns:NuovoProdottoResponse" />
   </wsdl:message>
-  <wsdl:message name="IService1_Signin_InputMessage">
-    <wsdl:part name="parameters" element="tns:Signin" />
+  <wsdl:message name="IService1_Registrazione_InputMessage">
+    <wsdl:part name="parameters" element="tns:Registrazione" />
   </wsdl:message>
-  <wsdl:message name="IService1_Signin_OutputMessage">
-    <wsdl:part name="parameters" element="tns:SigninResponse" />
+  <wsdl:message name="IService1_Registrazione_OutputMessage">
+    <wsdl:part name="parameters" element="tns:RegistrazioneResponse" />
   </wsdl:message>
   <wsdl:message name="IService1_UserLogin_InputMessage">
     <wsdl:part name="parameters" element="tns:UserLogin" />
@@ -151,9 +151,9 @@
       <wsdl:input wsaw:Action="http://tempuri.org/IService1/NuovoProdotto" message="tns:IService1_NuovoProdotto_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IService1/NuovoProdottoResponse" message="tns:IService1_NuovoProdotto_OutputMessage" />
     </wsdl:operation>
-    <wsdl:operation name="Signin">
-      <wsdl:input wsaw:Action="http://tempuri.org/IService1/Signin" message="tns:IService1_Signin_InputMessage" />
-      <wsdl:output wsaw:Action="http://tempuri.org/IService1/SigninResponse" message="tns:IService1_Signin_OutputMessage" />
+    <wsdl:operation name="Registrazione">
+      <wsdl:input wsaw:Action="http://tempuri.org/IService1/Registrazione" message="tns:IService1_Registrazione_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IService1/RegistrazioneResponse" message="tns:IService1_Registrazione_OutputMessage" />
     </wsdl:operation>
     <wsdl:operation name="UserLogin">
       <wsdl:input wsaw:Action="http://tempuri.org/IService1/UserLogin" message="tns:IService1_UserLogin_InputMessage" />
@@ -272,8 +272,8 @@
         <soap:body use="literal" />
       </wsdl:output>
     </wsdl:operation>
-    <wsdl:operation name="Signin">
-      <soap:operation soapAction="http://tempuri.org/IService1/Signin" style="document" />
+    <wsdl:operation name="Registrazione">
+      <soap:operation soapAction="http://tempuri.org/IService1/Registrazione" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>
