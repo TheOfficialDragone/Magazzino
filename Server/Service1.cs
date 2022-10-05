@@ -411,7 +411,7 @@ namespace Server
                                 id = reader.GetInt32(0);
                             }
                         }
-                        command1.CommandText = "INSERT INTO magazziniere(email,nome,cognome,indirizzo,data_nascita,telefono,IDcitta,IDlogin) " + "VALUES('" + nuovo.Email.Trim().ToLower() + "','" + nuovo.Nome.Trim().ToLower() + "','" + nuovo.Cognome.Trim().ToLower() + "','" + nuovo.Indirizzo.Trim().ToLower() + "','" + nuovo.Data_nascita + "','" + nuovo.Telefono.Trim() + "',')";
+                        command1.CommandText = "INSERT INTO magazziniere(email,nome,cognome,indirizzo,data_nascita,telefono,IDcitta,IDlogin) " + "VALUES('" + nuovo.Email.Trim().ToLower() + "','" + nuovo.Nome.Trim().ToLower() + "','" + nuovo.Cognome.Trim().ToLower() + "','" + nuovo.Indirizzo.Trim().ToLower() + "','" + nuovo.Data_nascita + "','" + nuovo.Telefono.Trim() + "')";
 
                         if (command1.ExecuteNonQuery() > 0)
                             risultato = true;
@@ -437,18 +437,13 @@ namespace Server
                 int codice = 0;
                 using (MySqlCommand command1 = conn.CreateCommand())
                 {
-                    command1.CommandText = "SELECT * FROM account JOIN amministratore ON account.IDlogin=amministratore.IDlogin " + "WHERE amministratore.email='" + user.Email.Trim().ToLower() + "' AND account.password='" + user.Password + "'";
-
+                    command1.CommandText = "SELECT * FROM account WHERE email='" + user.Email.Trim().ToLower() + "' AND password='" + user.Password + "'";
                     using (MySqlDataReader reader = command1.ExecuteReader())
                     {
+                        // controllare che il campo isAdmin sia vero 
                         if (reader.HasRows)
-                            codice = 1;
-                    }
-                    command1.CommandText = "SELECT * FROM account JOIN magazziniere ON account.IDlogin=magazziniere.IDlogin " + "WHERE magazziniere.email='" + user.Email.Trim().ToLower() + "' AND account.password='" + user.Password + "'";
-                    using (MySqlDataReader reader = command1.ExecuteReader())
-                    {
-                        if (reader.HasRows)
-                            codice = 2;
+                            // allora esiste un utente con quelle credenziali
+                            // ora controlla se è admin o no
                     }
                     return codice;
                 }

@@ -13,7 +13,6 @@
   <xs:element name="Articolo" nillable="true" type="tns:Articolo" />
   <xs:complexType name="Utente">
     <xs:sequence>
-      <xs:element minOccurs="0" name="Cap" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="Cognome" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="Data_nascita" type="xs:dateTime" />
       <xs:element minOccurs="0" name="Email" nillable="true" type="xs:string" />

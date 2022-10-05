@@ -3,19 +3,6 @@ CREATE DATABASE IF NOT EXISTS magazzino;
 
 USE magazzino;
 
-CREATE TABLE account (
-  IDlogin int(10) NOT NULL AUTO_INCREMENT PRIMARY KEY,
-  password varchar(255) NOT NULL
-);
-
-CREATE TABLE amministratore (
-  email varchar(50) NOT NULL PRIMARY KEY,
-  nome text NOT NULL,
-  cognome text NOT NULL,
-  fk_login int(10) NOT NULL,
-  Foreign Key (fk_login) REFERENCES account(IDlogin) ON DELETE CASCADE
-);
-
 CREATE TABLE categoria (
   IDcategoria int(11) NOT NULL AUTO_INCREMENT PRIMARY KEY,
   nome varchar(255) NOT NULL
@@ -45,7 +32,7 @@ CREATE TABLE composizione (
   Foreign Key (fk_ordine) REFERENCES ordine(IDordine) ON DELETE CASCADE
 );
 
-CREATE TABLE magazziniere(
+CREATE TABLE account(
   IDutente int(11) NOT NULL AUTO_INCREMENT PRIMARY KEY,
   nome text NOT NULL,
   cognome text NOT NULL,
@@ -53,6 +40,5 @@ CREATE TABLE magazziniere(
   indirizzo text NOT NULL,
   data_nascita date NOT NULL,
   telefono text NOT NULL,
-  fk_login int(10) NOT NULL,
-  Foreign Key (fk_login) REFERENCES account(IDlogin) ON DELETE CASCADE
+  TipoAccount int(10) NOT NULL,
  );
