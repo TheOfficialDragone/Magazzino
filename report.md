@@ -69,7 +69,7 @@ CREATE TABLE prodotto (
   IDprodotto int(11) NOT NULL AUTO_INCREMENT PRIMARY KEY,
   nome varchar(255) NOT NULL,
   descrizione text NOT NULL,
-  prezzo float NOT NULL,
+  prezzo text NOT NULL,
   quantita int(11) NOT NULL,
   fk_categoria int(11) NOT NULL,
   Foreign Key (fk_categoria) REFERENCES categoria(IDcategoria) ON DELETE CASCADE
