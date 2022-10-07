@@ -449,7 +449,7 @@ namespace Server
 
                           if (reader.Read())
                           {
-                                if (reader.GetInt32(7) == 1)
+                                if (reader.GetInt32(8) == 1)
                                     codice = 1;
                                 // l'utente loggato è un admin
                                 // altrimenti un magazziniere
