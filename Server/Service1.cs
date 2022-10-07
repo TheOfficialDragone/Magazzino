@@ -66,7 +66,7 @@ namespace Server
                     using (MySqlCommand command1 = conn.CreateCommand())
                     {   
                         //cancellare il prodotto dal db mantenedo la categoria
-                        command1.CommandText = "UPDATE prodotto SET disponibilita=0 WHERE IDprodotto=" + id;
+                        command1.CommandText = "UPDATE prodotto SET quantita=0 WHERE IDprodotto=" + id;
                         if (command1.ExecuteNonQuery() > 0)
                             risultato = true;
                     }
@@ -122,7 +122,7 @@ namespace Server
 
                 using (MySqlCommand command1 = conn.CreateCommand())
                 {
-                    command1.CommandText = "SELECT prodotto.*, categoria.nome FROM prodotto, categoria " + "WHERE prodotto.IDcategoria=categoria.IDcategoria AND IDprodotto=" + IDProdotto;
+                    command1.CommandText = "SELECT prodotto.*, categoria.nome FROM prodotto, categoria " + "WHERE prodotto.fk_categoria=categoria.IDcategoria AND IDprodotto=" + IDProdotto;
                     using (MySqlDataReader reader = command1.ExecuteReader())
                     {
                         while (reader.Read())
@@ -257,7 +257,7 @@ namespace Server
                 using (MySqlCommand command1 = conn.CreateCommand())
                 {
                     int idLogin = 0;
-                    command1.CommandText = "SELECT IDlogin FROM account WHERE email='" + email.Trim().ToLower() + "'";
+                    command1.CommandText = "SELECT IDutente FROM account WHERE email='" + email.Trim().ToLower() + "'";
                     using (MySqlDataReader reader = command1.ExecuteReader())
                     {
                         while (reader.Read())
@@ -268,7 +268,7 @@ namespace Server
 
                     command1.CommandText = "UPDATE account SET " +
                                             "password='" + psw + "' " +
-                                           "WHERE IDlogin=" + idLogin;
+                                           "WHERE IDutente=" + idLogin;
                     if (command1.ExecuteNonQuery() > 0)
                         risultato = true;
                 }

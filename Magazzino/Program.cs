@@ -85,7 +85,7 @@ namespace Client
 
                                 //Magazziniere
                                 case 2:
-                                    IsMagazziniere(login);
+                                    IsMagazziniere(login,psw);
                                     break;
                             }
                             break;
@@ -644,7 +644,7 @@ namespace Client
             /// Controlla che le credenziali inserite siano di un magazziniere e mostra la relativa schermata
             /// </summary>
             /// <param>Login ossia username e password</param>
-            void IsMagazziniere(Login login)
+            void IsMagazziniere(Login login, string psw)
             {
                 Console.Clear();
                 Console.WriteLine("Benvenuto magazziniere " + login.Email);
