@@ -596,10 +596,10 @@ namespace Client
                                 if (client.ListaMagazzinieri().Count() > 0)
                                 {
                                     Console.WriteLine("***GESTIONE MAGAZZINIERE***");
-                                    //lista dei magazzinieri
-                                    foreach (var c in client.ListaMagazzinieri())
+                                    // print lista magazzinieri
+                                    foreach (var m in client.ListaMagazzinieri())
                                     {
-                                        Console.WriteLine(client.ListaMagazzinieri());
+                                        Console.WriteLine(client.GetMagazziniere(m).IDmagazziniere + " - " + client.GetMagazziniere(m).Nome + " - " + client.GetMagazziniere(m).Cognome + " - " + client.GetMagazziniere(m).Username + " - " + client.GetMagazziniere(m).Password);
                                     }
                                 }
                                 else
