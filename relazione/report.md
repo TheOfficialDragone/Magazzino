@@ -5,7 +5,7 @@ subtitle: Corso di Laurea in Ingegneria dei sistemi informativi
 geometry: margin= 2.5cm
 ---
 
-![](logoUnipr.png)
+![](images/logoUnipr.png)
 
 # Il progetto in breve
 Nasce come sistema per gestire un magazzino di prodotti, da impiegare nel reparto logistica di una realtà aziendale. Il sistema prevede due tipologie di account: l'admin e il magazziniere. Il primo è un account riservato al responsabile di magazzino, mentre ogni magazziniere ha il proprio account con permessi limitati. Per rendere la realizzazione del programma e il suo relativo impiego il più realistico possibile, si è pensato allo sviluppo di un'applicazione a riga di comando.
@@ -48,10 +48,24 @@ In seguito alla lettura delle relazioni sopracitate, si è rivelato necessario l
 Una volta incluse le entità sopracitate, una prima bozza di schema logico è risultata essere la seguente:
 
 <!--includere immagine da draw.io-->
+![](images/logico.png)
 
-Tenendo conto dei vincoli di integrità rfeferenziale si è proceduto alla scelta dei campi per ogni entità, ottenendo alla fine il seguente schema logico:
+## Progettazione relazionale
+Tenendo conto dei vincoli di integrità referenziale si è proceduto alla scelta dei campi per ogni entità, ottenendo alla fine il seguente schema logico:
 
 <!--includere schema logico con campi e specifiche delle chiavi primarie ed esterne-->
+![](images/er.png)
+
+categoria (**IDcategoria**, nome)
+
+prodotto (**IDprodotto**, nome, descrizione, prezzo, quantita, *fk_categoria*)
+
+ordine (**IDordine**, data)
+
+composizione (**IDcomposizione**, *fk_prodotto*, *fk_ordine*, quantita)
+
+account (**IDaccount**, password, nome, cognome, email, indirizzo, data_nascita,  telefono, TipoAccount)
+
 
 Lo schema è stato quindi tradotto in linguaggio SQL per creare le tabelle con i campi coerenti con i tipi di dato necessarie alla corretta rappresentazione delle entità all'interno del database.
 
@@ -103,3 +117,4 @@ CREATE TABLE account (
  );
 ```
 
+# 
