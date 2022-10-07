@@ -599,7 +599,7 @@ namespace Client
                                     // print lista magazzinieri
                                     foreach (var m in client.ListaMagazzinieri())
                                     {
-                                        Console.WriteLine(client.GetMagazziniere(m).IDmagazziniere + " - " + client.GetMagazziniere(m).Nome + " - " + client.GetMagazziniere(m).Cognome + " - " + client.GetMagazziniere(m).Username + " - " + client.GetMagazziniere(m).Password);
+                                        Console.WriteLine(client.GetMagazziniere(m).Nome + " - " + client.GetMagazziniere(m).Cognome + " - " + client.GetMagazziniere(m).Email + " - " + client.GetMagazziniere(m).Psw);
                                     }
                                 }
                                 else

@@ -517,12 +517,12 @@ namespace Server
                     {
                         while (reader.Read())
                         {
-                            magazziniere.Email = reader.GetString(3).TrimEnd().ToUpper();
-                            magazziniere.Nome = reader.GetString(1).TrimEnd().ToUpper();
-                            magazziniere.Cognome = reader.GetString(2).TrimEnd().ToUpper();
-                            magazziniere.Indirizzo = reader.GetString(4).TrimEnd().ToUpper();
-                            magazziniere.Data_nascita = reader.GetDateTime(5);
-                            magazziniere.Telefono = reader.GetString(6).TrimEnd().ToUpper();
+                            magazziniere.Email = reader.GetString(4).TrimEnd().ToUpper();
+                            magazziniere.Nome = reader.GetString(2).TrimEnd().ToUpper();
+                            magazziniere.Cognome = reader.GetString(3).TrimEnd().ToUpper();
+                            magazziniere.Indirizzo = reader.GetString(5).TrimEnd().ToUpper();
+                            magazziniere.Data_nascita = reader.GetDateTime(6);
+                            magazziniere.Telefono = reader.GetString(7).TrimEnd().ToUpper();
                         }
                     }
                 }
