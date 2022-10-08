@@ -130,8 +130,8 @@ namespace Server
                             // controllare ordine campi in tabella db
                             prodotto.Nome = reader.GetString(1).TrimEnd().ToUpper();
                             prodotto.Descrizione = reader.GetString(2).TrimEnd().ToUpper();
-                            prodotto.Quantita = reader.GetInt32(3);
-                            prodotto.Prezzo = reader.GetDouble(4);
+                            prodotto.Quantita = reader.GetInt32(4);
+                            prodotto.Prezzo = reader.GetDouble(3);
                             prodotto.Categoria = reader.GetString(6).TrimEnd().ToUpper();
                         }
                     }
@@ -372,7 +372,7 @@ namespace Server
                     else
                         descrizione = nuovo.Descrizione.Trim().ToLower();
 
-                    command1.CommandText = "INSERT INTO prodotto(nome,descrizione,prezzo, quantita, fk_categoria) " + "VALUES( " + "'" + nuovo.Nome.Trim().ToLower() + "','" + descrizione  + "," + nuovo.Prezzo.ToString().Replace(",", ".") + "'," + disp + "," + id_cat + ")";
+                    command1.CommandText = "INSERT INTO prodotto(nome,descrizione,prezzo,quantita, fk_categoria) " + "VALUES('" + nuovo.Nome.Trim().ToLower() + "','" + descrizione  + "','" + nuovo.Prezzo.ToString().Replace(",", ".") + "','" + disp + "','" + id_cat + "')";
 
                     if (command1.ExecuteNonQuery() > 0)
                         risultato = true;

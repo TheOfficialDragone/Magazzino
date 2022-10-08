@@ -1,11 +1,6 @@
 C:\Users\rocco\Desktop\Magazzino\Server\bin\Debug\Server.exe.config
 C:\Users\rocco\Desktop\Magazzino\Server\bin\Debug\Server.exe
 C:\Users\rocco\Desktop\Magazzino\Server\bin\Debug\Server.pdb
-C:\Users\rocco\Desktop\Magazzino\Server\obj\Debug\Server.csproj.AssemblyReference.cache
-C:\Users\rocco\Desktop\Magazzino\Server\obj\Debug\Server.csproj.SuggestedBindingRedirects.cache
-C:\Users\rocco\Desktop\Magazzino\Server\obj\Debug\Server.csproj.CoreCompileInputs.cache
-C:\Users\rocco\Desktop\Magazzino\Server\obj\Debug\Server.exe
-C:\Users\rocco\Desktop\Magazzino\Server\obj\Debug\Server.pdb
 C:\Users\rocco\Desktop\Magazzino\Server\bin\Debug\BouncyCastle.Crypto.dll
 C:\Users\rocco\Desktop\Magazzino\Server\bin\Debug\Google.Protobuf.dll
 C:\Users\rocco\Desktop\Magazzino\Server\bin\Debug\K4os.Compression.LZ4.dll
@@ -29,4 +24,9 @@ C:\Users\rocco\Desktop\Magazzino\Server\bin\Debug\System.Buffers.xml
 C:\Users\rocco\Desktop\Magazzino\Server\bin\Debug\System.Memory.xml
 C:\Users\rocco\Desktop\Magazzino\Server\bin\Debug\System.Numerics.Vectors.xml
 C:\Users\rocco\Desktop\Magazzino\Server\bin\Debug\System.Runtime.CompilerServices.Unsafe.xml
+C:\Users\rocco\Desktop\Magazzino\Server\obj\Debug\Server.csproj.AssemblyReference.cache
+C:\Users\rocco\Desktop\Magazzino\Server\obj\Debug\Server.csproj.SuggestedBindingRedirects.cache
+C:\Users\rocco\Desktop\Magazzino\Server\obj\Debug\Server.csproj.CoreCompileInputs.cache
 C:\Users\rocco\Desktop\Magazzino\Server\obj\Debug\Server.csproj.CopyComplete
+C:\Users\rocco\Desktop\Magazzino\Server\obj\Debug\Server.exe
+C:\Users\rocco\Desktop\Magazzino\Server\obj\Debug\Server.pdb

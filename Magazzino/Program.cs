@@ -588,18 +588,15 @@ namespace Client
                                 break;
 
                             //gestione magazzinieri
-
-                            // controllare coerenza campi ed entita
-
                             case 2:
                                 Console.Clear();
                                 if (client.ListaMagazzinieri().Count() > 0)
                                 {
-                                    Console.WriteLine("***GESTIONE MAGAZZINIERE***");
+                                    Console.WriteLine("***LISTA MAGAZZINIERI***");
                                     // print lista magazzinieri
                                     foreach (var m in client.ListaMagazzinieri())
                                     {
-                                        Console.WriteLine(client.GetMagazziniere(m).Nome + " - " + client.GetMagazziniere(m).Cognome + " - " + client.GetMagazziniere(m).Email + " - " + client.GetMagazziniere(m).Psw);
+                                        Console.WriteLine(client.GetMagazziniere(m).Nome + " - " + client.GetMagazziniere(m).Cognome + " - " + client.GetMagazziniere(m).Email);
                                     }
                                 }
                                 else
