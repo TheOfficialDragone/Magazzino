@@ -144,7 +144,7 @@ namespace Client
                     Console.Clear();
                     Console.WriteLine("***ADMIN***");
                     Console.WriteLine("1.Gestisci i prodotti in magazzino");
-                    Console.WriteLine("2.Gestisci magazzinieri");
+                    Console.WriteLine("2.Lista magazzinieri");
                     Console.WriteLine("3.Esci");
 
                     Console.WriteLine("Scelta: ");
@@ -330,11 +330,13 @@ namespace Client
                                                         Console.WriteLine("\nPremi un tasto per continuare");
                                                         Console.ReadKey();
                                                     }
-                                                    Console.WriteLine("Devi prima creare una categoria!");
 
+                                                }
+                                                else
+                                                {
+                                                    Console.WriteLine("Devi prima creare una categoria!");
                                                     Console.WriteLine("\nPremi un tasto per continuare");
                                                     Console.ReadKey();
-
                                                 }
                                                 break;
 

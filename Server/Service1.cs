@@ -308,7 +308,7 @@ namespace Server
                     else
                         descrizione = prodottoDaModificare.Descrizione.Trim().ToLower();
 
-                    command1.CommandText = "UPDATE prodotto SET " + "nome='" + prodottoDaModificare.Nome.Trim().ToLower() + "', " + "descrizione='" + descrizione + "', " + "disponibilita=" + disp + ", prezzo=" + prodottoDaModificare.Prezzo.ToString().Replace(",", ".") + ", IDcategoria=" + id_cat + " WHERE IDprodotto=" + prodottoDaModificare.IDprodotto;
+                    command1.CommandText = "UPDATE prodotto SET " + "nome='" + prodottoDaModificare.Nome.Trim().ToLower() + "', " + "descrizione='" + descrizione + "', " + "prezzo=" + prodottoDaModificare.Prezzo.ToString().Replace(",", ".") + ", fk_categoria=" + id_cat + " WHERE IDprodotto=" + prodottoDaModificare.IDprodotto;
 
                     if (command1.ExecuteNonQuery() > 0)
                         risultato = true;
