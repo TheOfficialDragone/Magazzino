@@ -1,10 +1,8 @@
 ﻿using Magazzino.ServiceReference1;
 using Server;
 using System;
-using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
-using System.Runtime.CompilerServices;
 using System.ServiceModel;
 
 namespace Client
@@ -79,13 +77,13 @@ namespace Client
 
                                 //admin
                                 case 1:
-                                 IsAdmin();
-                                 break;    
-                                               
+                                    IsAdmin();
+                                    break;
+
 
                                 //Magazziniere
                                 case 2:
-                                    IsMagazziniere(login,psw);
+                                    IsMagazziniere(login, psw);
                                     break;
                             }
                             break;
@@ -414,7 +412,7 @@ namespace Client
                                                                 Console.WriteLine("2.Descrizione: " + prodottoDaModificare.Descrizione);
                                                                 Console.WriteLine("3.Prezzo: " + String.Format("{0:0.00}", prodottoDaModificare.Prezzo) + " euro");
                                                                 Console.WriteLine("4.Categoria: " + prodottoDaModificare.Categoria);
-                                                                Console.WriteLine("\n5.Annulla");
+                                                                Console.WriteLine("5.Annulla");
                                                                 Console.WriteLine("6.Salva modifiche");
 
                                                                 Console.WriteLine("\nScelta: ");
@@ -447,7 +445,7 @@ namespace Client
 
                                                                             prodottoDaModificare.Descrizione = descrizioneModifica;
                                                                             break;
-                                                                        
+
                                                                         case 3:
                                                                             double prezzoModifica = 0;
                                                                             //modifica prezzo
@@ -636,7 +634,7 @@ namespace Client
                         Console.ReadKey();
                     }
                 } while (sceltaMenuAdmin != 3);
-                
+
             }
 
             /// <summary>
@@ -666,42 +664,73 @@ namespace Client
                     try
                     {
                         sceltaMenuCliente = Convert.ToInt32(Console.ReadLine());
-
+                        string disponibile;
                         switch (sceltaMenuCliente)
                         {
                             case 1:
                                 Console.Clear();
                                 Console.WriteLine("***LISTA PRODOTTI***");
-                                //stampo tutti i prodotti disponibili
-                                foreach (var p in client.ListaProdottiDisponibili())
+                                Console.Clear();
+                                if (client.ListaProdotti().Count() > 0)
                                 {
-                                    Console.WriteLine(client.GetProdotto(p).IDprodotto + " - " + client.GetProdotto(p).Nome + " - " + String.Format("{0:0.00}", client.GetProdotto(p).Prezzo) + " euro - " + client.GetProdotto(p).Categoria);
+                                    Console.WriteLine("***LISTA PRODOTTI***");
+                                    //stampo tutti i prodotti
+                                    foreach (var p in client.ListaProdotti())
+                                    {
+                                        if (client.GetProdotto(p).Quantita >= 1)
+                                            disponibile = "DISPONIBILE";
+                                        else
+                                            disponibile = "NON DISPONIBILE";
+                                        // TODO: verificare query ed eventuali modifiche
+                                        Console.WriteLine(client.GetProdotto(p).IDprodotto + " - " + client.GetProdotto(p).Nome + " - " + String.Format("{0:0.00}", client.GetProdotto(p).Prezzo) + " euro - " + disponibile + " - " + client.GetProdotto(p).Quantita + "-" + client.GetProdotto(p).Categoria);
+                                    }
                                 }
-
+                                else
+                                    Console.WriteLine("\nNessun prodotto presente nel sistema");
                                 Console.WriteLine("\nPremi un tasto per continuare");
                                 Console.ReadKey();
                                 break;
 
                             case 2:
                                 Console.Clear();
-                                Console.WriteLine("***LISTA GIACENZE***");
+                                Console.WriteLine("***AUMENTA GIACENZE***");
                                 //stampo tutti i prodotti disponibili
-                                foreach (var p in client.ListaProdottiDisponibili())
+
+                                if (client.ListaProdotti().Count() > 0)
                                 {
-                                    Console.WriteLine(client.GetProdotto(p).IDprodotto + " - " + client.GetProdotto(p).Nome + " - " + String.Format("{0:0.00}", client.GetProdotto(p).Prezzo) + " euro - " + client.GetProdotto(p).Categoria);
+                                    Console.WriteLine("***LISTA PRODOTTI***");
+                                    //stampo tutti i prodotti
+                                    foreach (var z in client.ListaProdotti())
+                                    {
+                                        if (client.GetProdotto(z).Quantita >= 1)
+                                            disponibile = "DISPONIBILE";
+                                        else
+                                            disponibile = "NON DISPONIBILE";
+                                        // TODO: verificare query ed eventuali modifiche
+                                        Console.WriteLine(client.GetProdotto(z).IDprodotto + " - " + client.GetProdotto(z).Nome + " - " + String.Format("{0:0.00}", client.GetProdotto(z).Prezzo) + " euro - " + disponibile + " - " + client.GetProdotto(z).Quantita + "-" + client.GetProdotto(z).Categoria);
+                                    }
                                 }
-
+                                int id = 0;
+                                int quantita = 0;
                                 Console.WriteLine("\nInserire l'id del prodotto di cui si vuole aumentare la quantità");
+                                id = Convert.ToInt32(Console.ReadLine());
+                                Console.WriteLine("\nInserire la quantità da aumentare");
+                                quantita = Convert.ToInt32(Console.ReadLine());
 
-                                // prendere in input variabile utente
-                                // principali controlli su input
-                                Console.ReadLine();
-
-                                break;
+                                if(client.AumentaGiacenze(id, quantita))
+                                {
+                                    Console.WriteLine("giacenza aumentata");
+                                    break;
+                                }
+                                else
+                                {
+                                    Console.WriteLine("errore giacenza");
+                                    break;
+                                }
 
                             case 3:
                                 Console.Clear();
-                                Console.WriteLine("***LISTA GIACENZE***");
+                                Console.WriteLine("***DIMINUISCI GIACENZE***");
                                 //stampo tutti i prodotti disponibili
                                 foreach (var p in client.ListaProdottiDisponibili())
                                 {
@@ -900,9 +929,9 @@ namespace Client
                         Console.ReadKey();
                     }
                 } while (sceltaMenuCliente != 7);
-                
+
             }
-            
+
             void NuovoMagazziniere()
             {
                 string emailRegister;
@@ -1048,11 +1077,11 @@ namespace Client
                     Console.ReadKey();
                 }
 
-            }   
+            }
         }
-            
+
     }
 }
 
-   
+
 

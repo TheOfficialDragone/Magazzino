@@ -1,10 +1,5 @@
-﻿using Server;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.Serialization;
+﻿using System.Collections.Generic;
 using System.ServiceModel;
-using System.Text;
 
 namespace Server
 {
@@ -58,7 +53,7 @@ namespace Server
         List<int> ListaProdottiDisponibili();
 
         [OperationContract]
-        bool AumentaGiacenze(int id,int quantita);
+        bool AumentaGiacenze(int id, int quantita);
 
         [OperationContract]
         bool DiminuisciGiacenze(int id, int quantita);

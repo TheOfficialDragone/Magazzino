@@ -1,14 +1,8 @@
 ﻿
 using MySql.Data.MySqlClient;
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Configuration;
-using System.Data.SqlClient;
-using System.Linq;
-using System.Runtime.Serialization;
-using System.ServiceModel;
-using System.Text;
 
 
 namespace Server
@@ -62,16 +56,16 @@ namespace Server
             try
             {
                 bool risultato = false;
-                
-                    using (MySqlCommand command1 = conn.CreateCommand())
-                    {   
-                        //cancellare il prodotto dal db mantenedo la categoria
-                        command1.CommandText = "UPDATE prodotto SET quantita=0 WHERE IDprodotto=" + id;
-                        if (command1.ExecuteNonQuery() > 0)
-                            risultato = true;
-                    }
-                   
-                
+
+                using (MySqlCommand command1 = conn.CreateCommand())
+                {
+                    //cancellare il prodotto dal db mantenedo la categoria
+                    command1.CommandText = "UPDATE prodotto SET quantita=0 WHERE IDprodotto=" + id;
+                    if (command1.ExecuteNonQuery() > 0)
+                        risultato = true;
+                }
+
+
                 return risultato;
             }
             catch (Exception)
@@ -144,7 +138,7 @@ namespace Server
                 throw new Exception();
             }
 
-           
+
         }
 
         /// <summary>
@@ -152,37 +146,37 @@ namespace Server
         /// </summary>
         /// <param name="id">Identificativo dello stato dell'ordine</param>
         /// <returns>Stringa contenente lo stato</returns>
-       /* 
-          public string GetStatoOrdine(int id)
-        {
-            try
-            {
-                string stato = null;
-                using (SqlConnection conn = new SqlConnection(ConnectionString))
-                {
-                    conn.Open();
-                    using (SqlCommand command1 = conn.CreateCommand())
-                    {
-                        command1.CommandText = "SELECT stato_ordine FROM stato_ordine WHERE IDstato=" + id;
-                        using (SqlDataReader reader = command1.ExecuteReader())
-                        {
-                            while (reader.Read())
-                            {
-                                stato = reader.GetString(0).TrimEnd().ToUpper();
-                            }
-                        }
-                    }
-                    conn.Close();
-                }
-                return stato;
-            }
-            catch (Exception)
-            {
-                throw new Exception();
-            }
-        }
-       */
-        
+        /* 
+           public string GetStatoOrdine(int id)
+         {
+             try
+             {
+                 string stato = null;
+                 using (SqlConnection conn = new SqlConnection(ConnectionString))
+                 {
+                     conn.Open();
+                     using (SqlCommand command1 = conn.CreateCommand())
+                     {
+                         command1.CommandText = "SELECT stato_ordine FROM stato_ordine WHERE IDstato=" + id;
+                         using (SqlDataReader reader = command1.ExecuteReader())
+                         {
+                             while (reader.Read())
+                             {
+                                 stato = reader.GetString(0).TrimEnd().ToUpper();
+                             }
+                         }
+                     }
+                     conn.Close();
+                 }
+                 return stato;
+             }
+             catch (Exception)
+             {
+                 throw new Exception();
+             }
+         }
+        */
+
         /// <summary>
         /// Lista delle categorie
         /// </summary>
@@ -219,7 +213,7 @@ namespace Server
         public List<int> ListaProdotti()
         {
             try
-            {   
+            {
                 //lista stringhe no interi 
                 List<int> lista = new List<int>();
                 using (MySqlCommand command1 = conn.CreateCommand())
@@ -372,7 +366,7 @@ namespace Server
                     else
                         descrizione = nuovo.Descrizione.Trim().ToLower();
 
-                    command1.CommandText = "INSERT INTO prodotto(nome,descrizione,prezzo,quantita, fk_categoria) " + "VALUES('" + nuovo.Nome.Trim().ToLower() + "','" + descrizione  + "','" + nuovo.Prezzo.ToString().Replace(",", ".") + "','" + disp + "','" + id_cat + "')";
+                    command1.CommandText = "INSERT INTO prodotto(nome,descrizione,prezzo,quantita, fk_categoria) " + "VALUES('" + nuovo.Nome.Trim().ToLower() + "','" + descrizione + "','" + nuovo.Prezzo.ToString().Replace(",", ".") + "','" + disp + "','" + id_cat + "')";
 
                     if (command1.ExecuteNonQuery() > 0)
                         risultato = true;
@@ -393,13 +387,13 @@ namespace Server
         public bool Registrazione(Utente nuovo)
         {
 
-          // tipo di query: <nomeConnessioneVar> = new MySqlConnection(<connStringVar>
+            // tipo di query: <nomeConnessioneVar> = new MySqlConnection(<connStringVar>
             try
             {
                 bool risultato = false;
                 using (MySqlCommand command1 = conn.CreateCommand())
                 {
-                
+
                     /*
                     command1.CommandText = "SELECT MAX(account.IDutente) FROM account";
                     int id = 0;
@@ -411,11 +405,11 @@ namespace Server
                         }
                     }
                     */
-                    command1.CommandText = "INSERT INTO account(password,nome,cognome,email,indirizzo,data_nascita,telefono,TipoAccount) " + "VALUES('"+nuovo.Psw + "','"+nuovo.Nome.Trim().ToLower() + "','" + nuovo.Cognome.Trim().ToLower() + "','" + nuovo.Email.Trim().ToLower() + "','"  + nuovo.Indirizzo.Trim().ToLower() + "','" + nuovo.Data_nascita + "','" + nuovo.Telefono.Trim() + "', '2')";
+                    command1.CommandText = "INSERT INTO account(password,nome,cognome,email,indirizzo,data_nascita,telefono,TipoAccount) " + "VALUES('" + nuovo.Psw + "','" + nuovo.Nome.Trim().ToLower() + "','" + nuovo.Cognome.Trim().ToLower() + "','" + nuovo.Email.Trim().ToLower() + "','" + nuovo.Indirizzo.Trim().ToLower() + "','" + nuovo.Data_nascita + "','" + nuovo.Telefono.Trim() + "', '2')";
 
                     if (command1.ExecuteNonQuery() > 0)
                         risultato = true;
-                    
+
                 }
                 return risultato;
             }
@@ -447,15 +441,15 @@ namespace Server
                             // se è admin allora codice = 1
                             // se non è admin allora codice = 2
 
-                          if (reader.Read())
-                          {
+                            if (reader.Read())
+                            {
                                 if (reader.GetInt32(8) == 1)
                                     codice = 1;
                                 // l'utente loggato è un admin
                                 // altrimenti un magazziniere
                                 else
                                     codice = 2;  //metto 2 perchè ho gia controllato esistenza utente
-                          }
+                            }
                     }
                     // se invece non vengono restituite righe vuol dire che le credenziali sono errate
                     return codice;
@@ -478,7 +472,7 @@ namespace Server
                 List<string> listaMagazzinieri = new List<string>();
 
                 using (MySqlCommand command1 = conn.CreateCommand())
-                {   
+                {
                     //ottengo email solo magazzinieri
                     command1.CommandText = "SELECT email FROM account WHERE TipoAccount = 2";
                     using (MySqlDataReader reader = command1.ExecuteReader())
@@ -573,7 +567,7 @@ namespace Server
         /// <returns>risultato true or false a seconda dell'esito</returns>
         /// 
 
-        
+
         public bool AumentaGiacenze(int id, int quantita)
         {
             try
@@ -604,53 +598,54 @@ namespace Server
             {
                 bool risultato = false;
 
-                
 
-                    // controllo della correttezza della quantita spostato nel program
-                    // in seguito a un'attenta riflessione avvenuta in doccia
 
-                    /*
-                    using (SqlCommand command0 = conn.CreateCommand())
+                // controllo della correttezza della quantita spostato nel program
+                // in seguito a un'attenta riflessione avvenuta in doccia
+
+                /*
+                using (SqlCommand command0 = conn.CreateCommand())
+                {
+                    //controlla numero giacenze
+                    command0.CommandText = "SELECT disponibilita from prodotto where IDProdotto ='" + id + "'";
+                    using (SqlDataReader reader = command0.ExecuteReader())
                     {
-                        //controlla numero giacenze
-                        command0.CommandText = "SELECT disponibilita from prodotto where IDProdotto ='" + id + "'";
-                        using (SqlDataReader reader = command0.ExecuteReader())
+                        while (reader.Read())
                         {
-                            while (reader.Read())
-                            {
-                                attuale = reader.GetInt32(0);
-                            }
-
+                            attuale = reader.GetInt32(0);
                         }
-
-                        if (attuale < quantita)
-                        {
-                            Console.WriteLine("impossibile diminuire giacenze, numero troppo alto");
-                            return risultato; //false perchè att < quantita e non è possibile
-                        }
-                        else
-                        {
-                        */
-
-                    using (MySqlCommand command1 = conn.CreateCommand())
-                    {
-                        command1.CommandText = "UPDATE prodotto SET disponibilita = disponibilita -' " + quantita + " ' WHERE IDProdotto = " + id + " ' ";
-                        using (MySqlDataReader reader = command1.ExecuteReader()) ; // necessario? da warning
 
                     }
-                    
-                    risultato = true;
-                
+
+                    if (attuale < quantita)
+                    {
+                        Console.WriteLine("impossibile diminuire giacenze, numero troppo alto");
+                        return risultato; //false perchè att < quantita e non è possibile
+                    }
+                    else
+                    {
+                    */
+
+                using (MySqlCommand command1 = conn.CreateCommand())
+                {
+                    command1.CommandText = "UPDATE prodotto SET disponibilita = disponibilita -' " + quantita + " ' WHERE IDProdotto = " + id + " ' ";
+                    using (MySqlDataReader reader = command1.ExecuteReader()) ; // necessario? da warning
+
+                }
+
+                risultato = true;
+
                 return risultato;
 
-            }catch (Exception)
+            }
+            catch (Exception)
             {
                 throw new Exception();
             }
-           
+
         }
-            
+
     }
 
-    
+
 }

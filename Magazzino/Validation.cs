@@ -8,7 +8,7 @@ namespace Client
         {
             //validazione email
             string pattern = "^([0-9a-zA-Z]([-\\.\\w]*[0-9a-zA-Z])*@([0-9a-zA-Z][-\\w]*[0-9a-zA-Z]\\.)+[a-zA-Z]{2,9})$";
-            
+
             return Regex.IsMatch(email, pattern);
         }
 
@@ -73,7 +73,7 @@ namespace Client
                 pattern = @"^(\+[0-9]{12})$";
                 return Regex.Match(numero, pattern).Success;
             }
-                
+
             return false;
         }
     }
