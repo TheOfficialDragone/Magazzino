@@ -716,15 +716,16 @@ namespace Client
                                 id = Convert.ToInt32(Console.ReadLine());
                                 Console.WriteLine("\nInserire la quantità da aumentare");
                                 quantita = Convert.ToInt32(Console.ReadLine());
+                                client.AumentaGiacenze(id, quantita);
 
                                 if(client.AumentaGiacenze(id, quantita))
                                 {
-                                    Console.WriteLine("giacenza aumentata");
+                                    Console.WriteLine("GIACENZA AUMENTATA");
                                     break;
                                 }
                                 else
                                 {
-                                    Console.WriteLine("errore giacenza");
+                                    Console.WriteLine("ERRORE GIACENZA");
                                     break;
                                 }
 
