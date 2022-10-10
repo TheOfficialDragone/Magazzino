@@ -923,7 +923,7 @@ namespace Client
                         Console.WriteLine("\nPremi un tasto per continuare");
                         Console.ReadKey();
                     }
-                } while (sceltaMenuCliente != 7);
+                } while (sceltaMenuCliente != 5);
 
             }
 
