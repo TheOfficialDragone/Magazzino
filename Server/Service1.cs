@@ -624,17 +624,17 @@ namespace Server
                     {
                         using (MySqlCommand command1 = conn.CreateCommand())
                         {
-                            command1.CommandText = "UPDATE prodotto SET quantita = quantita -' " + quantita + " ' WHERE IDProdotto = " + id + " ' ";
+                            command1.CommandText = "UPDATE prodotto SET quantita = quantita -' " + quantita + " ' WHERE IDProdotto = ' " + id + " ' ";
                             using (MySqlDataReader reader = command1.ExecuteReader()) ; // necessario? da warning
 
                         }
 
                         risultato = true;
 
-                        return risultato;
-
                     }
                 }
+
+                return risultato;
             }
             catch (Exception)
             {

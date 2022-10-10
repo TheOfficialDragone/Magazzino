@@ -706,7 +706,7 @@ namespace Client
                                             disponibile = "DISPONIBILE";
                                         else
                                             disponibile = "NON DISPONIBILE";
-                                        // TODO: verificare query ed eventuali modifiche
+          
                                         Console.WriteLine(client.GetProdotto(z).IDprodotto + " - " + client.GetProdotto(z).Nome + " - " + String.Format("{0:0.00}", client.GetProdotto(z).Prezzo) + " euro - " + disponibile + " - " + client.GetProdotto(z).Quantita + "-" + client.GetProdotto(z).Categoria);
                                     }
                                 }
@@ -714,18 +714,22 @@ namespace Client
                                 int quantita = 0;
                                 Console.WriteLine("\nInserire l'id del prodotto di cui si vuole aumentare la quantità");
                                 id = Convert.ToInt32(Console.ReadLine());
+
                                 Console.WriteLine("\nInserire la quantità da aumentare");
                                 quantita = Convert.ToInt32(Console.ReadLine());
-                                client.AumentaGiacenze(id, quantita);
+
+                                //client.AumentaGiacenze(id, quantita);
 
                                 if(client.AumentaGiacenze(id, quantita))
                                 {
                                     Console.WriteLine("GIACENZA AUMENTATA");
+                                    Console.ReadLine();
                                     break;
                                 }
                                 else
                                 {
                                     Console.WriteLine("ERRORE GIACENZA");
+                                    Console.ReadLine();
                                     break;
                                 }
 
@@ -755,23 +759,26 @@ namespace Client
 
                                     Console.WriteLine("\nInserire la quantità da diminuire");
                                     quantita_diminuita = Convert.ToInt32(Console.ReadLine());
-                                    client.DiminuisciGiacenze(id_prod, quantita_diminuita);
 
-                                    if (client.AumentaGiacenze(id_prod, quantita_diminuita))
+                                    //client.DiminuisciGiacenze(id_prod, quantita_diminuita);
+
+                                    if (client.DiminuisciGiacenze(id_prod, quantita_diminuita))
                                     {
                                         Console.WriteLine("GIACENZA DIMINUITA");
+                                        Console.ReadLine();
                                         break;
                                     }
                                     else
                                     {
                                         Console.WriteLine("ERRORE GIACENZA");
+                                        Console.ReadLine();
                                         break;
-
                                     }
                                 }
                                 catch (FormatException)
                                 {
                                     Console.WriteLine("Scelta non valida!");
+                                    Console.ReadLine();
                                 }
 
                                 break;
