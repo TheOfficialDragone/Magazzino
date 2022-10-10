@@ -69,6 +69,12 @@ account (**IDaccount**, password, nome, cognome, email, indirizzo, data_nascita,
 ### La traduzione in linguaggio SQL
 Lo schema è stato quindi tradotto in linguaggio SQL per creare le tabelle con i campi coerenti con i tipi di dato necessarie alla corretta rappresentazione delle entità all'interno del database.
 
+Siccome in SQL non è possibile utilizzare liste di oggetti come tipi di dato, è stata necessaria (e doverosa per la correttezza della teoria) una traduzione del campo `prodottiOrdinati` di tipo lista di prodotti. Questo aspetto è trattato dal design pattern `adapter` che come intuibile dal nome si occupa di garantire una collaborazione tra oggetti con interfacce differenti attraverso una traduzione e un adattamento.
+
+L'immagine è alquanto esplicativa
+
+![](images/adapter.png)
+
 ```sql
 CREATE DATABASE IF NOT EXISTS magazzino;
 
