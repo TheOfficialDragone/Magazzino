@@ -730,57 +730,44 @@ namespace Client
                                 }
 
                             case 3:
-                                Console.Clear();
-                                Console.WriteLine("***DIMINUISCI GIACENZE***");
-                                //stampo tutti i prodotti disponibili
-                                foreach (var p in client.ListaProdottiDisponibili())
-                                {
-                                    Console.WriteLine(client.GetProdotto(p).IDprodotto + " - " + client.GetProdotto(p).Nome + " - " + String.Format("{0:0.00}", client.GetProdotto(p).Prezzo) + " euro - " + client.GetProdotto(p).Categoria);
-                                }
-
-                                Console.WriteLine("\nInserire l'id del prodotto di cui si vuole diminuire la quantità");
 
                                 try
                                 {
-                                    int idRiduci = Convert.ToInt32(Console.ReadLine());
-                                    if (client.ListaProdotti().Contains(idRiduci))
+                                    if (client.ListaProdotti().Count() > 0)
                                     {
-                                        // allora chiedo di quanto ridurlo
-                                        Console.WriteLine("Inserire di quanto si vuole ridurre la quantità");
-                                        int quantitaRiduzione = Convert.ToInt32(Console.ReadLine());
-                                        if (quantitaRiduzione > 0)
+                                        Console.WriteLine("***LISTA PRODOTTI***");
+                                        //stampo tutti i prodotti
+                                        foreach (var z in client.ListaProdotti())
                                         {
-                                            // controllo se la quantita ridotta è maggiore della giacenza
-                                            if (quantitaRiduzione > client.GetProdotto(idRiduci).Quantita)
-                                            {
-                                                Console.WriteLine("La quantità da ridurre è maggiore della giacenza");
-                                                Console.WriteLine("\nPremi un tasto per continuare");
-                                                Console.ReadKey();
-                                            }
+                                            if (client.GetProdotto(z).Quantita >= 1)
+                                                disponibile = "DISPONIBILE";
                                             else
-                                            {
-                                                // allora posso ridurre la giacenza
-                                                client.DiminuisciGiacenze(idRiduci, quantitaRiduzione);
-                                                Console.WriteLine("Giacenza ridotta");
-                                                Console.WriteLine("\nPremi un tasto per continuare");
-                                                Console.ReadKey();
-                                            }
+                                                disponibile = "NON DISPONIBILE";
+                                            // TODO: verificare query ed eventuali modifiche
+                                            Console.WriteLine(client.GetProdotto(z).IDprodotto + " - " + client.GetProdotto(z).Nome + " - " + String.Format("{0:0.00}", client.GetProdotto(z).Prezzo) + " euro - " + disponibile + " - " + client.GetProdotto(z).Quantita + "-" + client.GetProdotto(z).Categoria);
+                                        }
+                                    }
+                                    int id_prod = 0;
+                                    int quantita_diminuita = 0;
 
-                                        }
-                                        else
-                                        {
-                                            Console.WriteLine("La quantità da ridurre deve essere maggiore di 0");
-                                            Console.WriteLine("\nPremi un tasto per continuare");
-                                            Console.ReadKey();
-                                        }
-                                        Console.Clear();
-                                        if (client.DiminuisciGiacenze(idRiduci, quantitaRiduzione))
-                                            Console.WriteLine("Quantità diminuita!");
-                                        else
-                                            Console.WriteLine("Errore: diminuzione della quantità non riuscita!");
+                                    Console.WriteLine("\nInserire l'id del prodotto di cui si vuole aumentare la quantità");
+                                    id_prod = Convert.ToInt32(Console.ReadLine());
+
+                                    Console.WriteLine("\nInserire la quantità da diminuire");
+                                    quantita_diminuita = Convert.ToInt32(Console.ReadLine());
+                                    client.DiminuisciGiacenze(id_prod, quantita_diminuita);
+
+                                    if (client.AumentaGiacenze(id_prod, quantita_diminuita))
+                                    {
+                                        Console.WriteLine("GIACENZA DIMINUITA");
+                                        break;
                                     }
                                     else
-                                        Console.WriteLine("Codice prodotto non valido!");
+                                    {
+                                        Console.WriteLine("ERRORE GIACENZA");
+                                        break;
+
+                                    }
                                 }
                                 catch (FormatException)
                                 {

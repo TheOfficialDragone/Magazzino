@@ -593,22 +593,20 @@ namespace Server
         /// <returns>risultato true or false a seconda dell'esito</returns>
         public bool DiminuisciGiacenze(int id, int quantita)
         {
-            // int attuale = 0;
+             int attuale = 0;
             try
             {
                 bool risultato = false;
 
-
-
                 // controllo della correttezza della quantita spostato nel program
                 // in seguito a un'attenta riflessione avvenuta in doccia
 
-                /*
-                using (SqlCommand command0 = conn.CreateCommand())
+
+                using (MySqlCommand command0 = conn.CreateCommand())
                 {
                     //controlla numero giacenze
-                    command0.CommandText = "SELECT disponibilita from prodotto where IDProdotto ='" + id + "'";
-                    using (SqlDataReader reader = command0.ExecuteReader())
+                    command0.CommandText = "SELECT quantita from prodotto where IDProdotto ='" + id + "'";
+                    using (MySqlDataReader reader = command0.ExecuteReader())
                     {
                         while (reader.Read())
                         {
@@ -624,19 +622,19 @@ namespace Server
                     }
                     else
                     {
-                    */
+                        using (MySqlCommand command1 = conn.CreateCommand())
+                        {
+                            command1.CommandText = "UPDATE prodotto SET quantita = quantita -' " + quantita + " ' WHERE IDProdotto = " + id + " ' ";
+                            using (MySqlDataReader reader = command1.ExecuteReader()) ; // necessario? da warning
 
-                using (MySqlCommand command1 = conn.CreateCommand())
-                {
-                    command1.CommandText = "UPDATE prodotto SET disponibilita = disponibilita -' " + quantita + " ' WHERE IDProdotto = " + id + " ' ";
-                    using (MySqlDataReader reader = command1.ExecuteReader()) ; // necessario? da warning
+                        }
 
+                        risultato = true;
+
+                        return risultato;
+
+                    }
                 }
-
-                risultato = true;
-
-                return risultato;
-
             }
             catch (Exception)
             {
