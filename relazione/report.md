@@ -10,7 +10,7 @@ geometry: margin= 2.5cm
 # Il progetto in breve
 Nasce come sistema per gestire un magazzino di prodotti, da impiegare nel reparto logistica di una realtà aziendale. Il sistema prevede due tipologie di account: l'admin e il magazziniere. Il primo è un account riservato al responsabile di magazzino, mentre ogni magazziniere ha il proprio account con permessi limitati. Per rendere la realizzazione del programma e il suo relativo impiego il più realistico possibile, si è pensato allo sviluppo di un'applicazione a riga di comando.
 
-In fase di progettazione si è pensato di tenere il funzionamento del sistema limitatamente al reparto di magazzino, senza avere quinid la necessità di comunicare con applicativi o basi di dati relative ad altri uffici. Questo spiega anche l'assenza di interfacce grafiche e di elementi aggiuntivi superflui quali immagini: i destinatari e gli utilizzatori dell'applicativo identificano i prodotti tramite i codici degli stessi, e sono poco interessati alle immagini o alle altre caratteristiche.
+In fase di progettazione si è pensato di tenere il funzionamento del sistema limitatamente al reparto di magazzino, senza avere quindi la necessità di comunicare con applicativi o basi di dati relative ad altri uffici. Questo spiega anche l'assenza di interfacce grafiche e di elementi aggiuntivi superflui quali immagini: i destinatari e gli utilizzatori dell'applicativo identificano i prodotti tramite i codici degli stessi, e sono poco interessati alle immagini o alle altre caratteristiche.
 
 ## Composizione del progetto
 Il progetto si compone di una parte client basata su una interfaccia a riga di comando, e una server, rappresentata da un server db manager che utilizza i servizi WCF forniti dal .NET Framework di Microsoft. Il linguaggio di programmazione utilizzato è C#, affiancato in alcuni punti dal linguaggio SQL per l'interazione con il database che è di tipo MySQL.
@@ -18,9 +18,9 @@ Il progetto si compone di una parte client basata su una interfaccia a riga di c
 # Le fasi di progettazione
 
 ## Studio di fattibilità e analisi dei requisiti
-Il progetto, dovendo utilizzare tecnologie fornite da .NET Framework, doveva essere sviluppato su una macchina con sistema operativo Windows. Visto che le macchine nelle disponibilità dei progettisti risultavano essere una macchina con Gnu/Linux e una con OSX, veniva creata una partizione su quest'ultima per ospitare un'installazione del sistema operativo Windows attraverso l'utility `bootcamp` presente in MacOS. 
+Il progetto, dovendo utilizzare tecnologie fornite da .NET Framework, doveva essere sviluppato su una macchina con sistema operativo Windows.
 
-Una volta finalizzata l'installazione del sistema operativo, si è proceduto a installare l'ambiente di sviluppo integrato Visual Studio, poiché era stato studiato durante il periodo di lezioni. Oltre all'IDE sono state installate le estensioni consigliate. Come sistema di gestione di database, a fronte della scelta di volerlo gestire in MySQL, è stato effettuato il download dell'applicativo XAMPP.
+Unitamente all'IDE Visual Studio sono state installate le estensioni consigliate. Come sistema di gestione di database, a fronte della scelta di volerlo gestire in MySQL, è stato effettuato il download dell'applicativo XAMPP.
 
 I requisiti tecnici per lo sviluppo del progetto erano quindi soddisfatti.
 
@@ -40,21 +40,21 @@ Nello specifico, le prime relazioni tra entità sono risultate essere le seguent
 - Un ordine può essere composto da più prodotti, e un prodotto può essere presente in più ordini.
 - Un utente del magazzino può essere un magazziniere oppure admin, e avere quindi privilegi aggiuntivi.
 
+## Progettazione relazionale
+Tenendo conto dei vincoli di integrità referenziale si è proceduto alla scelta dei campi per ogni entità, ottenendo alla fine il seguente schema logico:
+
+![](images/conuml.png)
+
 In seguito alla lettura delle relazioni sopracitate, si è rivelato necessario l'inserimento di entità aggiuntive, al fine di gestire le relazioni di tipo N-N tra quelle esistenti.
 
 - Composizione: al fine di gestire la relazione N a N tra prodotti e ordini
 - Account  Amministratore: possiede un flag con un valore particolare che permette di distinguerlo in fase di login. È possibile la coesistenza di più amministratori.
 
-Una volta incluse le entità sopracitate, una prima bozza di schema logico è risultata essere la seguente:
+Una volta incluse le entità sopracitate, unitamente alla specificazione dei campi da inserire nelle stesse, è stato possibile ottenere una bozza di schema del database:
 
-<!--includere immagine da draw.io-->
-![](images/logico.png)
-
-## Progettazione relazionale
-Tenendo conto dei vincoli di integrità referenziale si è proceduto alla scelta dei campi per ogni entità, ottenendo alla fine il seguente schema logico:
-
-<!--includere schema logico con campi e specifiche delle chiavi primarie ed esterne-->
-![](images/er.png)
+> *In grassetto sono state indicate le chiavi primarie*
+> 
+> *In corsivo i vincoli di integrità referenziale sono stati tradotti in chiavi esterne*
 
 categoria (**IDcategoria**, nome)
 
@@ -66,7 +66,7 @@ composizione (**IDcomposizione**, *fk_prodotto*, *fk_ordine*, quantita)
 
 account (**IDaccount**, password, nome, cognome, email, indirizzo, data_nascita,  telefono, TipoAccount)
 
-
+### La traduzione in linguaggio SQL
 Lo schema è stato quindi tradotto in linguaggio SQL per creare le tabelle con i campi coerenti con i tipi di dato necessarie alla corretta rappresentazione delle entità all'interno del database.
 
 ```sql
