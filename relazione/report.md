@@ -161,8 +161,10 @@ public bool DiminuisciGiacenze(int id, int quantita)
             {
                 using (MySqlCommand command1 = conn.CreateCommand())
                 {
-                    command1.CommandText = "UPDATE prodotto SET quantita = quantita -' " + quantita + " ' WHERE IDProdotto = ' " + id + " ' ";
-                    using (MySqlDataReader reader = command1.ExecuteReader()) ; // necessario? da warning
+                    command1.CommandText = "UPDATE prodotto SET quantita = quantita -' "
+                    + quantita + " ' WHERE IDProdotto = ' " + id + " ' ";
+                    
+                    using (MySqlDataReader reader = command1.ExecuteReader()) ;
                 }
                 risultato = true;
             }
