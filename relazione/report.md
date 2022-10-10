@@ -20,7 +20,7 @@ Il progetto si compone di una parte client basata su una interfaccia a riga di c
 ## Studio di fattibilità e analisi dei requisiti
 Il progetto, dovendo utilizzare tecnologie fornite da .NET Framework, doveva essere sviluppato su una macchina con sistema operativo Windows.
 
-Unitamente all'IDE Visual Studio sono state installate le estensioni consigliate. Come sistema di gestione di database, a fronte della scelta di volerlo gestire in MySQL, è stato effettuato il download dell'applicativo XAMPP.
+Unitamente all'IDE Visual Studio sono state installate le estensioni consigliate. Come sistema di gestione di database, a fronte della scelta di volerlo gestire in MySQL, è stato effettuato il download dell'applicativo XAMPP (in quanto utilizzato in un insegnamento passato).
 
 I requisiti tecnici per lo sviluppo del progetto erano quindi soddisfatti.
 
@@ -123,4 +123,65 @@ CREATE TABLE account (
  );
 ```
 
-# 
+# I metodi
+Siccome i nomi dei metodi sono abbastanza auto esplicativi, questa sezione è mirata a spiegarne le scelte e i ragionamenti che ci stanno dietro.
+
+## Filosofia e privilegi d'accesso
+Come detto in precedenza, il sistema è pensato per essere utilizzato da due tipologie di account: i magazzinieri e gli amministratori. Di conseguenza sono previsti due differenti livelli di accesso e manipolazione dei dati presenti nel database. L'accesso tradizione, di amministrazione ordinaria previsto per i magazzinieri, consente di evadere ordini, quindi di diminuire la quantità dei prodotti presenti in magazzino, così come gestire eventuali resi e di conseguenza aumentare la giacenza. I metodi non possiedono una particolare motivazione di invocazione ma si concentrano sul risultato e sulla funzione implementata. Per essere più chiari e spiegare senza troppi giri di parole, si potrebbe dire che i metodi sono pensati per **ottenere un risultato**, piuttosto che **gestire una situazione**, in quanto la valutazione è demandata al magazziniere.
+
+In precedenza è stato fatto l'esempio della diminuzione della giacenza in seguito all'evasione di un ordine. In realtà si potrebbe pensare a un caso di un prodotto, o un lotto di prodotti che viene danneggiato o che per altri motivi non può essere venduto o tenuto in magazzino. La gestione della situazione confluirebbe comunque nella diminuzione della quantità del prodotto in questione.
+
+<!-- esempio di codice della diminuzione e spiegazione del perché è più complessa dell'aumento -->
+
+```csharp
+//Service1.cs
+public bool DiminuisciGiacenze(int id, int quantita)
+{
+    int attuale = 0;
+    try
+    {
+        bool risultato = false;
+        using (MySqlCommand command0 = conn.CreateCommand())
+        {
+            command0.CommandText = "SELECT quantita from prodotto where IDProdotto ='" + id + "'";
+            using (MySqlDataReader reader = command0.ExecuteReader())
+            {
+                while (reader.Read())
+                {
+                    attuale = reader.GetInt32(0);
+                }
+            }
+
+            if (attuale < quantita)
+            {
+                Console.WriteLine("impossibile diminuire giacenze, numero troppo alto");
+                return risultato; //false perchè att < quantita e non è possibile
+            }
+            else
+            {
+                using (MySqlCommand command1 = conn.CreateCommand())
+                {
+                    command1.CommandText = "UPDATE prodotto SET quantita = quantita -' " + quantita + " ' WHERE IDProdotto = ' " + id + " ' ";
+                    using (MySqlDataReader reader = command1.ExecuteReader()) ; // necessario? da warning
+                }
+                risultato = true;
+            }
+        }
+        return risultato;
+    }
+    catch (Exception)
+    {
+        throw new Exception();
+    }
+}
+```
+
+Il metodo per diminuire la giacenza è un po' più complesso del suo gemello per aumentarla, poichè è necessario un controllo preliminare: se la quantità che si vuole sottrarre alla giacenza è maggiore di quest'ultima si avrà una situazione di errore: la disponibilità non può essere negativa. Per cui in questa caso verrà mostrato un alert e l'operazione di diminuzione sarà impedita.
+
+Tornando alle funzionalità previste per l'utenza a privilegi base vi è quella di stampare alle informazioni di contatto (nome, mail, telefono) degli altri magazzinieri, in modo da poter conoscere i riferimenti di contatto per una eventuale necessità. Non rientrano nella stampa gli amministratori poiché è  ragionevole pensare che un responsabile sia sempre presente in magazzino e qualora dovesse assentarsi sarebbe lui a comunicarlo, oltre che per motivi di sicurezza.
+
+I magazzinieri inoltre possono in qualunque momento ottenere una stampa dei prodotti presenti in magazzino, ma non possono cancellare le informazioni di un prodotto o aggiungerne uno nuovo.
+
+## Metodi a privilegi elevati
+Possibilità che invece è concessa agli utenti amministratori con privilegi elevati, i quali possono anche registrare e inserire nel database nuovi magazzinieri. Tuttavia non dispongono privilegi sufficienti per inserire o rimuiovere dal sistema un amministratiore: questa operazione per ragioni di sicurezza e confidenzialità è fattibile solamente da operatori di sistema che hanno accesso diretto al database, i quali agiscono su richiesta del responsabile di stabilimento.
+
