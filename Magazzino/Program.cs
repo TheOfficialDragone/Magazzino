@@ -656,8 +656,9 @@ namespace Client
                     Console.WriteLine("1.Lista prodotti"); // visualizza prodotti in magazzino
                     Console.WriteLine("2.Aumenta giacenza"); // aumenta giacenza prodotto
                     Console.WriteLine("3.Diminuisci giacenza");
-                    Console.WriteLine("4.Il mio profilo"); // visualizza informazioni del profilo, no modifica
-                    Console.WriteLine("5.Esci");
+                    Console.WriteLine("4.Crea Ordine");
+                    Console.WriteLine("5.Il mio profilo"); // visualizza informazioni del profilo, no modifica
+                    Console.WriteLine("6.Esci");
 
 
                     Console.WriteLine("Scelta: ");
@@ -784,6 +785,43 @@ namespace Client
                                 break;
 
                             case 4:
+                                Console.WriteLine("*** CREAZIONE ORDINE***");
+                                if (client.ListaProdotti().Count() > 0)
+                                {
+                                    Console.WriteLine("***LISTA PRODOTTI***");
+                                    //stampo tutti i prodotti
+                                    foreach (var z in client.ListaProdotti())
+                                    {
+                                        if (client.GetProdotto(z).Quantita >= 1)
+                                            disponibile = "DISPONIBILE";
+                                        else
+                                            disponibile = "NON DISPONIBILE";
+
+                                        Console.WriteLine(client.GetProdotto(z).IDprodotto + " - " + client.GetProdotto(z).Nome + " - " + String.Format("{0:0.00}", client.GetProdotto(z).Prezzo) + " euro - " + disponibile + " - " + client.GetProdotto(z).Quantita + "-" + client.GetProdotto(z).Categoria);
+                                    }
+                                }
+                                int id_ordine = 0;
+                                int quantita_ordine = 0;
+                                Console.WriteLine("\nInserire l'id del prodotto di cui si vuole aumentare la quantità");
+                                id_ordine = Convert.ToInt32(Console.ReadLine());
+
+                                Console.WriteLine("\nInserire la quantità da aumentare");
+                                quantita_ordine = Convert.ToInt32(Console.ReadLine());
+
+                                if (client.CreaOrdine(id_ordine,quantita_ordine))
+                                {
+                                    Console.WriteLine("ORDINE EFFETTUATO CORRETTAMENTE");
+                                    Console.ReadLine();
+                                    break;
+                                }
+                                else
+                                {
+                                    Console.WriteLine("ERRORE ORDINE");
+                                    Console.ReadLine();
+                                    break;
+                                }                              
+
+                            case 5:
                                 int sceltaMenuDati = 0;
                                 //dati dell'utente
                                 do
@@ -899,7 +937,7 @@ namespace Client
                                     }
                                 } while (sceltaMenuDati != 3);
                                 break;
-                            case 5:
+                            case 6:
                                 break;
                         }
                     }
@@ -923,7 +961,7 @@ namespace Client
                         Console.WriteLine("\nPremi un tasto per continuare");
                         Console.ReadKey();
                     }
-                } while (sceltaMenuCliente != 5);
+                } while (sceltaMenuCliente != 6);
 
             }
 

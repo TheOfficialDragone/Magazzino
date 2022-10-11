@@ -643,6 +643,38 @@ namespace Server
 
         }
 
+       public  bool CreaOrdine(int id, int quantita) 
+       {
+            List<Articolo> ordine;
+            bool risultato = false;
+            using (MySqlCommand command1 = conn.CreateCommand())
+            {
+                // verso TODO: aggiornare query per la formula corretta di disponibilità
+                command1.CommandText = "SELECT * FROM prodotto WHERE IDProdotto =' " + id + "';";
+                
+                using (MySqlDataReader reader = command1.ExecuteReader())
+                {   if (reader.HasRows)
+                    {
+                        while (reader.Read())
+                        {
+                            ordine.Add(reader.GetInt32(0));
+                        }
+
+                        risultato=true;
+                    }
+                    else 
+                    { 
+                        risultato = false;
+                    }
+  
+                }
+
+                return risultato;
+            }
+
+       }
+
+
     }
 
 
