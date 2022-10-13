@@ -1,5 +1,6 @@
 ﻿
 using MySql.Data.MySqlClient;
+using Org.BouncyCastle.Crypto.Generators;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -389,7 +390,7 @@ namespace Server
                     {
                         while (reader.Read())
                         {
-                            if (BCrypt.Net.BCrypt.Verify(user.Psw, reader.GetString(0)))
+                            if (BCrypt.Net.BCrypt.Verify(user.Password, reader.GetString(0)))
                             {
                                 codice = reader.GetInt32(1);
                             }

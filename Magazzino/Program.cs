@@ -1,16 +1,20 @@
 ﻿using Magazzino.ServiceReference1;
+using Org.BouncyCastle.Crypto.Generators;
 using Server;
 using System;
 using System.Globalization;
 using System.Linq;
 using System.ServiceModel;
+using System.ServiceModel.Configuration;
 
 namespace Client
 {
 
     class Program
     {
+        #pragma warning disable IDE0060 // Rimuovere il parametro inutilizzato
         static void Main(string[] args)
+
         {
             Service1Client client = new Magazzino.ServiceReference1.Service1Client();
 
@@ -1007,12 +1011,12 @@ namespace Client
                             else
                             {
                                 // controllare se è necessario lo storing del salt
-                                string salt = BCrypt.Net.BCrypt.GenerateSalt();
+                                string salt = BCrypt.Net.BCrypt.GenerateSalt(6);
                                 string hash = BCrypt.Net.BCrypt.HashPassword(password, salt);
 
                                 //salvo hash e salt nel db
                                 nuovo.Psw = hash;
-                                nuovo.Salt = salt;
+                                
                             }
                         } while (Validation.ValidatePassword(password) == false);
 
