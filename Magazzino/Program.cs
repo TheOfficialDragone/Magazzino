@@ -27,8 +27,6 @@ namespace Client
                 Console.WriteLine("2.Registrati");
                 Console.WriteLine("3.Esci");
 
-
-
                 Console.WriteLine("Scelta: ");
                 try
                 {
@@ -58,8 +56,31 @@ namespace Client
                             do
                             {
                                 Console.WriteLine("Inserisci password: ");
-                                psw = Console.ReadLine();
-
+                                // instead of Console.ReadLine() use the following code to hide the password
+                                psw = string.Empty;
+                                ConsoleKeyInfo key;
+                                do
+                                {
+                                    key = Console.ReadKey(true);
+                                    // Backspace Should Not Work
+                                    if (key.Key != ConsoleKey.Backspace && key.Key != ConsoleKey.Enter)
+                                    {
+                                        psw += key.KeyChar;
+                                        Console.Write("*");
+                                    }
+                                    else
+                                    {
+                                        if (key.Key == ConsoleKey.Backspace && psw.Length > 0)
+                                        {
+                                            psw = psw.Substring(0, (psw.Length - 1));
+                                            Console.Write("\b \b");
+                                        }
+                                    }
+                                }
+                                // Stops Receving Keys Once Enter is Pressed
+                                while (key.Key != ConsoleKey.Enter);
+                                Console.WriteLine();
+                                
                             } while (psw == "" || psw == " "); //controllo che la password non sia vuota
 
                             Login login = new Login()
