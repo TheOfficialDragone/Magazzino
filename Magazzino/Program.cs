@@ -708,7 +708,7 @@ namespace Client
                                             disponibile = "DISPONIBILE";
                                         else
                                             disponibile = "NON DISPONIBILE";
-          
+
                                         Console.WriteLine(client.GetProdotto(z).IDprodotto + " - " + client.GetProdotto(z).Nome + " - " + String.Format("{0:0.00}", client.GetProdotto(z).Prezzo) + " euro - " + disponibile + " - " + client.GetProdotto(z).Quantita + "-" + client.GetProdotto(z).Categoria);
                                     }
                                 }
@@ -722,7 +722,7 @@ namespace Client
 
                                 //client.AumentaGiacenze(id, quantita);
 
-                                if(client.AumentaGiacenze(id, quantita))
+                                if (client.AumentaGiacenze(id, quantita))
                                 {
                                     Console.WriteLine("GIACENZA AUMENTATA");
                                     Console.ReadLine();
@@ -786,7 +786,7 @@ namespace Client
                                 break;
 
                             case 4:
-                                
+
                                 Console.Clear();
                                 Console.WriteLine("***PRODOTTI IN ESAURIMENTO***");
                                 Console.Clear();
@@ -806,10 +806,10 @@ namespace Client
                                 }
                                 else
                                     Console.WriteLine("\nNessun prodotto presente nel sistema");
-                                    Console.WriteLine("\nPremi un tasto per continuare");
-                                    Console.ReadKey();
-                                    break;
-                                
+                                Console.WriteLine("\nPremi un tasto per continuare");
+                                Console.ReadKey();
+                                break;
+
 
                             case 5:
                                 int sceltaMenuDati = 0;

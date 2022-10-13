@@ -3,7 +3,7 @@ using MySql.Data.MySqlClient;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
-
+#pragma warning disable CS0642
 
 namespace Server
 {
@@ -140,42 +140,6 @@ namespace Server
 
 
         }
-
-        /// <summary>
-        /// Stato dell'ordine
-        /// </summary>
-        /// <param name="id">Identificativo dello stato dell'ordine</param>
-        /// <returns>Stringa contenente lo stato</returns>
-        /* 
-           public string GetStatoOrdine(int id)
-         {
-             try
-             {
-                 string stato = null;
-                 using (SqlConnection conn = new SqlConnection(ConnectionString))
-                 {
-                     conn.Open();
-                     using (SqlCommand command1 = conn.CreateCommand())
-                     {
-                         command1.CommandText = "SELECT stato_ordine FROM stato_ordine WHERE IDstato=" + id;
-                         using (SqlDataReader reader = command1.ExecuteReader())
-                         {
-                             while (reader.Read())
-                             {
-                                 stato = reader.GetString(0).TrimEnd().ToUpper();
-                             }
-                         }
-                     }
-                     conn.Close();
-                 }
-                 return stato;
-             }
-             catch (Exception)
-             {
-                 throw new Exception();
-             }
-         }
-        */
 
         /// <summary>
         /// Lista delle categorie
@@ -393,18 +357,6 @@ namespace Server
                 bool risultato = false;
                 using (MySqlCommand command1 = conn.CreateCommand())
                 {
-
-                    /*
-                    command1.CommandText = "SELECT MAX(account.IDutente) FROM account";
-                    int id = 0;
-                    using (MySqlDataReader reader = command1.ExecuteReader())
-                    {
-                        while (reader.Read())
-                        {
-                            id = reader.GetInt32(0);
-                        }
-                    }
-                    */
                     command1.CommandText = "INSERT INTO account(password,nome,cognome,email,indirizzo,data_nascita,telefono,TipoAccount) " + "VALUES('" + nuovo.Psw + "','" + nuovo.Nome.Trim().ToLower() + "','" + nuovo.Cognome.Trim().ToLower() + "','" + nuovo.Email.Trim().ToLower() + "','" + nuovo.Indirizzo.Trim().ToLower() + "','" + nuovo.Data_nascita + "','" + nuovo.Telefono.Trim() + "', '2')";
 
                     if (command1.ExecuteNonQuery() > 0)
@@ -576,7 +528,7 @@ namespace Server
                 using (MySqlCommand command1 = conn.CreateCommand())
                 {
                     command1.CommandText = "UPDATE prodotto SET quantita = quantita +' " + quantita + " ' WHERE IDProdotto =' " + id + " ' ";
-                    using (MySqlDataReader reader = command1.ExecuteReader()); 
+                    using (MySqlDataReader reader = command1.ExecuteReader()) ;
                     risultato = true;
                 }
                 return risultato;
@@ -593,7 +545,7 @@ namespace Server
         /// <returns>risultato true or false a seconda dell'esito</returns>
         public bool DiminuisciGiacenze(int id, int quantita)
         {
-             int attuale = 0;
+            int attuale = 0;
             try
             {
                 bool risultato = false;

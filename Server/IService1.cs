@@ -58,9 +58,6 @@ namespace Server
         [OperationContract]
         bool DiminuisciGiacenze(int id, int quantita);
 
-        [OperationContract]
-        bool CreaOrdine(int id, int quantita);
-
 
     }
 }
