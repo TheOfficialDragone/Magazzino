@@ -1005,7 +1005,15 @@ namespace Client
                                 Console.ReadKey();
                             }
                             else
-                                nuovo.Psw = password;
+                            {
+                                // controllare se è necessario lo storing del salt
+                                string salt = BCrypt.Net.BCrypt.GenerateSalt();
+                                string hash = BCrypt.Net.BCrypt.HashPassword(password, salt);
+
+                                //salvo hash e salt nel db
+                                nuovo.Psw = hash;
+                                nuovo.Salt = salt;
+                            }
                         } while (Validation.ValidatePassword(password) == false);
 
                         string nome;

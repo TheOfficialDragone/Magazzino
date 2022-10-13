@@ -383,29 +383,20 @@ namespace Server
                 int codice = 0;
                 using (MySqlCommand command1 = conn.CreateCommand())
                 {
-                    command1.CommandText = "SELECT * FROM account WHERE email='" + user.Email.Trim().ToLower() + "' AND password='" + user.Password + "'";
+                    // check password with hash
+                    command1.CommandText = "SELECT password, TipoAccount FROM account WHERE email='" + user.Email.Trim().ToLower() + "'";
                     using (MySqlDataReader reader = command1.ExecuteReader())
                     {
-                        // controllare che il campo isAdmin sia vero 
-                        if (reader.HasRows)
-                            // allora esiste un utente con quelle credenziali
-                            // ora controlla se è admin o no
-                            // se è admin allora codice = 1
-                            // se non è admin allora codice = 2
-
-                            if (reader.Read())
+                        while (reader.Read())
+                        {
+                            if (BCrypt.Net.BCrypt.Verify(user.Psw, reader.GetString(0)))
                             {
-                                if (reader.GetInt32(8) == 1)
-                                    codice = 1;
-                                // l'utente loggato è un admin
-                                // altrimenti un magazziniere
-                                else
-                                    codice = 2;  //metto 2 perchè ho gia controllato esistenza utente
+                                codice = reader.GetInt32(1);
                             }
+                        }
                     }
-                    // se invece non vengono restituite righe vuol dire che le credenziali sono errate
-                    return codice;
                 }
+                return codice;
             }
             catch (Exception)
             {
