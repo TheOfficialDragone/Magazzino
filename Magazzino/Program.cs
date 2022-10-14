@@ -7,12 +7,13 @@ using System.Linq;
 using System.ServiceModel;
 using System.ServiceModel.Configuration;
 
+#pragma warning disable IDE0060
 namespace Client
 {
 
     class Program
     {
-        #pragma warning disable IDE0060 // Rimuovere il parametro inutilizzato
+       
         static void Main(string[] args)
 
         {
@@ -212,8 +213,7 @@ namespace Client
                                                         if (client.GetProdotto(p).Quantita >= 1)
                                                             disponibile = "DISPONIBILE";
                                                         else
-                                                            disponibile = "NON DISPONIBILE";
-                                                        // TODO: verificare query ed eventuali modifiche
+                                                            disponibile = "NON DISPONIBILE";                                       
                                                         Console.WriteLine(client.GetProdotto(p).IDprodotto + " - " + client.GetProdotto(p).Nome + " - " + String.Format("{0:0.00}", client.GetProdotto(p).Prezzo) + " euro - " + disponibile + " - " + client.GetProdotto(p).Quantita + "-" + client.GetProdotto(p).Categoria);
                                                     }
                                                 }
@@ -277,8 +277,7 @@ namespace Client
 
                                                     Console.Clear();
                                                     Console.WriteLine("***AGGIUNGI PRODOTTO***");
-                                                    Console.WriteLine("Inserisci una descrizione del prodotto: ");
-                                                    // verificare coerenza con il DB - campo nullable
+                                                    Console.WriteLine("Inserisci una descrizione del prodotto: ");                                                 
                                                     string descrizioneNuovoProdotto = Console.ReadLine();
 
                                                     int categoriaNuovoProdotto = 0;
@@ -308,10 +307,7 @@ namespace Client
                                                         }
 
                                                     } while (client.ListaCategorie().Contains(categoriaNuovoProdotto) == false);
-
-                                                    // TODO verificare funzionamento con campi db attuali
-
-
+                                                   
                                                     // chiedi di inserire quantità del prodotto e aggiungilo al db
                                                     int quantitaNuovoProdotto = 0;
                                                     do
@@ -413,9 +409,7 @@ namespace Client
                                                         if (client.GetProdotto(p).Quantita > 0)
                                                             disponibile = "DISPONIBILE";
                                                         else
-                                                            disponibile = "NON DISPONIBILE";
-
-                                                        // verificare conversioni e cose stampate
+                                                            disponibile = "NON DISPONIBILE";                         
                                                         Console.WriteLine(client.GetProdotto(p).IDprodotto + " - " + client.GetProdotto(p).Nome + " - " + String.Format("{0:0.00}", client.GetProdotto(p).Prezzo) + " euro - " + disponibile + " - " + client.GetProdotto(p).Categoria);
                                                     }
                                                     Console.WriteLine("\nInserisci codice prodotto da modificare: ");
@@ -620,14 +614,15 @@ namespace Client
                                     Console.WriteLine("***LISTA MAGAZZINIERI***");
                                     // print lista magazzinieri
                                     foreach (var m in client.ListaMagazzinieri())
-                                    {
-                                        //Console.WriteLine(client.GetMagazziniere(m).Nome + " - " + client.GetMagazziniere(m).Cognome + " - " + client.GetMagazziniere(m).Email);
+                                    {                           
                                         Console.WriteLine(m);
                                     }
                                 }
                                 else
+                                {
                                     Console.WriteLine("Lista dei magazzinieri vuota");
-
+                                }
+                                    
                                 Console.WriteLine("\nPremi un tasto per continuare");
                                 Console.ReadKey();
                                 break;
@@ -635,7 +630,6 @@ namespace Client
                             case 3:
                                 break;
                         }
-
 
                     }
                     catch (FormatException)
@@ -707,8 +701,7 @@ namespace Client
                                         if (client.GetProdotto(p).Quantita >= 1)
                                             disponibile = "DISPONIBILE";
                                         else
-                                            disponibile = "NON DISPONIBILE";
-                                        // TODO: verificare query ed eventuali modifiche
+                                            disponibile = "NON DISPONIBILE";                                      
                                         Console.WriteLine(client.GetProdotto(p).IDprodotto + " - " + client.GetProdotto(p).Nome + " - " + String.Format("{0:0.00}", client.GetProdotto(p).Prezzo) + " euro - " + disponibile + " - " + client.GetProdotto(p).Quantita + "-" + client.GetProdotto(p).Categoria);
                                     }
                                 }
@@ -743,9 +736,7 @@ namespace Client
                                 id = Convert.ToInt32(Console.ReadLine());
 
                                 Console.WriteLine("\nInserire la quantità da aumentare");
-                                quantita = Convert.ToInt32(Console.ReadLine());
-
-                                //client.AumentaGiacenze(id, quantita);
+                                quantita = Convert.ToInt32(Console.ReadLine());                                
 
                                 if (client.AumentaGiacenze(id, quantita))
                                 {
@@ -761,7 +752,6 @@ namespace Client
                                 }
 
                             case 3:
-
                                 try
                                 {
                                     if (client.ListaProdotti().Count() > 0)
@@ -774,7 +764,6 @@ namespace Client
                                                 disponibile = "DISPONIBILE";
                                             else
                                                 disponibile = "NON DISPONIBILE";
-                                            // TODO: verificare query ed eventuali modifiche
                                             Console.WriteLine(client.GetProdotto(z).IDprodotto + " - " + client.GetProdotto(z).Nome + " - " + String.Format("{0:0.00}", client.GetProdotto(z).Prezzo) + " euro - " + disponibile + " - " + client.GetProdotto(z).Quantita + "-" + client.GetProdotto(z).Categoria);
                                         }
                                     }
@@ -786,9 +775,7 @@ namespace Client
 
                                     Console.WriteLine("\nInserire la quantità da diminuire");
                                     quantita_diminuita = Convert.ToInt32(Console.ReadLine());
-
-                                    //client.DiminuisciGiacenze(id_prod, quantita_diminuita);
-
+                               
                                     if (client.DiminuisciGiacenze(id_prod, quantita_diminuita))
                                     {
                                         Console.WriteLine("GIACENZA DIMINUITA");
@@ -811,13 +798,12 @@ namespace Client
                                 break;
 
                             case 4:
-
                                 Console.Clear();
                                 Console.WriteLine("***PRODOTTI IN ESAURIMENTO***");
                                 Console.Clear();
                                 if (client.ListaProdotti().Count() > 0)
                                 {
-                                    Console.WriteLine("***LISTA PRODOTTI***");
+                                    Console.WriteLine("***LISTA PRODOTTI IN ESAURIMENTO***");
                                     //stampo tutti i prodotti
                                     foreach (var p in client.ListaProdotti())
                                     {

@@ -390,6 +390,7 @@ namespace Server
                     {
                         while (reader.Read())
                         {
+                            codice = 0;
                             if (BCrypt.Net.BCrypt.Verify(user.Password, reader.GetString(0)))
                             {
                                 codice = reader.GetInt32(1);
@@ -510,8 +511,6 @@ namespace Server
         /// </summary>
         /// <returns>risultato true or false a seconda dell'esito</returns>
         /// 
-
-
         public bool AumentaGiacenze(int id, int quantita)
         {
             try
