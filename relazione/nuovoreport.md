@@ -51,7 +51,7 @@ Per semplicità di rappresentazione può essere utilizzato UML.
 
 ## Use case
 
-|registraMagazziniere|                                                                                            |
+|**registraMagazziniere**|                                                                                            |
 | ------------------------ |------------------------------------------------------------------------------------------- |
 | Descrizione       | Permette la registrazione di un nuovo magazziniere e ne inserisce i dati all'interno di un database       |
 | Attore            | Un nuovo utente, un magfazziniere o un amministratore                                |
@@ -69,7 +69,7 @@ Per semplicità di rappresentazione può essere utilizzato UML.
 |Eccezioni gestite||
 -->
 
-|loginUtente|
+|**loginUtente**|
 |------------------------| ----------------------------------------------------------------------------------------|
 |Descrizione|Permette a un utente registrato in precedenza, e quindi presente all'interno del database, di effettuare l'accesso al sistema con le sue credenziali di mail e password|
 |Attore|Un qualsiasi utente già registrato|
@@ -77,7 +77,7 @@ Per semplicità di rappresentazione può essere utilizzato UML.
 |Svolgimento|Vengono richieste mail e password, viene controllata la loro correttezza e la loro presenza all'interno della base di dati. In caso di username o password errata viene visualizzato un errore|
 |Eccezioni gestite|La password non può essere vuota|
 
-|incrementaQta|
+|**incrementaQta**|
 |------------------------| ----------------------------------------------------------------------------------------|
 |Descrizione|Permetyte di incrementare la quantità di un prodotto|
 |Attore|Un qualsiasi utente|
@@ -85,42 +85,42 @@ Per semplicità di rappresentazione può essere utilizzato UML.
 |Svolgimento|Viene richiesto l'identificativo del prodotto e la quantità per la quale egli deve essere incrementato.|
 |Eccezioni gestite||
 
-|decrementaQta|
+|**decrementaQta**|
 |------------------------| ----------------------------------------------------------------------------------------|
 |Descrizione|Permette di decrementare la quantità di un prodotto|
 |Attore|Un qualsiasi utente|
 |Frequenza d'uso|Ogniqualvolta vi è la necessità di decrementare la quantità di un elemento del magazzino|
 |Svolgimento|Viene richiesto l'identificativo del prodotto e la quantità per la quale egli deve essere decrementato. Viene fatto un controllo sulla quantità presente in magazzino. Se il sottraendo è maggiore del sottraendo allora viene stampato un messaggio di errore.|
 
-|stampaProdotti|
+|**stampaProdotti**|
 |------------------------| ----------------------------------------------------------------------------------------|
 |Descrizione|Vengono stampati tutti i prodotti presenti in magazzino, con le informazioni a loro collegate.|
 |Attore|Qualsiasi magazziniere|
 |Frequenza d'uso|Ogniqualvolta vi sia necessità di visualizzare le informazioni relative ai prodotti presenti nel magazzino.|
 |Svolgimento|La base di dati viene interrogata al fine di ottenere la lista di prodotti con le relative informazioni salvate. Se un prodotto risulta avere una scarsa quantità al momento dell'interrogazione, verrà stampato un messaggio in corrispondenza dello stesso.|
 
-|stampaMagazzinieri|
+|**stampaMagazzinieri**|
 |------------------------| ----------------------------------------------------------------------------------------|
 |Descrizione|Consente di ottenere le informazioni relative ai magazzinieri registrati. Per questioni di riservatezza non vengono inclusi gli amministratori e le loro informazioni di accesso.|
 |Attore|Qualsiasi magazziniere|
 |Frequenza d'uso|Ogniqualvolta un magazzziniere dovesse avere bisogno di contattare un altro magazziniere per necessità lavorative. Non vengono inclusi gli amministratori poichè la presenza di questi ultimi è sempre prevista all'interno dell'azienda.|
 |Svolgimento|Viene effettuata una query di selezione sulla base di dati. I dati vengono letti dal sistema e sottoposti all'attore che ne ha fatto richiesta.|
 
-|modificaProdotto|
+|**modificaProdotto**|
 |------------------------| ----------------------------------------------------------------------------------------|
 |Descrizione|Permette di modificare le informazioni relative ai prodotti presenti nel magazzino.|
 |Attore|Qualsiasi amministratore (più genericamente l'utenza con privilegi elevati)|
 |Frequenza d'uso|Ogniqualvolta vi sia necessità di modificare le informazioni relative a un elemento del magazzino diverse ma non escluse dalla quantità|
 |Svolgimento|Viene richiesto l'identificativo del prodotto e quale proprietà si intende modificare. Viene poi richiesto il nuovo valore della suddetta.|
 
-|nuovoProdotto|
+|**nuovoProdotto**|
 |------------------------| ----------------------------------------------------------------------------------------|
 |Descrizione|Permette di aggiungere un prodotto al database|
 |Attore|Qualsiasi amministatore|
 |Frequenza d'uso|Ogniqualvolta suia necessario inserire un prodotto da zero nella base di dati|
 |Svolgimento|Vengono richieste tutte le informazioni del nuovo prodotto, per poi essere inviate al database.|
 
-|eliminaProdotto|
+|**eliminaProdotto**|
 |------------------------| ----------------------------------------------------------------------------------------|
 |Descrizione|Permette di eliminare un prodotto dal database|
 |Attore|Qualsiasi amministatore|
@@ -151,3 +151,77 @@ Al fine di validare i requisiti evidenziati, sono state utilizzate le CRC cards:
 
 Questo approccio, anche se successivo al brainstorming, ha permesso di verificare la correttezza dei casi d'uso e delle associazioni. Ha permesso inoltre una correzione degli stessi e ha chiarito, tramite un processo di realizzazione teorica dei casi d'uso, che non vi erano classi che non erano state considerate.
 
+# Le scelte progettuali
+
+## Le classi e UML
+Una volta tradotte le entità in classi, i loro attributi e i loro metodi sono stati rappresentati utilizzando UML: unified modeling language.
+
+Siccome a livello di accesso e all'interno del database non è necessario distinguere tra magazzinieri e amministratori come entità, anche a livello di codice si è pensato di effettuare una distinzione in fase di recupero delle informazioni di accesso durante il login.
+
+![](images/umlaggiornato.png)
+
+
+Infatti, all'interno del database, ogni account possiede un valore in corrispondenza del campo `TipoAccount`. Quando il valore è settato a `1` l'account è di tipo amministratore e possiede privilegi elevati, altrimenti se è di tipo `2` (default) è un magazziniere. Questo è stato pensato per ottenere un layering di funzionalità che fosse più facile da estendere in momenti successivi (si pensi a un'utenza di tipo `3` per utenti ospiti o esterni, `4` per i super amministratori e così via). Questo spiega anche come mai il campo in questione non sia stato pensato come un booleano.
+
+### Controllo dei privilegi
+Il tipo di provilegio è specificato nel record dell'account, in fase di login questo viene letto dall'applicazione.
+
+```csharp
+int codice = 0;
+using (MySqlCommand command1 = conn.CreateCommand())
+{
+    // check password with hash
+    command1.CommandText = "SELECT password, TipoAccount FROM account WHERE email='"
+    + user.Email.Trim().ToLower() + "'";
+    
+    using (MySqlDataReader reader = command1.ExecuteReader())
+    {
+        while (reader.Read())
+        {
+            codice = 0;
+            if (BCrypt.Net.BCrypt.Verify(user.Password, reader.GetString(0)))
+            {
+                codice = reader.GetInt32(1);
+            }
+        }
+    }
+}
+return codice;
+```
+
+
+Successivamente viene valutato quale menù somministrare.
+```csharp
+
+int code = client.UserLogin(login); //invio i dati al server e assegno un codice di ritorno
+
+switch (code)
+{
+    //login errato
+    case 0:
+        Console.WriteLine("Login errato!");
+        Console.WriteLine("\nPremi un tasto per continuare");
+        Console.ReadKey();
+        break;
+
+    //admin
+    case 1:
+        IsAdmin();
+        break;
+
+
+    //Magazziniere
+    case 2:
+        IsMagazziniere(login, psw);
+        break;
+}
+```
+
+## La comunicazione tra applicazione e database
+Siccome i dati del magazzino sono contenuti all'interno di un database, e vi è un continuo scambio di informazioni tra client e db, è stato necessario implementare un proxy tra gli oggetti contenuti nella base di dati e quelli istanziati dalle classi.
+
+In realtà l'applicazione non dipende dall'identità dei dati, e vi sono stati degli oggetti che devono essere estratti e presentati molto frequentemente.
+
+È possibile quindi implementare un c.d. *proxy* al fine di avere un sostituto di un oggetto capace di rappresentare le stesse informazioni, con la possibilità di eseguirci operazioni e di salvarne gli stati mantenendo però un basso livello di occupazione in memoria dal lato dell'applicazione.
+
+Il desing pattern di tipo proxy infatti permette di recuperare le informazioni dalla base di dati, di effettuare modifiche o alterare proprietà "al volo" e di salvare le modifiche all'interno della base di dati.
