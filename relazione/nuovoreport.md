@@ -91,7 +91,13 @@ Per semplicità di rappresentazione può essere utilizzato UML.
 |Attore|Un qualsiasi utente|
 |Frequenza d'uso|Ogniqualvolta vi è la necessità di decrementare la quantità di un elemento del magazzino|
 |Svolgimento|Viene richiesto l'identificativo del prodotto e la quantità per la quale egli deve essere decrementato. Viene fatto un controllo sulla quantità presente in magazzino. Se il sottraendo è maggiore del sottraendo allora viene stampato un messaggio di errore.|
-|Eccezioni gestite||
+
+|stampaProdotti|
+|------------------------| ----------------------------------------------------------------------------------------|
+|Descrizione|Vengono stampati tutti i prodotti presenti in magazzino, con le informazioni a loro collegate.|
+|Attore|Qualsiasi magazziniere|
+|Frequenza d'uso|Ogniqualvolta vi sia necessità di visualizzare le informazioni relative ai prodotti presenti nel magazzino.|
+|Svolgimento|La base di dati viene interrogata al fine di ottenere la lista di prodotti con le relative informazioni salvate. Se un prodotto risulta avere una scarsa quantità al momento dell'interrogazione, verrà stampato un messaggio in corrispondenza dello stesso.|
 
 |stampaMagazzinieri|
 |------------------------| ----------------------------------------------------------------------------------------|
@@ -99,7 +105,6 @@ Per semplicità di rappresentazione può essere utilizzato UML.
 |Attore|Qualsiasi magazziniere|
 |Frequenza d'uso|Ogniqualvolta un magazzziniere dovesse avere bisogno di contattare un altro magazziniere per necessità lavorative. Non vengono inclusi gli amministratori poichè la presenza di questi ultimi è sempre prevista all'interno dell'azienda.|
 |Svolgimento|Viene effettuata una query di selezione sulla base di dati. I dati vengono letti dal sistema e sottoposti all'attore che ne ha fatto richiesta.|
-|Eccezioni gestite||
 
 |modificaProdotto|
 |------------------------| ----------------------------------------------------------------------------------------|
@@ -107,8 +112,20 @@ Per semplicità di rappresentazione può essere utilizzato UML.
 |Attore|Qualsiasi amministratore (più genericamente l'utenza con privilegi elevati)|
 |Frequenza d'uso|Ogniqualvolta vi sia necessità di modificare le informazioni relative a un elemento del magazzino diverse ma non escluse dalla quantità|
 |Svolgimento|Viene richiesto l'identificativo del prodotto e quale proprietà si intende modificare. Viene poi richiesto il nuovo valore della suddetta.|
-|Eccezioni gestite||
 
+|nuovoProdotto|
+|------------------------| ----------------------------------------------------------------------------------------|
+|Descrizione|Permette di aggiungere un prodotto al database|
+|Attore|Qualsiasi amministatore|
+|Frequenza d'uso|Ogniqualvolta suia necessario inserire un prodotto da zero nella base di dati|
+|Svolgimento|Vengono richieste tutte le informazioni del nuovo prodotto, per poi essere inviate al database.|
+
+|eliminaProdotto|
+|------------------------| ----------------------------------------------------------------------------------------|
+|Descrizione|Permette di eliminare un prodotto dal database|
+|Attore|Qualsiasi amministatore|
+|Frequenza d'uso|Ogniqualvolta sia necessario rimuovere definitivamente un prodotto dalla base di dati|
+|Svolgimento|Viene richiesto l'identificativo del prodotto da rimuovere|
 
 
 # Analisi dei requisiti
