@@ -5,185 +5,225 @@ subtitle: Corso di Laurea in Ingegneria dei sistemi informativi
 geometry: margin= 2.5cm
 ---
 
-![](images/logoUnipr.png)
+![](images/uniprNT.png){width=250, align=center}
+\newpage
 
-# Il progetto in breve
-Nasce come sistema per gestire un magazzino di prodotti, da impiegare nel reparto logistica di una realtà aziendale. Il sistema prevede due tipologie di account: l'admin e il magazziniere. Il primo è un account riservato al responsabile di magazzino, mentre ogni magazziniere ha il proprio account con permessi limitati. Per rendere la realizzazione del programma e il suo relativo impiego il più realistico possibile, si è pensato allo sviluppo di un'applicazione a riga di comando.
+# SRS
+Il SRS, *Software Requirements Specifications* è un documento che descrive il sistema software sviluppato, elencandone i functional e i non functional requirements. Sono anche indicati i casi d'uso.
 
-In fase di progettazione si è pensato di tenere il funzionamento del sistema limitatamente al reparto di magazzino, senza avere quindi la necessità di comunicare con applicativi o basi di dati relative ad altri uffici. Questo spiega anche l'assenza di interfacce grafiche e di elementi aggiuntivi superflui quali immagini: i destinatari e gli utilizzatori dell'applicativo identificano i prodotti tramite i codici degli stessi, e sono poco interessati alle immagini o alle altre caratteristiche.
+## Introduzione
+Il progetto nasce con lo scopo di gestire il magazzino di una piccola realtà aziendale, le cui principali esigenze sono quelle di tenere traccia delle giacenze in maniera precisa, anche scollegata dal resto degli uffici in azienda. Come specificato dallo stakeholder, l'azienda si occupa di montaggi di attrezzature, i prodotti in magazzino non vengono propriamente venduti. Questo comporta quindi che l'applicativo avrà un uso interno limitato al reparto di magazzino, al fine di monitorare l'assenza temporanea di attrezzature, senza avere quindi una reale necessità di comunicare con altri settori aziendali.
 
-## Composizione del progetto
-Il progetto si compone di una parte client basata su una interfaccia a riga di comando, e una server, rappresentata da un server db manager che utilizza i servizi WCF forniti dal .NET Framework di Microsoft. Il linguaggio di programmazione utilizzato è C#, affiancato in alcuni punti dal linguaggio SQL per l'interazione con il database che è di tipo MySQL.
+## Descrizione generale
+La gestione del magazzino è un aspetto chiave all'interno di un'azienda, anche se non si tratta di prodotti da vendere. L'applicativo sviluppato permette una gestione rapida e univoca di tutte le attrezzature presenti in magazzino. A causa dell'utilizzo finale e dei *domain requirements* rilevati a colloquio con lo stakeholder, si è pensato a un'interfaccia di gestione dell'applicativo da riga di comando, in quanto durante le operazioni di gestione gli utenti identificano un prodotto in base al suo codice interno identificativo, e non prestano attenzione ad altri dettagli quali foto o altri elementi grafici.
 
-# Le fasi di progettazione
+# Le funzionalità e i requisiti
 
-## Studio di fattibilità e analisi dei requisiti
-Il progetto, dovendo utilizzare tecnologie fornite da .NET Framework, doveva essere sviluppato su una macchina con sistema operativo Windows.
+- ogni magazziniere dovrebbe avere il proprio accont personale;
+- ogni magazziniere dovrebbe essere in grado di gestire *la quantità* di un singolo prodotto;
+- ogni magazziniere dovrebbe essere in grado di conoscere i dati identificativi dei colleghi;
+- i magazzinieri non dovrebbero essere in grado di modificare la composizione del magazzino, ovvero aggiungere, modificare o eliminare i prodotti;
+- un nuovo magazziniere può registrarsi e accedere al sistema;
+- l'accesso al sistema è garantito da un'utenza (tipo account);
+- il suddetto deve essere personale, e le informazioni di accesso devono essere conservate in maniera criptata;
+- la gestione degli account, e le informazioni a loro connesse devono rispettare la triade CIA;
+- dovrebbe essere prevista un'utenza con privilegi aggiuntivi capace di effettuare operazioni non consentite ai magazzinieri;
+- i prodotti devono poter essere identificati in maniera univoca;
+- devono essere registarte tutte le informazioni riguardanti un prodotto
+  - il suo prezzo, in caso di danneggiamento o smarrimento
+  - una breve descrizione, al fine di conoscere informazioni aggiuntive
+  - un nome generico per un eventuale controllo secondario di tipo visivo
 
-Unitamente all'IDE Visual Studio sono state installate le estensioni consigliate. Come sistema di gestione di database, a fronte della scelta di volerlo gestire in MySQL, è stato effettuato il download dell'applicativo XAMPP (in quanto utilizzato in un insegnamento passato).
+# Elicitation e attività di supporto
+Come attività di supporto all'elicitation, ovvero la raccolta di informazioni, è stato scelto un approccio di tipo *brainstorming*, in quanto la strategia di *focus group* è stata ritenuta infattibile a causa del ridotto numero di partecipanti al progetto (2).
 
-I requisiti tecnici per lo sviluppo del progetto erano quindi soddisfatti.
+## Il brainstorming
+Nella prima fase, ovvero quella di storm, sono state raccolte le informazioni partendo dalla conoscenza delle funzionalità da implementare, e delle caratteristiche del dominio in esame. Le idee genarate dalla prima fase sono state successivamente filtrate in quella che è la seconda fase, ovvero quella di calm.
 
-## Progettazione logica
-La progettazione logica parte dal riconoscimento delle entità coinvolte e dal loro posizionamento in uno schema relazionale.
+Idee similari sono state unite e sono stati definiti e applicati i criteri di accettabilità.
 
-Le prime entità sono risultate essere:
+# I casi d'uso 
+I casi d'uso, o use cases, sono strettamente collegati con i requisiti, in quanto ogni requirement deve essere coperto da un caso d'uso.
 
-- Utenti
-- Prodotti
-- Ordini
-- Categorie
+La loro nomenclatura deve essere auto esplicativa, per questo motivo infatti uno use case è chiamato come l'azione che compie nei confronti di una entità.
 
-Nello specifico, le prime relazioni tra entità sono risultate essere le seguenti:
+Per semplicità di rappresentazione può essere utilizzato UML.
 
-- Una categoria contiene più prodotti, ma un prodotto fa parte di una sola categoria.
-- Un ordine può essere composto da più prodotti, e un prodotto può essere presente in più ordini.
-- Un utente del magazzino può essere un magazziniere oppure admin, e avere quindi privilegi aggiuntivi.
+## Use case
 
-## Progettazione relazionale
-Tenendo conto dei vincoli di integrità referenziale si è proceduto alla scelta dei campi per ogni entità, ottenendo alla fine il seguente schema logico:
+|**registraMagazziniere**|                                                                                            |
+| ------------------------ |------------------------------------------------------------------------------------------- |
+| Descrizione       | Permette la registrazione di un nuovo magazziniere e ne inserisce i dati all'interno di un database       |
+| Attore            | Un nuovo utente, un magfazziniere o un amministratore                                |
+| Frequenza d'uso   | Ogniqualvolta un magazziniere deve essere aggiunto al database                                    |
+| Svolgimento       | Vengono richieste le informazioni identificative del magazziniere, insieme a una password per gli accessi futuri |
+| Eccezioni gestite | Se la mail risulta essere già registrata viene comunicato, se la password non rispetta le condizioni viene comunicato, la mail deve corrispondere a un formato mail. È previsto il controllo con una regex |
 
-![](images/conuml.png)
+<!--
+||
+|------------------------| ----------------------------------------------------------------------------------------|
+|Descrizione||
+|Attore||
+|Frequenza d'uso||
+|Svolgimento||
+|Eccezioni gestite||
+-->
 
-In seguito alla lettura delle relazioni sopracitate, si è rivelato necessario l'inserimento di entità aggiuntive, al fine di gestire le relazioni di tipo N-N tra quelle esistenti.
+|**loginUtente**|
+|------------------------| ----------------------------------------------------------------------------------------|
+|Descrizione|Permette a un utente registrato in precedenza, e quindi presente all'interno del database, di effettuare l'accesso al sistema con le sue credenziali di mail e password|
+|Attore|Un qualsiasi utente già registrato|
+|Frequenza d'uso|Ogniqualvolta un utente ha necessità di operare con la piattaforma al fine di effettuarvi l'accesso, per visionare o modificarne i dati|
+|Svolgimento|Vengono richieste mail e password, viene controllata la loro correttezza e la loro presenza all'interno della base di dati. In caso di username o password errata viene visualizzato un errore|
+|Eccezioni gestite|La password non può essere vuota|
 
-- Composizione: al fine di gestire la relazione N a N tra prodotti e ordini
-- Account  Amministratore: possiede un flag con un valore particolare che permette di distinguerlo in fase di login. È possibile la coesistenza di più amministratori.
+|**incrementaQta**|
+|------------------------| ----------------------------------------------------------------------------------------|
+|Descrizione|Permetyte di incrementare la quantità di un prodotto|
+|Attore|Un qualsiasi utente|
+|Frequenza d'uso|Ogniqualvolta vi è la necessità di incrementare la quantità di un elemento del magazzino|
+|Svolgimento|Viene richiesto l'identificativo del prodotto e la quantità per la quale egli deve essere incrementato.|
+|Eccezioni gestite||
 
-Una volta incluse le entità sopracitate, unitamente alla specificazione dei campi da inserire nelle stesse, è stato possibile ottenere una bozza di schema del database:
+|**decrementaQta**|
+|------------------------| ----------------------------------------------------------------------------------------|
+|Descrizione|Permette di decrementare la quantità di un prodotto|
+|Attore|Un qualsiasi utente|
+|Frequenza d'uso|Ogniqualvolta vi è la necessità di decrementare la quantità di un elemento del magazzino|
+|Svolgimento|Viene richiesto l'identificativo del prodotto e la quantità per la quale egli deve essere decrementato. Viene fatto un controllo sulla quantità presente in magazzino. Se il sottraendo è maggiore del sottraendo allora viene stampato un messaggio di errore.|
 
-> *In grassetto sono state indicate le chiavi primarie*
-> 
-> *In corsivo i vincoli di integrità referenziale sono stati tradotti in chiavi esterne*
+|**stampaProdotti**|
+|------------------------| ----------------------------------------------------------------------------------------|
+|Descrizione|Vengono stampati tutti i prodotti presenti in magazzino, con le informazioni a loro collegate.|
+|Attore|Qualsiasi magazziniere|
+|Frequenza d'uso|Ogniqualvolta vi sia necessità di visualizzare le informazioni relative ai prodotti presenti nel magazzino.|
+|Svolgimento|La base di dati viene interrogata al fine di ottenere la lista di prodotti con le relative informazioni salvate. Se un prodotto risulta avere una scarsa quantità al momento dell'interrogazione, verrà stampato un messaggio in corrispondenza dello stesso.|
 
-categoria (**IDcategoria**, nome)
+|**stampaMagazzinieri**|
+|------------------------| ----------------------------------------------------------------------------------------|
+|Descrizione|Consente di ottenere le informazioni relative ai magazzinieri registrati. Per questioni di riservatezza non vengono inclusi gli amministratori e le loro informazioni di accesso.|
+|Attore|Qualsiasi magazziniere|
+|Frequenza d'uso|Ogniqualvolta un magazzziniere dovesse avere bisogno di contattare un altro magazziniere per necessità lavorative. Non vengono inclusi gli amministratori poichè la presenza di questi ultimi è sempre prevista all'interno dell'azienda.|
+|Svolgimento|Viene effettuata una query di selezione sulla base di dati. I dati vengono letti dal sistema e sottoposti all'attore che ne ha fatto richiesta.|
 
-prodotto (**IDprodotto**, nome, descrizione, prezzo, quantita, *fk_categoria*)
+|**modificaProdotto**|
+|------------------------| ----------------------------------------------------------------------------------------|
+|Descrizione|Permette di modificare le informazioni relative ai prodotti presenti nel magazzino.|
+|Attore|Qualsiasi amministratore (più genericamente l'utenza con privilegi elevati)|
+|Frequenza d'uso|Ogniqualvolta vi sia necessità di modificare le informazioni relative a un elemento del magazzino diverse ma non escluse dalla quantità|
+|Svolgimento|Viene richiesto l'identificativo del prodotto e quale proprietà si intende modificare. Viene poi richiesto il nuovo valore della suddetta.|
 
-ordine (**IDordine**, data)
+|**nuovoProdotto**|
+|------------------------| ----------------------------------------------------------------------------------------|
+|Descrizione|Permette di aggiungere un prodotto al database|
+|Attore|Qualsiasi amministatore|
+|Frequenza d'uso|Ogniqualvolta suia necessario inserire un prodotto da zero nella base di dati|
+|Svolgimento|Vengono richieste tutte le informazioni del nuovo prodotto, per poi essere inviate al database.|
 
-composizione (**IDcomposizione**, *fk_prodotto*, *fk_ordine*, quantita)
+|**eliminaProdotto**|
+|------------------------| ----------------------------------------------------------------------------------------|
+|Descrizione|Permette di eliminare un prodotto dal database|
+|Attore|Qualsiasi amministatore|
+|Frequenza d'uso|Ogniqualvolta sia necessario rimuovere definitivamente un prodotto dalla base di dati|
+|Svolgimento|Viene richiesto l'identificativo del prodotto da rimuovere|
 
-account (**IDaccount**, password, nome, cognome, email, indirizzo, data_nascita,  telefono, TipoAccount)
 
-### La traduzione in linguaggio SQL
-Lo schema è stato quindi tradotto in linguaggio SQL per creare le tabelle con i campi coerenti con i tipi di dato necessarie alla corretta rappresentazione delle entità all'interno del database.
+# Analisi dei requisiti
+Al fine di affinare i requisiti da implementare nel sistema, è stata effettuata anche un'analisi degli stessi, cercando inoltre di individuarne di nuovi. Nello specifico è stato utilizzato un approccio misto.
 
-Siccome in SQL non è possibile utilizzare liste di oggetti come tipi di dato, è stata necessaria (e doverosa per la correttezza della teoria) una traduzione del campo `prodottiOrdinati` di tipo lista di prodotti. Questo aspetto è trattato dal design pattern `adapter` che come intuibile dal nome si occupa di garantire una collaborazione tra oggetti con interfacce differenti attraverso una traduzione e un adattamento.
+## Analisi delle classi
+Prima di tutto è stata necessaria l'astrazione delle entità che componevano il problema. Le entità sono state estratte in classi. Unitamente alla loro astrazione sono stati gestiti i functional requirements.
 
-L'immagine è alquanto esplicativa
+Sono state poste in essere inoltre delle tecniche con l'obiettivo di scoprire nuove classi coinvolte nel problema.
 
-![](images/adapter.png)
+## Analisi nome-verbo
+Dai dati raccolti insieme allo stakeholder è emersa la necessità di riunire i prodotti in categorie: è stata quindi aggiunta al progetto l'entità `categoria`
 
-```sql
-CREATE DATABASE IF NOT EXISTS magazzino;
+## Analisi dei casi d'uso
+Partendo dai casi d'uso raccolti insieme allo stakeholder non è stato riscontrata alcuna necessità di inserimento di nuove entità
 
-USE magazzino;
+## CRC
+Al fine di validare i requisiti evidenziati, sono state utilizzate le CRC cards:
 
-CREATE TABLE categoria (
-  IDcategoria int(11) NOT NULL AUTO_INCREMENT PRIMARY KEY,
-  nome varchar(255) NOT NULL
-);
+- Class name
+- Responsabilities
+- Collaborators
 
-CREATE TABLE prodotto (
-  IDprodotto int(11) NOT NULL AUTO_INCREMENT PRIMARY KEY,
-  nome varchar(255) NOT NULL,
-  descrizione text NOT NULL,
-  prezzo text NOT NULL,
-  quantita int(11) NOT NULL,
-  fk_categoria int(11) NOT NULL,
-  Foreign Key (fk_categoria) REFERENCES categoria(IDcategoria) ON DELETE CASCADE
-);
+Questo approccio, anche se successivo al brainstorming, ha permesso di verificare la correttezza dei casi d'uso e delle associazioni. Ha permesso inoltre una correzione degli stessi e ha chiarito, tramite un processo di realizzazione teorica dei casi d'uso, che non vi erano classi che non erano state considerate.
 
-CREATE TABLE ordine (
-  IDordine int(11) NOT NULL AUTO_INCREMENT PRIMARY KEY,
-  data date NOT NULL
-);
+# Le scelte progettuali
 
-CREATE TABLE composizione (
-  IDcomposizione int(11) NOT NULL AUTO_INCREMENT PRIMARY KEY,
-  fk_prodotto int(11) NOT NULL,
-  fk_ordine int(11) NOT NULL,
-  quantita int(11) NOT NULL,
-  Foreign Key (fk_prodotto) REFERENCES prodotto(IDprodotto) ON DELETE CASCADE,
-  Foreign Key (fk_ordine) REFERENCES ordine(IDordine) ON DELETE CASCADE
-);
+## Le classi e UML
+Una volta tradotte le entità in classi, i loro attributi e i loro metodi sono stati rappresentati utilizzando UML: unified modeling language.
 
-CREATE TABLE account (
-  IDutente int(11) NOT NULL AUTO_INCREMENT PRIMARY KEY,
-  password varchar(255) NOT NULL,
-  nome text NOT NULL,
-  cognome text NOT NULL,
-  email text NOT NULL,
-  indirizzo text NOT NULL,
-  data_nascita date NOT NULL,
-  telefono text NOT NULL,
-  TipoAccount int(1) NOT NULL,
-  Foreign Key (fk_login) REFERENCES account(IDlogin) ON DELETE CASCADE
- );
-```
+Siccome a livello di accesso e all'interno del database non è necessario distinguere tra magazzinieri e amministratori come entità, anche a livello di codice si è pensato di effettuare una distinzione in fase di recupero delle informazioni di accesso durante il login.
 
-# I metodi
-Siccome i nomi dei metodi sono abbastanza auto esplicativi, questa sezione è mirata a spiegarne le scelte e i ragionamenti che ci stanno dietro.
+![](images/umlaggiornato.png)
 
-## Filosofia e privilegi d'accesso
-Come detto in precedenza, il sistema è pensato per essere utilizzato da due tipologie di account: i magazzinieri e gli amministratori. Di conseguenza sono previsti due differenti livelli di accesso e manipolazione dei dati presenti nel database. L'accesso tradizione, di amministrazione ordinaria previsto per i magazzinieri, consente di evadere ordini, quindi di diminuire la quantità dei prodotti presenti in magazzino, così come gestire eventuali resi e di conseguenza aumentare la giacenza. I metodi non possiedono una particolare motivazione di invocazione ma si concentrano sul risultato e sulla funzione implementata. Per essere più chiari e spiegare senza troppi giri di parole, si potrebbe dire che i metodi sono pensati per **ottenere un risultato**, piuttosto che **gestire una situazione**, in quanto la valutazione è demandata al magazziniere.
 
-In precedenza è stato fatto l'esempio della diminuzione della giacenza in seguito all'evasione di un ordine. In realtà si potrebbe pensare a un caso di un prodotto, o un lotto di prodotti che viene danneggiato o che per altri motivi non può essere venduto o tenuto in magazzino. La gestione della situazione confluirebbe comunque nella diminuzione della quantità del prodotto in questione.
+Infatti, all'interno del database, ogni account possiede un valore in corrispondenza del campo `TipoAccount`. Quando il valore è settato a `1` l'account è di tipo amministratore e possiede privilegi elevati, altrimenti se è di tipo `2` (default) è un magazziniere. Questo è stato pensato per ottenere un layering di funzionalità che fosse più facile da estendere in momenti successivi (si pensi a un'utenza di tipo `3` per utenti ospiti o esterni, `4` per i super amministratori e così via). Questo spiega anche come mai il campo in questione non sia stato pensato come un booleano.
 
-<!-- esempio di codice della diminuzione e spiegazione del perché è più complessa dell'aumento -->
+### Controllo dei privilegi
+Il tipo di provilegio è specificato nel record dell'account, in fase di login questo viene letto dall'applicazione.
 
 ```csharp
 //Service1.cs
-public bool DiminuisciGiacenze(int id, int quantita)
-{
-    int attuale = 0;
-    try
-    {
-        bool risultato = false;
-        using (MySqlCommand command0 = conn.CreateCommand())
-        {
-            command0.CommandText = "SELECT quantita from prodotto where IDProdotto ='" + id + "'";
-            using (MySqlDataReader reader = command0.ExecuteReader())
-            {
-                while (reader.Read())
-                {
-                    attuale = reader.GetInt32(0);
-                }
-            }
 
-            if (attuale < quantita)
+int codice = 0;
+using (MySqlCommand command1 = conn.CreateCommand())
+{
+    // check password with hash
+    command1.CommandText = "SELECT password, TipoAccount FROM account WHERE email='"
+    + user.Email.Trim().ToLower() + "'";
+
+    using (MySqlDataReader reader = command1.ExecuteReader())
+    {
+        while (reader.Read())
+        {
+            if (BCrypt.Net.BCrypt.Verify(user.Password, reader.GetString(0)))
             {
-                Console.WriteLine("impossibile diminuire giacenze, numero troppo alto");
-                return risultato; //false perchè att < quantita e non è possibile
-            }
-            else
-            {
-                using (MySqlCommand command1 = conn.CreateCommand())
-                {
-                    command1.CommandText = "UPDATE prodotto SET quantita = quantita -' "
-                    + quantita + " ' WHERE IDProdotto = ' " + id + " ' ";
-                    
-                    using (MySqlDataReader reader = command1.ExecuteReader()) ;
-                }
-                risultato = true;
+                codice = reader.GetInt32(1);
             }
         }
-        return risultato;
     }
-    catch (Exception)
-    {
-        throw new Exception();
-    }
+}
+return codice;
+```
+
+
+Successivamente viene valutato quale menù somministrare.
+```csharp
+//Program.cs
+
+int code = client.UserLogin(login); //invio i dati al server e assegno un codice di ritorno
+
+switch (code)
+{
+    //login errato
+    case 0:
+        Console.WriteLine("Login errato!");
+        Console.WriteLine("\nPremi un tasto per continuare");
+        Console.ReadKey();
+        break;
+
+    //admin
+    case 1:
+        IsAdmin();
+        break;
+
+
+    //Magazziniere
+    case 2:
+        IsMagazziniere(login, psw);
+        break;
 }
 ```
 
-Il metodo per diminuire la giacenza è un po' più complesso del suo gemello per aumentarla, poichè è necessario un controllo preliminare: se la quantità che si vuole sottrarre alla giacenza è maggiore di quest'ultima si avrà una situazione di errore: la disponibilità non può essere negativa. Per cui in questa caso verrà mostrato un alert e l'operazione di diminuzione sarà impedita.
+## La comunicazione tra applicazione e database
+Siccome i dati del magazzino sono contenuti all'interno di un database, e vi è un continuo scambio di informazioni tra client e db, è stato necessario implementare un proxy tra gli oggetti contenuti nella base di dati e quelli istanziati dalle classi.
 
-Tornando alle funzionalità previste per l'utenza a privilegi base vi è quella di stampare alle informazioni di contatto (nome, mail, telefono) degli altri magazzinieri, in modo da poter conoscere i riferimenti di contatto per una eventuale necessità. Non rientrano nella stampa gli amministratori poiché è  ragionevole pensare che un responsabile sia sempre presente in magazzino e qualora dovesse assentarsi sarebbe lui a comunicarlo, oltre che per motivi di sicurezza.
+In realtà l'applicazione non dipende dall'identità dei dati, e vi sono stati degli oggetti che devono essere estratti e presentati molto frequentemente.
 
-I magazzinieri inoltre possono in qualunque momento ottenere una stampa dei prodotti presenti in magazzino, ma non possono cancellare le informazioni di un prodotto o aggiungerne uno nuovo.
+È possibile quindi implementare un c.d. *proxy* al fine di avere un sostituto di un oggetto capace di rappresentare le stesse informazioni, con la possibilità di eseguirci operazioni e di salvarne gli stati mantenendo però un basso livello di occupazione in memoria dal lato dell'applicazione.
 
-## Metodi a privilegi elevati
-Possibilità che invece è concessa agli utenti amministratori con privilegi elevati, i quali possono anche registrare e inserire nel database nuovi magazzinieri. Tuttavia non dispongono privilegi sufficienti per inserire o rimuiovere dal sistema un amministratiore: questa operazione per ragioni di sicurezza e confidenzialità è fattibile solamente da operatori di sistema che hanno accesso diretto al database, i quali agiscono su richiesta del responsabile di stabilimento.
-
+Il desing pattern di tipo proxy infatti permette di recuperare le informazioni dalla base di dati, di effettuare modifiche o alterare proprietà "al volo" e di salvare le modifiche all'interno della base di dati.
