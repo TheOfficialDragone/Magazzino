@@ -18,20 +18,6 @@ CREATE TABLE prodotto (
   Foreign Key (fk_categoria) REFERENCES categoria(IDcategoria) ON DELETE CASCADE
 );
 
-CREATE TABLE ordine (
-  IDordine int(11) NOT NULL AUTO_INCREMENT PRIMARY KEY,
-  data date NOT NULL
-);
-
-CREATE TABLE composizione (
-  IDcomposizione int(11) NOT NULL AUTO_INCREMENT PRIMARY KEY,
-  fk_prodotto int(11) NOT NULL,
-  fk_ordine int(11) NOT NULL,
-  quantita int(11) NOT NULL,
-  Foreign Key (fk_prodotto) REFERENCES prodotto(IDprodotto) ON DELETE CASCADE,
-  Foreign Key (fk_ordine) REFERENCES ordine(IDordine) ON DELETE CASCADE
-);
-
 CREATE TABLE account(
   IDutente int(11) NOT NULL AUTO_INCREMENT PRIMARY KEY,
   password varchar(255) NOT NULL,
@@ -44,6 +30,7 @@ CREATE TABLE account(
   TipoAccount int(10) NOT NULL
  );
 
+-- assicurarsi di effettuare il bcrypt di 1 e test prima di updare sql
 INSERT INTO account(password, nome, cognome, email, indirizzo, data_nascita, telefono, TipoAccount)
 VALUES ('1', 'Admin', 'Admin', 'admin@test.local', 'parma', '2000/01/01', '1234567890', '1'),
 ('test', 'magazziniere', 'test', 'magazziniere@test.local', 'parma', '2002/12/12', '1234567890', '2')
