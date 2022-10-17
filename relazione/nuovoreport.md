@@ -167,18 +167,19 @@ Infatti, all'interno del database, ogni account possiede un valore in corrispond
 Il tipo di provilegio è specificato nel record dell'account, in fase di login questo viene letto dall'applicazione.
 
 ```csharp
+//Service1.cs
+
 int codice = 0;
 using (MySqlCommand command1 = conn.CreateCommand())
 {
     // check password with hash
     command1.CommandText = "SELECT password, TipoAccount FROM account WHERE email='"
     + user.Email.Trim().ToLower() + "'";
-    
+
     using (MySqlDataReader reader = command1.ExecuteReader())
     {
         while (reader.Read())
         {
-            codice = 0;
             if (BCrypt.Net.BCrypt.Verify(user.Password, reader.GetString(0)))
             {
                 codice = reader.GetInt32(1);
@@ -192,6 +193,7 @@ return codice;
 
 Successivamente viene valutato quale menù somministrare.
 ```csharp
+//Program.cs
 
 int code = client.UserLogin(login); //invio i dati al server e assegno un codice di ritorno
 
