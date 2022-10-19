@@ -5,8 +5,11 @@ subtitle: Corso di Laurea in Ingegneria dei sistemi informativi
 geometry: margin= 2.5cm
 ---
 
-![](images/uniprNT.png){width=250, align=center}
+![](images/uniprNT.png)
+
 \newpage
+
+![](images/logoazienda.jpg){align=center}
 
 # SRS
 Il SRS, *Software Requirements Specifications* è un documento che descrive il sistema software sviluppato, elencandone i functional e i non functional requirements. Sono anche indicati i casi d'uso.
@@ -51,13 +54,13 @@ Per semplicità di rappresentazione può essere utilizzato UML.
 
 ## Use case
 
-|**registraMagazziniere**|                                                                                            |
-| ------------------------ |------------------------------------------------------------------------------------------- |
-| Descrizione       | Permette la registrazione di un nuovo magazziniere e ne inserisce i dati all'interno di un database       |
-| Attore            | Un nuovo utente, un magfazziniere o un amministratore                                |
-| Frequenza d'uso   | Ogniqualvolta un magazziniere deve essere aggiunto al database                                    |
-| Svolgimento       | Vengono richieste le informazioni identificative del magazziniere, insieme a una password per gli accessi futuri |
-| Eccezioni gestite | Se la mail risulta essere già registrata viene comunicato, se la password non rispetta le condizioni viene comunicato, la mail deve corrispondere a un formato mail. È previsto il controllo con una regex |
+**registraMagazziniere**|                                                                                 
+|------------------------|------------------------------------------------------------------------------------------- |
+|Descrizione|Permette la registrazione di un nuovo magazziniere e ne inserisce i dati all'interno di un database|
+|Attore|Un nuovo utente, un magazziniere o un amministratore|
+|Frequenza d'uso|Ogniqualvolta un magazziniere deve essere aggiunto al database|
+|Svolgimento|Vengono richieste le informazioni identificative del magazziniere, insieme a una password per gli accessi futuri|
+|Eccezioni gestite|Se la mail risulta essere già registrata viene comunicato, se la password non rispetta le condizioni viene comunicato, la mail deve corrispondere a un formato mail. È previsto il controllo con una regex|
 
 <!--
 ||
@@ -83,7 +86,6 @@ Per semplicità di rappresentazione può essere utilizzato UML.
 |Attore|Un qualsiasi utente|
 |Frequenza d'uso|Ogniqualvolta vi è la necessità di incrementare la quantità di un elemento del magazzino|
 |Svolgimento|Viene richiesto l'identificativo del prodotto e la quantità per la quale egli deve essere incrementato.|
-|Eccezioni gestite||
 
 |**decrementaQta**|
 |------------------------| ----------------------------------------------------------------------------------------|
@@ -156,10 +158,9 @@ Questo approccio, anche se successivo al brainstorming, ha permesso di verificar
 ## Le classi e UML
 Una volta tradotte le entità in classi, i loro attributi e i loro metodi sono stati rappresentati utilizzando UML: unified modeling language.
 
-Siccome a livello di accesso e all'interno del database non è necessario distinguere tra magazzinieri e amministratori come entità, anche a livello di codice si è pensato di effettuare una distinzione in fase di recupero delle informazioni di accesso durante il login.
-
 ![](images/umlaggiornato.png)
 
+Siccome a livello di accesso e all'interno del database non è necessario distinguere tra magazzinieri e amministratori come entità, anche a livello di codice si è pensato di effettuare una distinzione in fase di recupero delle informazioni di accesso durante il login.
 
 Infatti, all'interno del database, ogni account possiede un valore in corrispondenza del campo `TipoAccount`. Quando il valore è settato a `1` l'account è di tipo amministratore e possiede privilegi elevati, altrimenti se è di tipo `2` (default) è un magazziniere. Questo è stato pensato per ottenere un layering di funzionalità che fosse più facile da estendere in momenti successivi (si pensi a un'utenza di tipo `3` per utenti ospiti o esterni, `4` per i super amministratori e così via). Questo spiega anche come mai il campo in questione non sia stato pensato come un booleano.
 
@@ -210,7 +211,6 @@ switch (code)
     case 1:
         IsAdmin();
         break;
-
 
     //Magazziniere
     case 2:
