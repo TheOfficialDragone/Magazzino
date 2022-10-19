@@ -4,6 +4,7 @@ using Server;
 using System;
 using System.Globalization;
 using System.Linq;
+using System.Runtime.Remoting.Messaging;
 using System.ServiceModel;
 using System.ServiceModel.Configuration;
 
@@ -812,6 +813,7 @@ namespace Client
                                             disponibilita = "IN ESAURIMENTO";
                                             Console.WriteLine(client.GetProdotto(p).IDprodotto + " - " + client.GetProdotto(p).Nome + " - " + String.Format("{0:0.00}", client.GetProdotto(p).Prezzo) + " euro - " + disponibilita + " - " + client.GetProdotto(p).Quantita + "-" + client.GetProdotto(p).Categoria);
                                         }
+                                      
 
                                     }
                                 }
@@ -846,10 +848,11 @@ namespace Client
                                                 Console.WriteLine("***I MIEI DATI***");
 
                                                 Utente profilo = client.GetMagazziniere(login.Email);
+                                                CultureInfo ci = CultureInfo.InvariantCulture;  
                                                 Console.WriteLine("Email: " + profilo.Email);
                                                 Console.WriteLine("Nome: " + profilo.Nome);
                                                 Console.WriteLine("Cognome: " + profilo.Cognome);
-                                                Console.WriteLine("Data nascita: " + profilo.Data_nascita.ToString("d", CultureInfo.CreateSpecificCulture("es-ES")));
+                                                Console.WriteLine("Data nascita: " + profilo.Data_nascita.ToString("dd-MM-yyyy"));
                                                 Console.WriteLine("Indirizzo: " + profilo.Indirizzo);
                                                 Console.WriteLine("Telefono: " + profilo.Telefono);
 
@@ -858,8 +861,10 @@ namespace Client
                                                 break;
                                             case 2:
                                                 //modifica password
+                                                string psw_attuale;
                                                 Console.WriteLine("\nInserisci la password attuale: ");
-                                                if (Console.ReadLine() == login.Password)
+                                                psw_attuale = Console.ReadLine();
+                                                if(psw_attuale == login.Password)
                                                 {
                                                     string psw1, psw2;
                                                     do
@@ -890,8 +895,15 @@ namespace Client
                                                     } while (psw2 == " " || psw == "");
 
 
+
                                                     if (psw1 == psw2)
                                                     {
+                                                        string salt = BCrypt.Net.BCrypt.GenerateSalt(6);
+                                                        string hash = BCrypt.Net.BCrypt.HashPassword(psw2, salt);
+
+                                                        //salvo hash e salt nel db
+                                                        psw2 = hash;
+
                                                         if (client.ModificaPassword(login.Email, psw2))
                                                         {
                                                             login.Password = psw2;

@@ -390,7 +390,7 @@ namespace Server
                     {
                         while (reader.Read())
                         {
-                            codice = 0;
+                            
                             if (BCrypt.Net.BCrypt.Verify(user.Password, reader.GetString(0)))
                             {
                                 codice = reader.GetInt32(1);
@@ -460,7 +460,7 @@ namespace Server
                             magazziniere.Nome = reader.GetString(2).TrimEnd().ToUpper();
                             magazziniere.Cognome = reader.GetString(3).TrimEnd().ToUpper();
                             magazziniere.Indirizzo = reader.GetString(5).TrimEnd().ToUpper();
-                            magazziniere.Data_nascita = reader.GetDateTime(6);
+                            magazziniere.Data_nascita = reader.GetDateTime(6); // scoppia qua
                             magazziniere.Telefono = reader.GetString(7).TrimEnd().ToUpper();
                         }
                     }
