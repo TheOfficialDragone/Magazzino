@@ -227,3 +227,9 @@ In realtà l'applicazione non dipende dall'identità dei dati, e vi sono stati d
 È possibile quindi implementare un c.d. *proxy* al fine di avere un sostituto di un oggetto capace di rappresentare le stesse informazioni, con la possibilità di eseguirci operazioni e di salvarne gli stati mantenendo però un basso livello di occupazione in memoria dal lato dell'applicazione.
 
 Il desing pattern di tipo proxy infatti permette di recuperare le informazioni dalla base di dati, di effettuare modifiche o alterare proprietà "al volo" e di salvare le modifiche all'interno della base di dati.
+
+### Hashing delle password
+È stato utilizzato BCrypt. Ok.
+
+![](images/IMG_0668.jpeg)
+
