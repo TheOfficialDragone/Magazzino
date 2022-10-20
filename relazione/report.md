@@ -17,6 +17,9 @@ Il SRS, *Software Requirements Specifications* è un documento che descrive il s
 ## Introduzione
 Il progetto nasce con lo scopo di gestire il magazzino di una piccola realtà aziendale, le cui principali esigenze sono quelle di tenere traccia delle giacenze in maniera precisa, anche scollegata dal resto degli uffici in azienda. Come specificato dallo stakeholder, l'azienda si occupa di montaggi di attrezzature, i prodotti in magazzino non vengono propriamente venduti. Questo comporta quindi che l'applicativo avrà un uso interno limitato al reparto di magazzino, al fine di monitorare l'assenza temporanea di attrezzature, senza avere quindi una reale necessità di comunicare con altri settori aziendali.
 
+### Sviluppo del progetto
+Il progetto è stato sviluppato seguendo un approccio misto tra una tecnica pianificata e una di tipo agile: la tecnica a cascata e l'extreme programming.
+
 ## Descrizione generale
 La gestione del magazzino è un aspetto chiave all'interno di un'azienda, anche se non si tratta di prodotti da vendere. L'applicativo sviluppato permette una gestione rapida e univoca di tutte le attrezzature presenti in magazzino. A causa dell'utilizzo finale e dei *domain requirements* rilevati a colloquio con lo stakeholder, si è pensato a un'interfaccia di gestione dell'applicativo da riga di comando, in quanto durante le operazioni di gestione gli utenti identificano un prodotto in base al suo codice interno identificativo, e non prestano attenzione ad altri dettagli quali foto o altri elementi grafici.
 
