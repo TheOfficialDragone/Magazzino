@@ -2,7 +2,7 @@
 title: Relazione Progetto di Tecniche di sviluppo software in ambiente industriale
 author: Riccardo Versetti, Rocco Carpi
 subtitle: Corso di Laurea in Ingegneria dei sistemi informativi
-geometry: margin= 2.5cm
+geometry: margin= 2.7cm
 ---
 
 ![](images/uniprNT.png)
@@ -18,7 +18,7 @@ Il SRS, *Software Requirements Specifications* è un documento che descrive il s
 Il progetto nasce con lo scopo di gestire il magazzino di una piccola realtà aziendale, le cui principali esigenze sono quelle di tenere traccia delle giacenze in maniera precisa, anche scollegata dal resto degli uffici in azienda. Come specificato dallo stakeholder, l'azienda si occupa di montaggi di attrezzature, i prodotti in magazzino non vengono propriamente venduti. Questo comporta quindi che l'applicativo avrà un uso interno limitato al reparto di magazzino, al fine di monitorare l'assenza temporanea di attrezzature, senza avere quindi una reale necessità di comunicare con altri settori aziendali.
 
 ### Sviluppo del progetto
-Il progetto è stato sviluppato seguendo un approccio misto tra una tecnica pianificata e una di tipo agile: la tecnica a cascata e l'extreme programming.
+Il progetto è stato sviluppato seguendo un approccio misto tra una tecnica pianificata e una di tipo agile: lo sviluppo a cascata e l'extreme programming. Lo sviluppo a cascata, in quanto metodologia plan-driven, permette di tenere specifiche e sviluppo separati, tuttavia le specifiche vengono definite in fase iniziale e successivamente congelate, inoltre i tempi di sviluppo sono particolarmente lunghi e il cliente è poco coinvolto. Le caratteristiche delle tecniche di sviluppo di questo progetto che invece fanno pensare a una metodologia di extreme programming sono: la costruzione del software pezzo per pezzo, insieme all'uso del *pair programming*, oltre che a un refactoring continuo.
 
 ## Descrizione generale
 La gestione del magazzino è un aspetto chiave all'interno di un'azienda, anche se non si tratta di prodotti da vendere. L'applicativo sviluppato permette una gestione rapida e univoca di tutte le attrezzature presenti in magazzino. A causa dell'utilizzo finale e dei *domain requirements* rilevati a colloquio con lo stakeholder, si è pensato a un'interfaccia di gestione dell'applicativo da riga di comando, in quanto durante le operazioni di gestione gli utenti identificano un prodotto in base al suo codice interno identificativo, e non prestano attenzione ad altri dettagli quali foto o altri elementi grafici.
