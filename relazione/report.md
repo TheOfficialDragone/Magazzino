@@ -9,21 +9,46 @@ geometry: margin= 2.7cm
 
 \newpage
 
+- [1. SRS](#1-srs)
+  - [1.1. Introduzione](#11-introduzione)
+    - [1.1.1. Sviluppo del progetto](#111-sviluppo-del-progetto)
+  - [1.2. Descrizione generale](#12-descrizione-generale)
+- [2. Le funzionalità e i requisiti](#2-le-funzionalità-e-i-requisiti)
+- [3. Elicitation e attività di supporto](#3-elicitation-e-attività-di-supporto)
+  - [3.1. Il brainstorming](#31-il-brainstorming)
+- [4. I casi d'uso](#4-i-casi-duso)
+  - [4.1. Use case](#41-use-case)
+- [5. Analisi dei requisiti](#5-analisi-dei-requisiti)
+  - [5.1. Analisi delle classi](#51-analisi-delle-classi)
+  - [5.2. Analisi nome-verbo](#52-analisi-nome-verbo)
+  - [5.3. Analisi dei casi d'uso](#53-analisi-dei-casi-duso)
+  - [5.4. CRC](#54-crc)
+- [6. Le scelte progettuali](#6-le-scelte-progettuali)
+  - [6.1. Le classi e UML](#61-le-classi-e-uml)
+    - [6.1.1. Controllo dei privilegi](#611-controllo-dei-privilegi)
+  - [6.2. La comunicazione tra applicazione e database](#62-la-comunicazione-tra-applicazione-e-database)
+  - [6.3. Hashing delle password](#63-hashing-delle-password)
+    - [6.3.1. BCrypt nel codice](#631-bcrypt-nel-codice)
+    - [6.3.2. Verifica password in fase di login](#632-verifica-password-in-fase-di-login)
+
+
+\newpage
+
 ![](images/logoazienda.jpg){align=center}
 
-# SRS
+# 1. SRS
 Il SRS, *Software Requirements Specifications* è un documento che descrive il sistema software sviluppato, elencandone i functional e i non functional requirements. Sono anche indicati i casi d'uso.
 
-## Introduzione
+## 1.1. Introduzione
 Il progetto nasce con lo scopo di gestire il magazzino di una piccola realtà aziendale, le cui principali esigenze sono quelle di tenere traccia delle giacenze in maniera precisa, anche scollegata dal resto degli uffici in azienda. Come specificato dallo stakeholder, l'azienda si occupa di montaggi di attrezzature, i prodotti in magazzino non vengono propriamente venduti. Questo comporta quindi che l'applicativo avrà un uso interno limitato al reparto di magazzino, al fine di monitorare l'assenza temporanea di attrezzature, senza avere quindi una reale necessità di comunicare con altri settori aziendali.
 
-### Sviluppo del progetto
+### 1.1.1. Sviluppo del progetto
 Il progetto è stato sviluppato seguendo un approccio misto tra una tecnica pianificata e una di tipo agile: lo sviluppo a cascata e l'extreme programming. Lo sviluppo a cascata, in quanto metodologia plan-driven, permette di tenere specifiche e sviluppo separati, tuttavia le specifiche vengono definite in fase iniziale e successivamente congelate, inoltre i tempi di sviluppo sono particolarmente lunghi e il cliente è poco coinvolto. Le caratteristiche delle tecniche di sviluppo di questo progetto che invece fanno pensare a una metodologia di extreme programming sono: la costruzione del software pezzo per pezzo, insieme all'uso del *pair programming*, oltre che a un refactoring continuo.
 
-## Descrizione generale
+## 1.2. Descrizione generale
 La gestione del magazzino è un aspetto chiave all'interno di un'azienda, anche se non si tratta di prodotti da vendere. L'applicativo sviluppato permette una gestione rapida e univoca di tutte le attrezzature presenti in magazzino. A causa dell'utilizzo finale e dei *domain requirements* rilevati a colloquio con lo stakeholder, si è pensato a un'interfaccia di gestione dell'applicativo da riga di comando, in quanto durante le operazioni di gestione gli utenti identificano un prodotto in base al suo codice interno identificativo, e non prestano attenzione ad altri dettagli quali foto o altri elementi grafici.
 
-# Le funzionalità e i requisiti
+# 2. Le funzionalità e i requisiti
 
 - ogni magazziniere dovrebbe avere il proprio accont personale;
 - ogni magazziniere dovrebbe essere in grado di gestire *la quantità* di un singolo prodotto;
@@ -40,22 +65,22 @@ La gestione del magazzino è un aspetto chiave all'interno di un'azienda, anche 
   - una breve descrizione, al fine di conoscere informazioni aggiuntive
   - un nome generico per un eventuale controllo secondario di tipo visivo
 
-# Elicitation e attività di supporto
+# 3. Elicitation e attività di supporto
 Come attività di supporto all'elicitation, ovvero la raccolta di informazioni, è stato scelto un approccio di tipo *brainstorming*, in quanto la strategia di *focus group* è stata ritenuta infattibile a causa del ridotto numero di partecipanti al progetto (2).
 
-## Il brainstorming
+## 3.1. Il brainstorming
 Nella prima fase, ovvero quella di storm, sono state raccolte le informazioni partendo dalla conoscenza delle funzionalità da implementare, e delle caratteristiche del dominio in esame. Le idee genarate dalla prima fase sono state successivamente filtrate in quella che è la seconda fase, ovvero quella di calm.
 
 Idee similari sono state unite e sono stati definiti e applicati i criteri di accettabilità.
 
-# I casi d'uso 
+# 4. I casi d'uso 
 I casi d'uso, o use cases, sono strettamente collegati con i requisiti, in quanto ogni requirement deve essere coperto da un caso d'uso.
 
 La loro nomenclatura deve essere auto esplicativa, per questo motivo infatti uno use case è chiamato come l'azione che compie nei confronti di una entità.
 
 Per semplicità di rappresentazione può essere utilizzato UML.
 
-## Use case
+## 4.1. Use case
 
 **registraMagazziniere**|                                                                                 
 |------------------------|------------------------------------------------------------------------------------------- |
@@ -133,21 +158,21 @@ Per semplicità di rappresentazione può essere utilizzato UML.
 |Svolgimento|Viene richiesto l'identificativo del prodotto da rimuovere|
 
 
-# Analisi dei requisiti
+# 5. Analisi dei requisiti
 Al fine di affinare i requisiti da implementare nel sistema, è stata effettuata anche un'analisi degli stessi, cercando inoltre di individuarne di nuovi. Nello specifico è stato utilizzato un approccio misto.
 
-## Analisi delle classi
+## 5.1. Analisi delle classi
 Prima di tutto è stata necessaria l'astrazione delle entità che componevano il problema. Le entità sono state estratte in classi. Unitamente alla loro astrazione sono stati gestiti i functional requirements.
 
 Sono state poste in essere inoltre delle tecniche con l'obiettivo di scoprire nuove classi coinvolte nel problema.
 
-## Analisi nome-verbo
+## 5.2. Analisi nome-verbo
 Dai dati raccolti insieme allo stakeholder è emersa la necessità di riunire i prodotti in categorie: è stata quindi aggiunta al progetto l'entità `categoria`
 
-## Analisi dei casi d'uso
+## 5.3. Analisi dei casi d'uso
 Partendo dai casi d'uso raccolti insieme allo stakeholder non è stato riscontrata alcuna necessità di inserimento di nuove entità
 
-## CRC
+## 5.4. CRC
 Al fine di validare i requisiti evidenziati, sono state utilizzate le CRC cards:
 
 - Class name
@@ -156,9 +181,9 @@ Al fine di validare i requisiti evidenziati, sono state utilizzate le CRC cards:
 
 Questo approccio, anche se successivo al brainstorming, ha permesso di verificare la correttezza dei casi d'uso e delle associazioni. Ha permesso inoltre una correzione degli stessi e ha chiarito, tramite un processo di realizzazione teorica dei casi d'uso, che non vi erano classi che non erano state considerate.
 
-# Le scelte progettuali
+# 6. Le scelte progettuali
 
-## Le classi e UML
+## 6.1. Le classi e UML
 Una volta tradotte le entità in classi, i loro attributi e i loro metodi sono stati rappresentati utilizzando UML: unified modeling language.
 
 ![](images/umlaggiornato.png)
@@ -167,7 +192,7 @@ Siccome a livello di accesso e all'interno del database non è necessario distin
 
 Infatti, all'interno del database, ogni account possiede un valore in corrispondenza del campo `TipoAccount`. Quando il valore è settato a `1` l'account è di tipo amministratore e possiede privilegi elevati, altrimenti se è di tipo `2` (default) è un magazziniere. Questo è stato pensato per ottenere un layering di funzionalità che fosse più facile da estendere in momenti successivi (si pensi a un'utenza di tipo `3` per utenti ospiti o esterni, `4` per i super amministratori e così via). Questo spiega anche come mai il campo in questione non sia stato pensato come un booleano.
 
-### Controllo dei privilegi
+### 6.1.1. Controllo dei privilegi
 Il tipo di provilegio è specificato nel record dell'account, in fase di login questo viene letto dall'applicazione.
 
 ```csharp
@@ -222,7 +247,7 @@ switch (code)
 }
 ```
 
-## La comunicazione tra applicazione e database
+## 6.2. La comunicazione tra applicazione e database
 Siccome i dati del magazzino sono contenuti all'interno di un database, e vi è un continuo scambio di informazioni tra client e db, è stato necessario implementare un proxy tra gli oggetti contenuti nella base di dati e quelli istanziati dalle classi.
 
 In realtà l'applicazione non dipende dall'identità dei dati, e vi sono stati degli oggetti che devono essere estratti e presentati molto frequentemente.
@@ -231,8 +256,54 @@ In realtà l'applicazione non dipende dall'identità dei dati, e vi sono stati d
 
 Il desing pattern di tipo proxy infatti permette di recuperare le informazioni dalla base di dati, di effettuare modifiche o alterare proprietà "al volo" e di salvare le modifiche all'interno della base di dati.
 
-### Hashing delle password
+## 6.3. Hashing delle password
 È stato utilizzato BCrypt. Ok.
 
 ![](images/IMG_0668.jpeg)
 
+BCrypt è stato scelto per la sua capacità di mitigare attacchi di tipo *brute force* e per la sua capacità di generare hash univoci per ogni password, anche grazie all'utilizzo di *salt*. Nello specifico, gli attacchi a cui BCrypt è resistente sono le **Rainbow tables**: sono tabelle che contengono hash di password e le rispettive password. Queste tabelle vengono utilizzate per effettuare attacchi di tipo *brute force* in cui si effettua una ricerca di hash all'interno della tabella. BCrypt infatti genera hash univoci per ogni password, quindi non è possibile utilizzare tali tabelle per effettuare attacchi di questo tipo.quindi non è possibile utilizzare tali tabelle per effettuare attacchi di questo tipo.
+
+### 6.3.1. BCrypt nel codice
+
+```csharp
+//Program.cs
+
+//una volta validata la password inserita dall'utente (regex)
+string salt = BCrypt.Net.BCrypt.GenerateSalt(6);
+string hash = BCrypt.Net.BCrypt.HashPassword(password, salt);
+
+//salvo hash
+nuovo.Psw = hash;
+
+// ...
+//registro l'utente nel database
+if (client.Registrazione(nuovo))
+    Console.WriteLine("Registrazione completata con successo!");
+else
+    Console.WriteLine("Errore: registrazione non riuscita!");
+```
+
+### 6.3.2. Verifica password in fase di login
+```csharp
+//Service1.cs
+
+int codice = 0; //livello di autorizzazione dell'utente
+using (MySqlCommand command1 = conn.CreateCommand())
+{
+    // check password with hash
+    command1.CommandText = "SELECT password, TipoAccount FROM account WHERE email='"
+    + user.Email.Trim().ToLower() + "'";
+
+    using (MySqlDataReader reader = command1.ExecuteReader())
+    {
+        while (reader.Read())
+        {
+            if (BCrypt.Net.BCrypt.Verify(user.Password, reader.GetString(0)))
+            {
+                codice = reader.GetInt32(1);
+            }
+        }
+    }
+}
+return codice;
+```
