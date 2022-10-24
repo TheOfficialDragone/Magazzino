@@ -179,7 +179,7 @@ Al fine di validare i requisiti evidenziati, sono state utilizzate le CRC cards:
 - Responsabilities
 - Collaborators
 
-Questo approccio, anche se successivo al brainstorming, ha permesso di verificare la correttezza dei casi d'uso e delle associazioni. Ha permesso inoltre una correzione degli stessi e ha chiarito, tramite un processo di realizzazione teorica dei casi d'uso, che non vi erano classi che non erano state considerate.
+Questo approccio, anche se successivo al brainstorming, ha permesso di verificare la correttezza dei casi d'uso e delle associazioni. Ha permesso inoltre una correzione degli stessi e ha chiarito, tramite un processo di realizzazione teorica dei casi d'uso, l'assenza di classi non ancora prese in considerazione.
 
 # 6. Le scelte progettuali
 
@@ -193,7 +193,7 @@ Siccome a livello di accesso e all'interno del database non è necessario distin
 Infatti, all'interno del database, ogni account possiede un valore in corrispondenza del campo `TipoAccount`. Quando il valore è settato a `1` l'account è di tipo amministratore e possiede privilegi elevati, altrimenti se è di tipo `2` (default) è un magazziniere. Questo è stato pensato per ottenere un layering di funzionalità che fosse più facile da estendere in momenti successivi (si pensi a un'utenza di tipo `3` per utenti ospiti o esterni, `4` per i super amministratori e così via). Questo spiega anche come mai il campo in questione non sia stato pensato come un booleano.
 
 ### 6.1.1. Controllo dei privilegi
-Il tipo di provilegio è specificato nel record dell'account, in fase di login questo viene letto dall'applicazione.
+Il tipo di privilegio è specificato nel record dell'account, in fase di login questo viene letto dall'applicazione.
 
 ```csharp
 //Service1.cs
@@ -261,7 +261,7 @@ Il desing pattern di tipo proxy infatti permette di recuperare le informazioni d
 
 ![](images/IMG_0668.jpeg)
 
-BCrypt è stato scelto per la sua capacità di mitigare attacchi di tipo *brute force* e per la sua capacità di generare hash univoci per ogni password, anche grazie all'utilizzo di *salt*. Nello specifico, gli attacchi a cui BCrypt è resistente sono le **Rainbow tables**: sono tabelle che contengono hash di password e le rispettive password. Queste tabelle vengono utilizzate per effettuare attacchi di tipo *brute force* in cui si effettua una ricerca di hash all'interno della tabella. BCrypt infatti genera hash univoci per ogni password, quindi non è possibile utilizzare tali tabelle per effettuare attacchi di questo tipo.quindi non è possibile utilizzare tali tabelle per effettuare attacchi di questo tipo.
+BCrypt è stato scelto per la sua capacità di mitigare attacchi di tipo *brute force* e per la sua capacità di generare hash univoci per ogni password, anche grazie all'utilizzo di *salt*. Nello specifico, gli attacchi a cui BCrypt è resistente sono le **Rainbow tables**: sono tabelle che contengono hash di password e le rispettive password. Queste tabelle vengono utilizzate per effettuare attacchi di tipo *brute force* in cui si effettua una ricerca di hash all'interno della tabella. BCrypt infatti genera hash univoci per ogni password, quindi non è possibile utilizzare tali tabelle per effettuare attacchi di questo tipo.
 
 ### 6.3.1. BCrypt nel codice
 
