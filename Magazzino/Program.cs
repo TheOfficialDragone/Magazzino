@@ -9,6 +9,11 @@ using System.ServiceModel;
 using System.ServiceModel.Configuration;
 
 #pragma warning disable IDE0060
+/**
+ * Developed by Rocco Carpi & Riccardo Versetti
+ * 16/10/2022
+ * Main principale del programma
+ */
 namespace Client
 {
 

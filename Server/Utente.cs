@@ -1,4 +1,9 @@
-﻿using System;
+﻿/**
+ * Developed by Rocco Carpi & Riccardo Versetti
+ * 16/10/2022
+ * 
+ */
+using System;
 using System.Runtime.Serialization;
 
 namespace Server

@@ -1,4 +1,9 @@
-﻿using MySql.Data.MySqlClient;
+﻿/**
+ * Developed by Rocco Carpi & Riccardo Versetti
+ * 16/10/2022
+ * 
+ */
+using MySql.Data.MySqlClient;
 using System;
 using System.ServiceModel;
 

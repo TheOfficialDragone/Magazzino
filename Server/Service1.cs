@@ -1,4 +1,8 @@
-﻿
+﻿/**
+ * Developed by Rocco Carpi & Riccardo Versetti
+ * 16/10/2022
+ * 
+ */
 using MySql.Data.MySqlClient;
 using Org.BouncyCastle.Crypto.Generators;
 using System;

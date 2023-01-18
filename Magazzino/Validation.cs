@@ -1,5 +1,9 @@
 ﻿using System.Text.RegularExpressions;
-
+/**
+ * Developed by Rocco Carpi & Riccardo Versetti
+ * 16/10/2022
+ * Controlla la validità o meno della mail e della password quando c'è un login 
+ */
 namespace Client
 {
     public class Validation

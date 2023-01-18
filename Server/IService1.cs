@@ -1,6 +1,10 @@
-﻿using System.Collections.Generic;
+﻿/**
+ * Developed by Rocco Carpi & Riccardo Versetti
+ * 16/10/2022
+ * 
+ */
+using System.Collections.Generic;
 using System.ServiceModel;
-
 namespace Server
 {
     // NOTA: è possibile utilizzare il comando "Rinomina" del menu "Refactoring" per modificare il nome di interfaccia "IService1" nel codice e nel file di configurazione contemporaneamente.
