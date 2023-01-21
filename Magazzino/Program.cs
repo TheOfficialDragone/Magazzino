@@ -1,4 +1,5 @@
 ﻿using Magazzino.ServiceReference1;
+using Org.BouncyCastle.Bcpg;
 using Org.BouncyCastle.Crypto.Generators;
 using Server;
 using System;
@@ -271,7 +272,9 @@ namespace Client
                                                         Console.WriteLine("Inserisci il prezzo del prodotto: ");
                                                         try
                                                         {
-                                                            prezzoNuovoProdotto = Convert.ToDouble(Console.ReadLine());
+                                                            string input;
+                                                            input = Console.ReadLine();
+                                                            prezzoNuovoProdotto = Double.Parse(input);  
                                                         }
                                                         catch (FormatException)
                                                         {
@@ -282,6 +285,7 @@ namespace Client
                                                     } while (prezzoNuovoProdotto <= 0);
 
                                                     Console.Clear();
+                                                    Console.WriteLine("prezzo: " + prezzoNuovoProdotto);
                                                     Console.WriteLine("***AGGIUNGI PRODOTTO***");
                                                     Console.WriteLine("Inserisci una descrizione del prodotto: ");                                                 
                                                     string descrizioneNuovoProdotto = Console.ReadLine();
