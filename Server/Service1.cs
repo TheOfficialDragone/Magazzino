@@ -68,8 +68,6 @@ namespace Server
                     if (command1.ExecuteNonQuery() > 0)
                         risultato = true;
                 }
-
-
                 return risultato;
             }
             catch (Exception)
@@ -196,8 +194,8 @@ namespace Server
             }
         }
 
-\        /// Modifica la password
-\        /// <param name="email">Email dell'utente</param>
+        /// Modifica la password
+        /// <param name="email">Email dell'utente</param>
         /// <param name="psw">Password dell'utente</param>
         /// <returns>True se la password è stata modificata. False in caso contrario</returns>
         public bool ModificaPassword(string email, string psw)
@@ -551,12 +549,6 @@ namespace Server
             {
                 throw new Exception("Errore! Impossibile diminuire la giacenza del prodotto");
             }
-
         }
-
-
-
     }
-
-
 }
