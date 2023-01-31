@@ -456,7 +456,7 @@ namespace Server
             }
             catch (Exception)
             {
-                throw new Exception();
+                throw new Exception("Errore! Impossibile recuperare il magazziniere");
             }
         }
 
