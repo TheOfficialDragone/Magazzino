@@ -158,6 +158,8 @@ namespace Client
             /// <summary>
             /// Controlla che le credenziali inserite siano di un admin e mostra la relativa schermata
             /// </summary>
+            /// 
+
 
             void IsAdmin()
             {
@@ -222,7 +224,7 @@ namespace Client
                                                             disponibile = "DISPONIBILE";
                                                         else
                                                             disponibile = "NON DISPONIBILE";                                       
-                                                        Console.WriteLine(articolo.IDprodotto + " - " + articolo.Nome + " - " + String.Format("{0:0.00}", articolo.Prezzo) + " euro - " + disponibile + " - " + articolo.Quantita + "-" + articolo.Categoria);
+                                                        Console.WriteLine(articolo.IDprodotto + " - " + articolo.Nome + " - " + String.Format("{0:0.00}", articolo.Prezzo) + " euro - " + disponibile + " - " + articolo.Quantita + " - " + articolo.Categoria);
                                                     }
                                                 }
                                                 else
