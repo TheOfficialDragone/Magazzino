@@ -47,7 +47,7 @@ namespace Server
             }
             catch (Exception)
             {
-                throw new Exception();
+                throw new Exception("Errore durante il controllo dell'email");
             }
         }
 
@@ -75,7 +75,7 @@ namespace Server
             }
             catch (Exception)
             {
-                throw new Exception();
+                throw new Exception("Errore in fase di eliminazione del prodotto");
             }
         }
 
@@ -104,7 +104,7 @@ namespace Server
             }
             catch (Exception)
             {
-                throw new Exception();
+                throw new Exception("Errore! Impossibile recuperare la categoria");
             }
         }
         /// <summary>
@@ -140,7 +140,7 @@ namespace Server
             }
             catch (Exception)
             {
-                throw new Exception();
+                throw new Exception("Errore! Impossibile recuperare il prodotto");
             }
 
 
@@ -169,7 +169,7 @@ namespace Server
             }
             catch (Exception)
             {
-                throw new Exception();
+                throw new Exception("Errore! Impossibile recuperare le categorie");
             }
         }
         //Lista dei prodotti disponibili
@@ -196,7 +196,7 @@ namespace Server
             }
             catch (Exception)
             {
-                throw new Exception();
+                throw new Exception("Errore! Impossibile recuperare la lista dei prodotti");
             }
         }
 
@@ -233,7 +233,7 @@ namespace Server
             }
             catch (Exception)
             {
-                throw new Exception();
+                throw new Exception("Errore durante la modifica della password");
             }
         }
 
