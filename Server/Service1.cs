@@ -294,7 +294,7 @@ namespace Server
             }
             catch (Exception)
             {
-                throw new Exception("Ërrore nella creazione di una nuova categoria");
+                throw new Exception("Errore nella creazione di una nuova categoria");
             }
         }
 
@@ -380,7 +380,7 @@ namespace Server
                     {
                         while (reader.Read())
                         {
-                            
+
                             if (BCrypt.Net.BCrypt.Verify(user.Password, reader.GetString(0)))
                             {
                                 codice = reader.GetInt32(1);
@@ -500,8 +500,8 @@ namespace Server
                 using (MySqlCommand command1 = conn.CreateCommand())
                 {
                     command1.CommandText = "UPDATE prodotto SET quantita = quantita +' " + quantita + " ' WHERE IDProdotto =' " + id + " ' ";
-                    using (MySqlDataReader reader = command1.ExecuteReader()) ;
-                    risultato = true;
+                    if (command1.ExecuteNonQuery() > 0)
+                        risultato = true;
                 }
                 return risultato;
             }
@@ -546,12 +546,9 @@ namespace Server
                         using (MySqlCommand command1 = conn.CreateCommand())
                         {
                             command1.CommandText = "UPDATE prodotto SET quantita = quantita -' " + quantita + " ' WHERE IDProdotto = ' " + id + " ' ";
-                            using (MySqlDataReader reader = command1.ExecuteReader()) ; // necessario? da warning
-
+                            if (command1.ExecuteNonQuery() > 0)
+                                risultato = true;
                         }
-
-                        risultato = true;
-
                     }
                 }
 
