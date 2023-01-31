@@ -217,11 +217,12 @@ namespace Client
                                                     //stampo tutti i prodotti
                                                     foreach (var p in client.ListaProdotti())
                                                     {
-                                                        if (client.GetProdotto(p).Quantita >= 1)
+                                                        Articolo articolo = client.GetProdotto(p);
+                                                        if (articolo.Quantita >= 1)
                                                             disponibile = "DISPONIBILE";
                                                         else
                                                             disponibile = "NON DISPONIBILE";                                       
-                                                        Console.WriteLine(client.GetProdotto(p).IDprodotto + " - " + client.GetProdotto(p).Nome + " - " + String.Format("{0:0.00}", client.GetProdotto(p).Prezzo) + " euro - " + disponibile + " - " + client.GetProdotto(p).Quantita + "-" + client.GetProdotto(p).Categoria);
+                                                        Console.WriteLine(articolo.IDprodotto + " - " + articolo.Nome + " - " + String.Format("{0:0.00}", articolo.Prezzo) + " euro - " + disponibile + " - " + articolo.Quantita + "-" + articolo.Categoria);
                                                     }
                                                 }
                                                 else
