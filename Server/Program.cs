@@ -15,14 +15,11 @@ namespace Server
         {
             try
             {
-                ServiceHost svcHost = new ServiceHost(typeof(Service1)); //Istanzio il servizio di tipo ServiceAgendaAziendale
+                ServiceHost svcHost = new ServiceHost(typeof(Service1)); 
                 svcHost.Open(); //Apro il servizio
 
                 Service1.Conn = new MySqlConnection(Service1.ConnectionString);
                 Service1.Conn.Open();
-
-
-
                 Console.WriteLine("Servizio Server aperto.");
                 Console.WriteLine("Premere un tasto per chiudere il server");
                 Console.ReadLine();
