@@ -24,7 +24,9 @@ namespace Client
         static void Main(string[] args)
 
         {
-            Service1Client client = new Magazzino.ServiceReference1.Service1Client();
+            try
+            {
+                Service1Client client = new Magazzino.ServiceReference1.Service1Client();
 
             int sceltaMenuShop = 0;
             do
@@ -1143,6 +1145,14 @@ namespace Client
                     Console.WriteLine("\nPremi un tasto per continuare");
                     Console.ReadKey();
                 }
+
+            }
+            }
+            catch (Exception)
+            {
+                Console.WriteLine("Controllare che il server sia attivo");
+                Console.WriteLine("Premi un tasto per riprovare\n");
+                Console.ReadKey();
 
             }
         }
