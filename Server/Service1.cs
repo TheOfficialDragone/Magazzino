@@ -51,7 +51,6 @@ namespace Server
             }
         }
 
-        /// <summary>
         /// Elimina un prodotto 
         /// </summary>
         /// <param name="id">Identificativo del prodotto da eliminare</param>
@@ -79,7 +78,6 @@ namespace Server
             }
         }
 
-        /// <summary>
         /// Nome di una categoria
         /// </summary>
         /// <param name="id">Identificativo della categoria</param>
@@ -107,9 +105,8 @@ namespace Server
                 throw new Exception("Errore! Impossibile recuperare la categoria");
             }
         }
-        /// <summary>
+
         /// Dati del prodotto
-        /// </summary>
         /// <param name="IDProdotto">Identificativo del prodotto</param>
         /// <returns>Oggetto Articolo</returns>
         public Articolo GetProdotto(int IDProdotto)
@@ -142,11 +139,9 @@ namespace Server
             {
                 throw new Exception("Errore! Impossibile recuperare il prodotto");
             }
-
-
         }
 
-        //Lista degli identificativi delle Categorie</returns>
+        //Lista degli identificativi delle Categorie
         public List<int> ListaCategorie()
         {
             try
@@ -172,6 +167,7 @@ namespace Server
                 throw new Exception("Errore! Impossibile recuperare le categorie");
             }
         }
+
         //Lista dei prodotti disponibili
         public List<int> ListaProdotti()
         {
@@ -200,10 +196,8 @@ namespace Server
             }
         }
 
-        /// <summary>
-        /// Modifica la password
-        /// </summary>
-        /// <param name="email">Email dell'utente</param>
+\        /// Modifica la password
+\        /// <param name="email">Email dell'utente</param>
         /// <param name="psw">Password dell'utente</param>
         /// <returns>True se la password è stata modificata. False in caso contrario</returns>
         public bool ModificaPassword(string email, string psw)
@@ -338,7 +332,6 @@ namespace Server
         }
 
         //Registrazione magazziniere
-        /// </summary>
         /// <param name="nuovo">Oggetto di tipo Utente</param>
         /// <returns>True se l'utente è stato creato con successo. False in caso contrario</returns>
         public bool Registrazione(Utente nuovo)
