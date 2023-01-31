@@ -158,6 +158,7 @@ namespace Magazzino
                                                         // mostro tutte le categorie all'admin per facilitare la scelta
                                                         foreach (var c in client.ListaCategorie())
                                                         {
+                                                            // qua forse conviene stampare tutte le categorie subito
                                                             Console.WriteLine(c + "." + client.GetCategoria(c));
                                                         }
 
@@ -366,6 +367,7 @@ namespace Magazzino
 
                                                                                 foreach (var c in client.ListaCategorie())
                                                                                 {
+                                                                                    // anche qui metodo per stampare subito tutte le categorie
                                                                                     Console.WriteLine(c + "." + client.GetCategoria(c));
                                                                                 }
                                                                                 Console.WriteLine("Inserisci codice categoria: ");
@@ -427,11 +429,12 @@ namespace Magazzino
                                                     Console.WriteLine("***ELIMINA PRODOTTO***");
                                                     foreach (var p in client.ListaProdotti())
                                                     {
+                                                        Articolo articolo = client.GetProdotto(p);
                                                         if (client.GetProdotto(p).Quantita > 0)
                                                             disponibile = "DISPONIBILE";
                                                         else
                                                             disponibile = "NON DISPONIBILE";
-                                                        Console.WriteLine(client.GetProdotto(p).IDprodotto + " - " + client.GetProdotto(p).Nome + " - " + String.Format("{0:0.00}", client.GetProdotto(p).Prezzo) + " euro - " + disponibile + " - " + client.GetProdotto(p).Categoria);
+                                                        Console.WriteLine(articolo.IDprodotto + " - " + articolo.Nome + " - " + String.Format("{0:0.00}", articolo.Prezzo) + " euro - " + disponibile + " - " + articolo.Categoria);
                                                     }
 
                                                     Console.WriteLine("\nInserisci codice prodotto da eliminare: ");
