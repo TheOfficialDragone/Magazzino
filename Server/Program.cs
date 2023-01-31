@@ -24,7 +24,7 @@ namespace Server
 
 
                 Console.WriteLine("Servizio Server aperto.");
-                Console.WriteLine("Premere un tasto per chiuere il server");
+                Console.WriteLine("Premere un tasto per chiudere il server");
                 Console.ReadLine();
 
                 svcHost.Close();
