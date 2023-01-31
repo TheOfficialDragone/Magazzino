@@ -10,58 +10,22 @@ namespace Client
     {
         public static bool ValidateEmail(string email)
         {
-            //validazione email
-            string pattern = "^([0-9a-zA-Z]([-\\.\\w]*[0-9a-zA-Z])*@([0-9a-zA-Z][-\\w]*[0-9a-zA-Z]\\.)+[a-zA-Z]{2,9})$";
+            string pattern = @"^(?!\.)(""([^""\r\\]|\\[""\r\\])*""|"
+                             + @"([-a-z0-9!#$%&'*+/=?^_`{|}~]|(?<!\.)\.)*)(?<!\.)"
+                             + @"@[a-z0-9][\w\.-]*[a-z0-9]\.[a-z][a-z\.]*[a-z]$";
 
-            return Regex.IsMatch(email, pattern);
+            Regex emailRegex = new Regex(pattern, RegexOptions.IgnoreCase);
+
+            return emailRegex.IsMatch(email);
         }
 
-        public static bool ValidatePassword(string psw)
+        public static bool IsValidPassword(string password)
         {
-            int validConditions = 0;
-            //la password non può essere minore di 6 caratteri
-            if (psw.Length < 6)
-                return false;
-            else
-            {
-                validConditions++;
-                //deve contenere almeno una lettera minuscola
-                foreach (char c in psw)
-                {
-                    if (c >= 'a' && c <= 'z')
-                    {
-                        validConditions++;
-                        break;
-                    }
-                }
-                //deve contenere una lettera maiuscola
-                foreach (char c in psw)
-                {
-                    if (c >= 'A' && c <= 'Z')
-                    {
-                        validConditions++;
-                        break;
-                    }
-                }
-                //deve contenere almeno un numero
-                foreach (char c in psw)
-                {
+            string pattern = @"^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{6,}$";
 
-                    if (c >= '0' && c <= '9')
-                    {
-                        validConditions++;
-                        break;
-                    }
-                }
-                //deve contenere un carattere speciale
-                if (validConditions == 4)
-                {
-                    char[] special = { '@', '#', '$', '%', '^', '&', '+', '=', '.' };
-                    if (psw.IndexOfAny(special) != -1)
-                        return true;
-                }
-            }
-            return false;
+            Regex passwordRegex = new Regex(pattern);
+
+            return passwordRegex.IsMatch(password);
         }
 
         public static bool ValidateTelephone(string numero)
