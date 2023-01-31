@@ -146,10 +146,7 @@ namespace Server
 
         }
 
-        /// <summary>
-        /// Lista delle categorie
-        /// </summary>
-        /// <returns>Lista degli identificativi delle Categorie</returns>
+        //Lista degli identificativi delle Categorie</returns>
         public List<int> ListaCategorie()
         {
             try
@@ -175,10 +172,7 @@ namespace Server
                 throw new Exception();
             }
         }
-        /// <summary>
-        /// Lista dei prodotti
-        /// </summary>
-        /// <returns>Lista dei dei prodotti con dispo > 0</returns>
+        //Lista dei prodotti disponibili
         public List<int> ListaProdotti()
         {
             try
@@ -243,9 +237,7 @@ namespace Server
             }
         }
 
-        /// <summary>
-        /// Modifica il prodotto
-        /// </summary>
+        //Modifica del prodotto
         /// <param name="prodottoDaModificare">Prodotto da modificare</param>
         /// <returns>True se il prodotto è stato modificato. False in caso contrario</returns>
         public bool ModificaProdotto(Articolo prodottoDaModificare)
@@ -280,13 +272,11 @@ namespace Server
             }
             catch (Exception)
             {
-                throw new Exception();
+                throw new Exception("Errore nella selezione del prodotto da modificare");
             }
         }
 
-        /// <summary>
-        /// Crea una nuova categoria
-        /// </summary>
+        //Crea una nuova categoria
         /// <param name="nome">Nome categoria</param>
         /// <returns>True se la categoria è stata creata. False in caso contrario</returns>
         public bool NuovaCategoria(string nome)
@@ -304,12 +294,11 @@ namespace Server
             }
             catch (Exception)
             {
-                throw new Exception();
+                throw new Exception("Ërrore nella creazione di una nuova categoria");
             }
         }
-        /// <summary>
-        /// Crea un nuovo prodotto
-        /// </summary>
+
+        //Crea un nuovo prodotto
         /// <param name="nuovo">Oggetto di tipo Articolo</param>
         /// <returns>True se il prodotto è stato creato. False in caso contrario</returns>
         public bool NuovoProdotto(Articolo nuovo)
@@ -344,12 +333,11 @@ namespace Server
             }
             catch (Exception)
             {
-                throw new Exception();
+                throw new Exception("Errore nella creazione di un nuovo prodotto");
             }
         }
 
-        /// <summary>
-        /// Registrazione magazziniere
+        //Registrazione magazziniere
         /// </summary>
         /// <param name="nuovo">Oggetto di tipo Utente</param>
         /// <returns>True se l'utente è stato creato con successo. False in caso contrario</returns>
@@ -372,13 +360,11 @@ namespace Server
             }
             catch (Exception)
             {
-                throw new Exception();
+                throw new Exception("Errore nella registrazione di un nuovo account");
             }
         }
 
-        /// <summary>
-        /// Login utente magazziniere o ADMIN
-        /// </summary>
+        //Login utente magazziniere o ADMIN
         /// <param name="user">Oggetto di tipo Login</param>
         /// <returns>0 se le credenziali sono errate. 1 se l'accesso è stato effettuato dall'admin. 2 se l'accesso è stato effettuato dal magazziniere</returns>
         public int UserLogin(Login user)
@@ -406,13 +392,11 @@ namespace Server
             }
             catch (Exception)
             {
-                throw new Exception();
+                throw new Exception("Errore in fase di login");
             }
         }
 
-        /// <summary>
-        /// Lista dei magazzinieri
-        /// </summary>
+        //Lista dei magazzinieri
         /// <returns>Lista dei nomi dei magazzinieri </returns>
         public List<string> ListaMagazzinieri()
         {
@@ -437,13 +421,11 @@ namespace Server
             }
             catch (Exception)
             {
-                throw new Exception();
+                throw new Exception("Errore durante il recupero della lista dei magazzinieri");
             }
         }
 
-        /// <summary>
-        /// Dati del magazziniere
-        /// </summary>
+        // Dati del magazziniere
         /// <param name="id">Identificativo del magazziniere</param>
         /// <returns>Oggetto Utente contenente i dati del magazziniere</returns>
         public Utente GetMagazziniere(string id)
@@ -478,9 +460,7 @@ namespace Server
             }
         }
 
-        /// <summary>
-        /// Lista dei prodotti disponibili
-        /// </summary>
+        // Lista dei prodotti disponibili
         /// <returns>Lista degli identificativi dei prodotti disponibili</returns>
         public List<int> ListaProdottiDisponibili()
         {
@@ -503,6 +483,7 @@ namespace Server
                 }
                 //restituisco la lista degli identificativi dei prodotto disponibili
                 return lista;
+                // qui cerchiamo di assegnare il prodotto con i dati restituiti dalla query
             }
             catch (Exception)
             {
@@ -510,11 +491,7 @@ namespace Server
             }
         }
 
-        /// <summary>
         /// Aumenta le giacenze di un prodotto tramite l'id
-        /// </summary>
-        /// <returns>risultato true or false a seconda dell'esito</returns>
-        /// 
         public bool AumentaGiacenze(int id, int quantita)
         {
             try
@@ -530,13 +507,11 @@ namespace Server
             }
             catch (Exception)
             {
-                throw new Exception();
+                throw new Exception("Errore! Impossibile aumentare la giacenza del prodotto");
             }
         }
 
-        /// <summary>
         /// Dimuniisce le giacenze di un prodotto tramite l'id
-        /// </summary>
         /// <returns>risultato true or false a seconda dell'esito</returns>
         public bool DiminuisciGiacenze(int id, int quantita)
         {
@@ -547,7 +522,6 @@ namespace Server
 
                 // controllo della correttezza della quantita spostato nel program
                 // in seguito a un'attenta riflessione avvenuta in doccia
-
 
                 using (MySqlCommand command0 = conn.CreateCommand())
                 {
@@ -585,7 +559,7 @@ namespace Server
             }
             catch (Exception)
             {
-                throw new Exception();
+                throw new Exception("Errore! Impossibile diminuire la giacenza del prodotto");
             }
 
         }
