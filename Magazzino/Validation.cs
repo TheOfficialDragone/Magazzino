@@ -19,7 +19,7 @@ namespace Client
             return emailRegex.IsMatch(email);
         }
 
-        public static bool IsValidPassword(string password)
+        public static bool ValidatePassword(string password)
         {
             string pattern = @"^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{6,}$";
 
