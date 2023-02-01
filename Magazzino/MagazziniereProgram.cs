@@ -81,7 +81,7 @@ namespace Magazzino
                                     foreach (var z in client.ListaProdotti())
                                     {
                                         Articolo a = client.GetProdotto(z);
-                                        if (client.GetProdotto(z).Quantita >= 1)
+                                        if (a.Quantita >= 1)
                                             disponibile = "DISPONIBILE";
                                         else
                                             disponibile = "NON DISPONIBILE";

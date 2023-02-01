@@ -39,11 +39,9 @@ namespace Magazzino
                     //email già presente nel db?
                     if (client.CheckEmail(emailRegister))
                     {
-                        //email non trovata nel sistema
+                        //email non trovata nel sistema, quindi creo nuovo utente
 
-                        //creo nuovo utente
                         Utente nuovo = new Utente { Email = emailRegister };
-
                         string password;
                         do
                         {
@@ -66,11 +64,9 @@ namespace Magazzino
                             }
                             else
                             {
-                                // controllare se è necessario lo storing del salt
                                 string salt = BCrypt.Net.BCrypt.GenerateSalt(6);
                                 string hash = BCrypt.Net.BCrypt.HashPassword(password, salt);
 
-                                //salvo hash e salt nel db
                                 nuovo.Psw = hash;
 
                             }
@@ -84,7 +80,6 @@ namespace Magazzino
                             Console.WriteLine("Nome:");
                             nome = Console.ReadLine();
                         } while (nome == "" || nome == " " || nome.Any(char.IsDigit));
-
                         nuovo.Nome = nome;
 
                         string cognome;
@@ -95,7 +90,6 @@ namespace Magazzino
                             Console.WriteLine("Cognome:");
                             cognome = Console.ReadLine();
                         } while (cognome == "" || cognome == " " || cognome.Any(char.IsDigit));
-
                         nuovo.Cognome = cognome;
 
                         string indirizzo;
@@ -106,7 +100,6 @@ namespace Magazzino
                             Console.WriteLine("Indirizzo:");
                             indirizzo = Console.ReadLine();
                         } while (indirizzo == "" || indirizzo == " ");
-
                         nuovo.Indirizzo = indirizzo;
 
                         string dataString;
@@ -133,7 +126,6 @@ namespace Magazzino
                             telefono = Console.ReadLine();
 
                         } while (Validation.ValidateTelephone(telefono) == false);
-
                         nuovo.Telefono = telefono;
 
                         Console.Clear();
@@ -149,7 +141,6 @@ namespace Magazzino
                         Console.Clear();
                         Console.WriteLine("Email già presente nel sistema!");
                     }
-
                     Console.WriteLine("\nPremi un tasto per continuare");
                     Console.ReadKey();
                 }
