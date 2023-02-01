@@ -56,7 +56,7 @@ namespace Magazzino
                                     foreach (var p in client.ListaProdotti())
                                     {
                                         Articolo a = client.GetProdotto(p);
-                                        if (client.GetProdotto(p).Quantita >= 1)
+                                        if (a.Quantita >= 1)
                                             disponibile = "DISPONIBILE";
                                         else
                                             disponibile = "NON DISPONIBILE";
@@ -120,7 +120,7 @@ namespace Magazzino
                                         foreach (var z in client.ListaProdotti())
                                         {
                                             Articolo a = client.GetProdotto(z);
-                                            if (client.GetProdotto(z).Quantita >= 1)
+                                            if (a.Quantita >= 1)
                                                 disponibile = "DISPONIBILE";
                                             else
                                                 disponibile = "NON DISPONIBILE";
@@ -168,7 +168,7 @@ namespace Magazzino
                                     foreach (var p in client.ListaProdotti())
                                     {
                                         Articolo a = client.GetProdotto(p);
-                                        if (client.GetProdotto(p).Quantita <= 2)
+                                        if (a.Quantita <= 2)
                                         {
                                             disponibilita = "IN ESAURIMENTO";
                                             Console.WriteLine(a.IDprodotto + " - " + a.Nome + " - " + String.Format("{0:0.00}", a.Prezzo) + " euro - " + disponibilita + " - " + a.Quantita + " - " + a.Categoria);
