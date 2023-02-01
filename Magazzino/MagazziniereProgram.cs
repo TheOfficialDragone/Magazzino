@@ -86,7 +86,7 @@ namespace Magazzino
                                         else
                                             disponibile = "NON DISPONIBILE";
 
-                                        Console.WriteLine(a.IDprodotto + " - " + a.Nome + " - " + String.Format("{0:0.00}", a.Prezzo) + " euro - " + disponibile + " - " + a.Quantita + "-" + a.Categoria);
+                                        Console.WriteLine(a.IDprodotto + " - " + a.Nome + " - " + String.Format("{0:0.00}", a.Prezzo) + " euro - " + disponibile + " - " + a.Quantita + " - " + a.Categoria);
                                     }
                                 }
                                 int id = 0;
@@ -124,7 +124,7 @@ namespace Magazzino
                                                 disponibile = "DISPONIBILE";
                                             else
                                                 disponibile = "NON DISPONIBILE";
-                                            Console.WriteLine(a.IDprodotto + " - " + a.Nome + " - " + String.Format("{0:0.00}", a.Prezzo) + " euro - " + disponibile + " - " + a.Quantita + "-" + a.Categoria);
+                                            Console.WriteLine(a.IDprodotto + " - " + a.Nome + " - " + String.Format("{0:0.00}", a.Prezzo) + " euro - " + disponibile + " - " + a.Quantita + " - " + a.Categoria);
                                         }
                                     }
                                     int id_prod = 0;
@@ -171,7 +171,7 @@ namespace Magazzino
                                         if (client.GetProdotto(p).Quantita <= 2)
                                         {
                                             disponibilita = "IN ESAURIMENTO";
-                                            Console.WriteLine(a.IDprodotto + " - " + a.Nome + " - " + String.Format("{0:0.00}", a.Prezzo) + " euro - " + disponibilita + " - " + a.Quantita + "-" + a.Categoria);
+                                            Console.WriteLine(a.IDprodotto + " - " + a.Nome + " - " + String.Format("{0:0.00}", a.Prezzo) + " euro - " + disponibilita + " - " + a.Quantita + " - " + a.Categoria);
                                         }
 
 
