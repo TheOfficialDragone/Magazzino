@@ -18,7 +18,7 @@ namespace Magazzino
             try
             {
                 Service1Client client = new Magazzino.ServiceReference1.Service1Client();
-                
+
                 Console.Clear();
                 Console.WriteLine("Benvenuto magazziniere " + login.Email);
                 Console.WriteLine("\nPremi un tasto per continuare");
@@ -55,11 +55,12 @@ namespace Magazzino
                                     //stampo tutti i prodotti
                                     foreach (var p in client.ListaProdotti())
                                     {
+                                        Articolo a = client.GetProdotto(p);
                                         if (client.GetProdotto(p).Quantita >= 1)
                                             disponibile = "DISPONIBILE";
                                         else
-                                            disponibile = "NON DISPONIBILE";                                      
-                                        Console.WriteLine(client.GetProdotto(p).IDprodotto + " - " + client.GetProdotto(p).Nome + " - " + String.Format("{0:0.00}", client.GetProdotto(p).Prezzo) + " euro - " + disponibile + " - " + client.GetProdotto(p).Quantita + "-" + client.GetProdotto(p).Categoria);
+                                            disponibile = "NON DISPONIBILE";
+                                        Console.WriteLine(a.IDprodotto + " - " + a.Nome + " - " + String.Format("{0:0.00}", a.Prezzo) + " euro - " + disponibile + " - " + a.Quantita + "-" + a.Categoria);
                                     }
                                 }
                                 else
@@ -79,12 +80,13 @@ namespace Magazzino
                                     //stampo tutti i prodotti
                                     foreach (var z in client.ListaProdotti())
                                     {
+                                        Articolo a = client.GetProdotto(z);
                                         if (client.GetProdotto(z).Quantita >= 1)
                                             disponibile = "DISPONIBILE";
                                         else
                                             disponibile = "NON DISPONIBILE";
 
-                                        Console.WriteLine(client.GetProdotto(z).IDprodotto + " - " + client.GetProdotto(z).Nome + " - " + String.Format("{0:0.00}", client.GetProdotto(z).Prezzo) + " euro - " + disponibile + " - " + client.GetProdotto(z).Quantita + "-" + client.GetProdotto(z).Categoria);
+                                        Console.WriteLine(a.IDprodotto + " - " + a.Nome + " - " + String.Format("{0:0.00}", a.Prezzo) + " euro - " + disponibile + " - " + a.Quantita + "-" + a.Categoria);
                                     }
                                 }
                                 int id = 0;
@@ -93,7 +95,7 @@ namespace Magazzino
                                 id = Convert.ToInt32(Console.ReadLine());
 
                                 Console.WriteLine("\nInserire la quantità da aumentare");
-                                quantita = Convert.ToInt32(Console.ReadLine());                                
+                                quantita = Convert.ToInt32(Console.ReadLine());
 
                                 if (client.AumentaGiacenze(id, quantita))
                                 {
@@ -117,11 +119,12 @@ namespace Magazzino
                                         //stampo tutti i prodotti
                                         foreach (var z in client.ListaProdotti())
                                         {
+                                            Articolo a = client.GetProdotto(z);
                                             if (client.GetProdotto(z).Quantita >= 1)
                                                 disponibile = "DISPONIBILE";
                                             else
                                                 disponibile = "NON DISPONIBILE";
-                                            Console.WriteLine(client.GetProdotto(z).IDprodotto + " - " + client.GetProdotto(z).Nome + " - " + String.Format("{0:0.00}", client.GetProdotto(z).Prezzo) + " euro - " + disponibile + " - " + client.GetProdotto(z).Quantita + "-" + client.GetProdotto(z).Categoria);
+                                            Console.WriteLine(a.IDprodotto + " - " + a.Nome + " - " + String.Format("{0:0.00}", a.Prezzo) + " euro - " + disponibile + " - " + a.Quantita + "-" + a.Categoria);
                                         }
                                     }
                                     int id_prod = 0;
@@ -132,7 +135,7 @@ namespace Magazzino
 
                                     Console.WriteLine("\nInserire la quantità da diminuire");
                                     quantita_diminuita = Convert.ToInt32(Console.ReadLine());
-                               
+
                                     if (client.DiminuisciGiacenze(id_prod, quantita_diminuita))
                                     {
                                         Console.WriteLine("GIACENZA DIMINUITA");
@@ -164,12 +167,13 @@ namespace Magazzino
                                     //stampo tutti i prodotti
                                     foreach (var p in client.ListaProdotti())
                                     {
+                                        Articolo a = client.GetProdotto(p);
                                         if (client.GetProdotto(p).Quantita <= 2)
                                         {
                                             disponibilita = "IN ESAURIMENTO";
-                                            Console.WriteLine(client.GetProdotto(p).IDprodotto + " - " + client.GetProdotto(p).Nome + " - " + String.Format("{0:0.00}", client.GetProdotto(p).Prezzo) + " euro - " + disponibilita + " - " + client.GetProdotto(p).Quantita + "-" + client.GetProdotto(p).Categoria);
+                                            Console.WriteLine(a.IDprodotto + " - " + a.Nome + " - " + String.Format("{0:0.00}", a.Prezzo) + " euro - " + disponibilita + " - " + a.Quantita + "-" + a.Categoria);
                                         }
-                                      
+
 
                                     }
                                 }
@@ -204,7 +208,7 @@ namespace Magazzino
                                                 Console.WriteLine("***I MIEI DATI***");
 
                                                 Utente profilo = client.GetMagazziniere(login.Email);
-                                                CultureInfo ci = CultureInfo.InvariantCulture;  
+                                                CultureInfo ci = CultureInfo.InvariantCulture;
                                                 Console.WriteLine("Email: " + profilo.Email);
                                                 Console.WriteLine("Nome: " + profilo.Nome);
                                                 Console.WriteLine("Cognome: " + profilo.Cognome);
@@ -220,7 +224,7 @@ namespace Magazzino
                                                 string psw_attuale;
                                                 Console.WriteLine("\nInserisci la password attuale: ");
                                                 psw_attuale = Console.ReadLine();
-                                                if(psw_attuale == login.Password)
+                                                if (psw_attuale == login.Password)
                                                 {
                                                     string psw1, psw2;
                                                     do
@@ -335,7 +339,5 @@ namespace Magazzino
             }
             catch (Exception) { Console.WriteLine("Errore nella visualizzazione del menu Magazziniere"); }
         }
-
-
     }
 }
