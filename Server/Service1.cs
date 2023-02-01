@@ -29,51 +29,47 @@ namespace Server
         public static MySqlConnection Conn { get => conn; set => conn = value; }
         #endregion
 
-
         public bool CheckEmail(string email)
         {
-            using (SqlConnection connection = new SqlConnection(connectionString))
+            using (MySqlTransaction t = conn.BeginTransaction())
             {
-                connection.Open();
-                SqlTransaction transaction; // creo transaction
-                transaction = connection.BeginTransaction(); //inizio la transaction
                 try
                 {
                     bool risultato = true;
                     using (MySqlCommand command1 = conn.CreateCommand())
                     {
+                        command1.Transaction = t;
                         command1.CommandText = "SELECT * FROM account WHERE email='" + email.Trim().ToLower() + "'";
                         using (MySqlDataReader reader = command1.ExecuteReader())
                         {
                             if (reader.HasRows)
                                 risultato = false;
                         }
-
-                        transaction.Commit(); //provo a fare commit della transaction
-                        
-                        return risultato;
                     }
-                    
-                    
-
+                    t.Commit();
+                    return risultato;
                 }
                 catch (Exception ex)
                 {
-                    Console.WriteLine("Eccezione nel commit di tipo: {0}", ex.GetType());
-                    Console.WriteLine(" Messaggio dell'eccezione: {0}", ex.Message);
-
                     try
                     {
-                        transaction.Rollback(); //se non va abuon fine provo a tornare indietro
+                        t.Rollback();
+                        Console.WriteLine("Eccezione nel commit", ex.GetType());
+                        Console.WriteLine("  Messaggio da commit:", ex.Message);
                     }
                     catch (Exception ex2)
                     {
-                        Console.WriteLine("Eccezione nel rollback di tipo: {0}", ex2.GetType());
-                        Console.WriteLine(" Messaggio dal rollback: {0}", ex2.Message);
+                        Console.WriteLine("Eccezione nel rollback", ex2.GetType());
+                        Console.WriteLine("  Messaggio del rollback", ex2.Message);
                     }
+                    throw new Exception("Errore durante il controllo dell'email");
                 }
             }
         }
+
+
+
+
 
         /// Elimina un prodotto 
         /// </summary>
