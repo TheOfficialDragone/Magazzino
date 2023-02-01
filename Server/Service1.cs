@@ -8,6 +8,7 @@ using Org.BouncyCastle.Crypto.Generators;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
+using System.Data.SqlClient;
 #pragma warning disable CS0642
 
 namespace Server
@@ -31,23 +32,46 @@ namespace Server
 
         public bool CheckEmail(string email)
         {
-            try
+            using (SqlConnection connection = new SqlConnection(connectionString))
             {
-                bool risultato = true;
-                using (MySqlCommand command1 = conn.CreateCommand())
+                connection.Open();
+                SqlTransaction transaction; // creo transaction
+                transaction = connection.BeginTransaction(); //inizio la transaction
+                try
                 {
-                    command1.CommandText = "SELECT * FROM account WHERE email='" + email.Trim().ToLower() + "'";
-                    using (MySqlDataReader reader = command1.ExecuteReader())
+                    bool risultato = true;
+                    using (MySqlCommand command1 = conn.CreateCommand())
                     {
-                        if (reader.HasRows)
-                            risultato = false;
+                        command1.CommandText = "SELECT * FROM account WHERE email='" + email.Trim().ToLower() + "'";
+                        using (MySqlDataReader reader = command1.ExecuteReader())
+                        {
+                            if (reader.HasRows)
+                                risultato = false;
+                        }
+
+                        transaction.Commit(); //provo a fare commit della transaction
+                        
+                        return risultato;
+                    }
+                    
+                    
+
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine("Eccezione nel commit di tipo: {0}", ex.GetType());
+                    Console.WriteLine(" Messaggio dell'eccezione: {0}", ex.Message);
+
+                    try
+                    {
+                        transaction.Rollback(); //se non va abuon fine provo a tornare indietro
+                    }
+                    catch (Exception ex2)
+                    {
+                        Console.WriteLine("Eccezione nel rollback di tipo: {0}", ex2.GetType());
+                        Console.WriteLine(" Messaggio dal rollback: {0}", ex2.Message);
                     }
                 }
-                return risultato;
-            }
-            catch (Exception)
-            {
-                throw new Exception("Errore durante il controllo dell'email");
             }
         }
 
