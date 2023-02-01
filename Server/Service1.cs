@@ -61,12 +61,32 @@ namespace Server
             {
                 bool risultato = false;
 
-                using (MySqlCommand command1 = conn.CreateCommand())
+                using (MySqlTransaction t = conn.BeginTransaction())
                 {
-                    //cancellare il prodotto dal db mantenedo la categoria
-                    command1.CommandText = "UPDATE prodotto SET quantita=0 WHERE IDprodotto=" + id;
-                    if (command1.ExecuteNonQuery() > 0)
-                        risultato = true;
+                    try
+                    {
+                        using (MySqlCommand command1 = conn.CreateCommand())
+                        {
+                            //cancellare il prodotto dal db mantenedo la categoria
+                            command1.CommandText = "UPDATE prodotto SET quantita=0 WHERE IDprodotto=" + id;
+                            if (command1.ExecuteNonQuery() > 0)
+                                risultato = true;
+                        }
+                        t.Commit();
+                    }
+                    catch (Exception ex)
+                    {
+                        try
+                        {
+                            t.Rollback();
+                            Console.WriteLine("Errore in fase di eliminazione del prodotto");
+                            Console.WriteLine(ex.ToString());
+                        }
+                        catch 
+                        { 
+                            Console.WriteLine("Errore in fase di rollback!");
+                        }
+                    }
                 }
                 return risultato;
             }
