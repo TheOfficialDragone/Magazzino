@@ -178,7 +178,9 @@ namespace Magazzino
                                     }
                                 }
                                 else
+                                {
                                     Console.WriteLine("\nNessun prodotto presente nel sistema");
+                                }
                                 Console.WriteLine("\nPremi un tasto per continuare");
                                 Console.ReadKey();
                                 break;
