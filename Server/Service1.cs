@@ -31,44 +31,29 @@ namespace Server
 
         public bool CheckEmail(string email)
         {
-            using (MySqlTransaction t = conn.BeginTransaction())
+            try
             {
-                try
-                {
-                    bool risultato = true;
-                    using (MySqlCommand command1 = conn.CreateCommand())
+                bool risultato = true;
+                using (MySqlCommand command1 = conn.CreateCommand())
+                {         
+                    command1.CommandText = "SELECT * FROM account WHERE email='" + email.Trim().ToLower() + "'";
+                    using (MySqlDataReader reader = command1.ExecuteReader())
                     {
-                        command1.Transaction = t;
-                        command1.CommandText = "SELECT * FROM account WHERE email='" + email.Trim().ToLower() + "'";
-                        using (MySqlDataReader reader = command1.ExecuteReader())
-                        {
-                            if (reader.HasRows)
-                                risultato = false;
-                        }
+                        if (reader.HasRows)
+                            risultato = false;
                     }
-                    t.Commit();
-                    return risultato;
                 }
-                catch (Exception ex)
-                {
-                    try
-                    {
-                        t.Rollback();
-                        Console.WriteLine("Eccezione nel commit", ex.GetType());
-                        Console.WriteLine("  Messaggio da commit:", ex.Message);
-                    }
-                    catch (Exception ex2)
-                    {
-                        Console.WriteLine("Eccezione nel rollback", ex2.GetType());
-                        Console.WriteLine("  Messaggio del rollback", ex2.Message);
-                    }
-                    throw new Exception("Errore durante il controllo dell'email");
-                }
+                    
+                return risultato;
             }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.GetType());
+                Console.WriteLine(ex.Message);                          
+                throw new Exception("Errore durante il controllo dell'email");
+            }
+            
         }
-
-
-
 
 
         /// Elimina un prodotto 
@@ -123,132 +108,84 @@ namespace Server
         /// <returns>Il nome della categoria</returns>
         public string GetCategoria(int id)
         {
+            string nome = null;
             try
             {
-                string nome = null;
-                using (MySqlConnection conn = new MySqlConnection(connectionString))
+                using (MySqlCommand command1 = conn.CreateCommand())
                 {
-                    conn.Open();
-                    using (MySqlTransaction t = conn.BeginTransaction())
+                    command1.CommandText = "SELECT nome FROM categoria WHERE IDcategoria=" + id;
+                    using (MySqlDataReader reader = command1.ExecuteReader())
                     {
-                        try
+                        while (reader.Read())
                         {
-                            using (MySqlCommand command1 = conn.CreateCommand())
-                            {
-                                command1.Transaction = t;
-                                command1.CommandText = "SELECT nome FROM categoria WHERE IDcategoria=" + id;
-                                using (MySqlDataReader reader = command1.ExecuteReader())
-                                {
-                                    while (reader.Read())
-                                    {
-                                        nome = reader.GetString(0).TrimEnd().ToUpper();
-                                    }
-                                }
-                            }
-                            t.Commit();
-                        }
-                        catch (Exception ex)
-                        {
-                            try
-                            {
-                                t.Rollback();
-                                Console.WriteLine("Eccezione nel commit", ex.GetType());
-                                Console.WriteLine("  Messaggio da commit:", ex.Message);
-                            }
-                            catch (Exception ex2)
-                            {
-                                Console.WriteLine("Eccezione nel rollback", ex2.GetType());
-                                Console.WriteLine("  Messaggio del rollback", ex2.Message);
-                            }
+                            nome = reader.GetString(0).TrimEnd().ToUpper();
                         }
                     }
                 }
+
                 return nome;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                Console.WriteLine(ex.GetType());
+                Console.WriteLine(ex.Message);
                 throw new Exception("Errore nel recupero della categoria");
             }
-        }
+        }       
+ 
+        
 
         /// Dati del prodotto
         /// <param name="IDProdotto">Identificativo del prodotto</param>
         /// <returns>Oggetto Articolo</returns>
         public Articolo GetProdotto(int IDProdotto)
-        {
-            //creo l'oggetto da restituire
-            Articolo prodotto = new Articolo() { IDprodotto = IDProdotto };
+        {         
             try
             {
-                using (MySqlConnection conn = new MySqlConnection(connectionString))
+                //creo l'oggetto da restituire
+                Articolo prodotto = new Articolo() { IDprodotto = IDProdotto };
+
+                using (MySqlCommand command1 = new MySqlCommand("SELECT prodotto.*, categoria.nome FROM prodotto, categoria WHERE prodotto.fk_categoria=categoria.IDcategoria AND IDprodotto=@IDprodotto"))
                 {
-                    conn.Open();
+                    command1.Parameters.AddWithValue("@IDprodotto", IDProdotto);
 
-                    using (MySqlTransaction t = conn.BeginTransaction())
+                    using (MySqlDataReader reader = command1.ExecuteReader())
                     {
-                        try
+                        while (reader.Read())
                         {
-
-                            using (MySqlCommand command1 = new MySqlCommand("SELECT prodotto.*, categoria.nome FROM prodotto, categoria WHERE prodotto.fk_categoria=categoria.IDcategoria AND IDprodotto=@IDprodotto", conn, t))
-                            {
-                                command1.Parameters.AddWithValue("@IDprodotto", IDProdotto);
-
-                                using (MySqlDataReader reader = command1.ExecuteReader())
-                                {
-                                    while (reader.Read())
-                                    {
-                                        // controllare ordine campi in tabella db
-                                        prodotto.Nome = reader.GetString(1).TrimEnd().ToUpper();
-                                        prodotto.Descrizione = reader.GetString(2).TrimEnd().ToUpper();
-                                        prodotto.Quantita = reader.GetInt32(4);
-                                        prodotto.Prezzo = reader.GetDouble(3);
-                                        prodotto.Categoria = reader.GetString(6).TrimEnd().ToUpper();
-                                    }
-                                }
-                            }
-                            t.Commit();
-                            
+                            // controllare ordine campi in tabella db
+                            prodotto.Nome = reader.GetString(1).TrimEnd().ToUpper();
+                            prodotto.Descrizione = reader.GetString(2).TrimEnd().ToUpper();
+                            prodotto.Quantita = reader.GetInt32(4);
+                            prodotto.Prezzo = reader.GetDouble(3);
+                            prodotto.Categoria = reader.GetString(6).TrimEnd().ToUpper();
                         }
-                        catch (Exception ex)
-                        {
-                            try
-                            {
-                                t.Rollback();
-                                Console.WriteLine("Eccezione nel commit", ex.GetType());
-                                Console.WriteLine("  Messaggio da commit:", ex.Message);
-                            }
-                            catch (Exception ex2)
-                            {
-                                Console.WriteLine("Eccezione nel rollback", ex2.GetType());
-                                Console.WriteLine("  Messaggio del rollback", ex2.Message);
-                            }
-                        }
-
                     }
-                    //restituisco il prodotto
-                    return prodotto;
                 }
+
+                //restituisco il prodotto
+                return prodotto;
             }
-            catch (Exception)
-            {
+            catch (Exception ex)
+            {                 
+                Console.WriteLine("Eccezione nel commit", ex.GetType());
+                Console.WriteLine("  Messaggio da commit:", ex.Message);
                 throw new Exception("Errore nel recupero della categoria");
             }
         }
+           
 
 
         //Lista degli identificativi delle Categorie
         public List<int> ListaCategorie()
         {
             List<int> lista = new List<int>();
-            MySqlTransaction t = null;
 
             try
             {
-                t = conn.BeginTransaction();
 
                 using (MySqlCommand command1 = conn.CreateCommand())
                 {
-                    command1.Transaction = t;
                     command1.CommandText = "SELECT IDcategoria FROM categoria";
                     using (MySqlDataReader reader = command1.ExecuteReader())
                     {
@@ -258,24 +195,15 @@ namespace Server
                         }
                     }
                 }
-                t.Commit();
+                return lista; //ritorno la lista
             }
             catch (Exception ex)
-            {
-                try
-                {
-                    t.Rollback();
-                    Console.WriteLine("Eccezione nel commit", ex.GetType());
-                    Console.WriteLine("  Messaggio da commit:", ex.Message);
-                }
-                catch (Exception ex2)
-                {
-                    Console.WriteLine("Eccezione nel rollback", ex2.GetType());
-                    Console.WriteLine("  Messaggio del rollback", ex2.Message);
-                }
+            {              
+                Console.WriteLine(ex.GetType());
+                Console.WriteLine(ex.Message);
+                throw new Exception("errore nel recupoero della lista delle categorie");
             }
-
-            return lista;
+            
         }
 
 
@@ -301,8 +229,10 @@ namespace Server
                 //restituisco la lista degli identificativi dei prodotti
                 return lista;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                Console.WriteLine(ex.GetType());
+                Console.WriteLine(ex.Message);
                 throw new Exception("Errore! Impossibile recuperare la lista dei prodotti");
             }
         }
