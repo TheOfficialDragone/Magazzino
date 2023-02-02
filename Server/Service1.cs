@@ -4,11 +4,9 @@
  * 
  */
 using MySql.Data.MySqlClient;
-using Org.BouncyCastle.Crypto.Generators;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
-using System.Data.SqlClient;
 #pragma warning disable CS0642
 
 namespace Server
@@ -35,7 +33,7 @@ namespace Server
             {
                 bool risultato = true;
                 using (MySqlCommand command1 = conn.CreateCommand())
-                {         
+                {
                     command1.CommandText = "SELECT * FROM account WHERE email='" + email.Trim().ToLower() + "'";
                     using (MySqlDataReader reader = command1.ExecuteReader())
                     {
@@ -43,16 +41,16 @@ namespace Server
                             risultato = false;
                     }
                 }
-                    
+
                 return risultato;
             }
             catch (Exception ex)
             {
                 Console.WriteLine(ex.GetType());
-                Console.WriteLine(ex.Message);                          
+                Console.WriteLine(ex.Message);
                 throw new Exception("Errore durante il controllo dell'email");
             }
-            
+
         }
 
 
@@ -87,7 +85,7 @@ namespace Server
                             Console.WriteLine("Eccezione nel commit", ex.GetType());
                             Console.WriteLine("  Messaggio da commit:", ex.Message);
                         }
-                        catch(Exception ex2) 
+                        catch (Exception ex2)
                         {
                             Console.WriteLine("Eccezione nel rollback", ex2.GetType());
                             Console.WriteLine("  Messaggio del rollback", ex2.Message);
@@ -131,15 +129,15 @@ namespace Server
                 Console.WriteLine(ex.Message);
                 throw new Exception("Errore nel recupero della categoria");
             }
-        }       
- 
-        
+        }
+
+
 
         /// Dati del prodotto
         /// <param name="IDProdotto">Identificativo del prodotto</param>
         /// <returns>Oggetto Articolo</returns>
         public Articolo GetProdotto(int IDProdotto)
-        {         
+        {
             try
             {
                 //creo l'oggetto da restituire
@@ -167,13 +165,13 @@ namespace Server
                 return prodotto;
             }
             catch (Exception ex)
-            {                 
+            {
                 Console.WriteLine("Eccezione nel commit", ex.GetType());
                 Console.WriteLine("  Messaggio da commit:", ex.Message);
                 throw new Exception("Errore nel recupero della categoria");
             }
         }
-           
+
 
 
         //Lista degli identificativi delle Categorie
@@ -198,12 +196,12 @@ namespace Server
                 return lista; //ritorno la lista
             }
             catch (Exception ex)
-            {              
+            {
                 Console.WriteLine(ex.GetType());
                 Console.WriteLine(ex.Message);
                 throw new Exception("errore nel recupero della lista delle categorie");
             }
-            
+
         }
 
 
@@ -324,7 +322,7 @@ namespace Server
                         if (command1.ExecuteNonQuery() > 0)
                             risultato = true;
                     }
-                     t.Commit();
+                    t.Commit();
                 }
                 return risultato;
 
@@ -358,7 +356,7 @@ namespace Server
             {
                 using (t)
                 {
-                    
+
                     using (MySqlCommand command1 = conn.CreateCommand())
                     {
                         command1.CommandText = "INSERT INTO categoria(nome) VALUES('" + nome.Trim().ToLower() + "')";
@@ -392,13 +390,13 @@ namespace Server
         /// <returns>True se il prodotto è stato creato. False in caso contrario</returns>
         public bool NuovoProdotto(Articolo nuovo)
         {
-            MySqlTransaction t = conn.BeginTransaction();  
+            MySqlTransaction t = conn.BeginTransaction();
             bool risultato = false;
             try
             {
                 using (t)
                 {
-                   
+
                     using (MySqlCommand command1 = conn.CreateCommand())
                     {
                         int id_cat = 0;
@@ -621,7 +619,8 @@ namespace Server
             MySqlTransaction t = conn.BeginTransaction();
             bool risultato = false;
             try
-            {   using (t)
+            {
+                using (t)
                 {
 
                     using (MySqlCommand command1 = conn.CreateCommand())
@@ -630,9 +629,9 @@ namespace Server
                         if (command1.ExecuteNonQuery() > 0)
                             risultato = true;
                     }
-                   
+
                 }
-                t.Commit(); 
+                t.Commit();
                 return risultato;
             }
             catch (Exception ex)

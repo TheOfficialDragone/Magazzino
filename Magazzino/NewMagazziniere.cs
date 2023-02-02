@@ -7,6 +7,7 @@ using System.Linq;
 using System.ServiceModel;
 using System.Text;
 using System.Threading.Tasks;
+using Utente = Magazzino.ServiceReference1.Utente;
 
 namespace Magazzino
 {

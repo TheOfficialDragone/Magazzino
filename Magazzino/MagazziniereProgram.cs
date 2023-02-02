@@ -8,6 +8,9 @@ using System.Linq;
 using System.ServiceModel;
 using System.Text;
 using System.Threading.Tasks;
+using Articolo = Magazzino.ServiceReference1.Articolo;
+using Login = Server.Login;
+using Utente = Magazzino.ServiceReference1.Utente;
 
 namespace Magazzino
 {

@@ -9,6 +9,9 @@ using System.Linq;
 using System.Runtime.Remoting.Messaging;
 using System.ServiceModel;
 using System.ServiceModel.Configuration;
+using Login = Magazzino.ServiceReference1.Login;
+
+
 
 #pragma warning disable IDE0060
 /**
