@@ -9,7 +9,7 @@ using System.ServiceModel;
 using System.Text;
 using System.Threading.Tasks;
 using Articolo = Magazzino.ServiceReference1.Articolo;
-using Login = Server.Login;
+using Login = Magazzino.ServiceReference1.Login;
 using Utente = Magazzino.ServiceReference1.Utente;
 
 namespace Magazzino
