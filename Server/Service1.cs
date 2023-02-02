@@ -201,7 +201,7 @@ namespace Server
             {              
                 Console.WriteLine(ex.GetType());
                 Console.WriteLine(ex.Message);
-                throw new Exception("errore nel recupero della lista delle categorie");
+                throw new Exception("errore nel recupoero della lista delle categorie");
             }
             
         }
@@ -243,107 +243,71 @@ namespace Server
         /// <returns>True se la password è stata modificata. False in caso contrario</returns>
         public bool ModificaPassword(string email, string psw)
         {
-            MySqlTransaction t = conn.BeginTransaction();
             try
             {
                 bool risultato = false;
-                using (t)
+                using (MySqlCommand command1 = conn.CreateCommand())
                 {
-                    using (MySqlCommand command1 = conn.CreateCommand())
+                    int idLogin = 0;
+                    command1.CommandText = "SELECT IDutente FROM account WHERE email='" + email.Trim().ToLower() + "'";
+                    using (MySqlDataReader reader = command1.ExecuteReader())
                     {
-                        int idLogin = 0;
-                        command1.CommandText = "SELECT IDutente FROM account WHERE email='" + email.Trim().ToLower() + "'";
-                        using (MySqlDataReader reader = command1.ExecuteReader())
+                        while (reader.Read())
                         {
-                            while (reader.Read())
-                            {
-                                idLogin = reader.GetInt32(0);
-                            }
+                            idLogin = reader.GetInt32(0);
                         }
-
-                        command1.CommandText = "UPDATE account SET " +
-                                                "password='" + psw + "' " +
-                                               "WHERE IDutente=" + idLogin;
-                        if (command1.ExecuteNonQuery() > 0)
-                            risultato = true;
                     }
-                    t.Commit();
+
+                    command1.CommandText = "UPDATE account SET " +
+                                            "password='" + psw + "' " +
+                                           "WHERE IDutente=" + idLogin;
+                    if (command1.ExecuteNonQuery() > 0)
+                        risultato = true;
                 }
                 return risultato;
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                try
-                {
-                    t.Rollback();
-                    Console.WriteLine("Eccezione nel commit", ex.GetType());
-                    Console.WriteLine("  Messaggio da commit:", ex.Message);
-                }
-                catch (Exception ex2)
-                {
-                    Console.WriteLine("Eccezione nel rollback", ex2.GetType());
-                    Console.WriteLine("  Messaggio del rollback", ex2.Message);
-                }
-
-                throw new Exception("errore nella modifica della passsword");
+                throw new Exception("Errore durante la modifica della password");
             }
         }
-
 
         //Modifica del prodotto
         /// <param name="prodottoDaModificare">Prodotto da modificare</param>
         /// <returns>True se il prodotto è stato modificato. False in caso contrario</returns>
         public bool ModificaProdotto(Articolo prodottoDaModificare)
         {
-            MySqlTransaction t = conn.BeginTransaction();
             try
             {
                 bool risultato = false;
-                using (t)
+                using (MySqlCommand command1 = conn.CreateCommand())
                 {
-                    using (MySqlCommand command1 = conn.CreateCommand())
+                    int id_cat = 0;
+                    command1.CommandText = "SELECT IDcategoria FROM categoria WHERE nome='" + prodottoDaModificare.Categoria.Trim().ToLower() + "'";
+                    using (MySqlDataReader reader = command1.ExecuteReader())
                     {
-                        int id_cat = 0;
-                        command1.CommandText = "SELECT IDcategoria FROM categoria WHERE nome='" + prodottoDaModificare.Categoria.Trim().ToLower() + "'";
-                        using (MySqlDataReader reader = command1.ExecuteReader())
+                        while (reader.Read())
                         {
-                            while (reader.Read())
-                            {
-                                id_cat = reader.GetInt32(0);
-                            }
+                            id_cat = reader.GetInt32(0);
                         }
-                        int disp = Convert.ToInt32(prodottoDaModificare.Quantita);
-                        string descrizione;
-                        if (prodottoDaModificare.Descrizione == null)
-                            descrizione = "...";
-                        else
-                            descrizione = prodottoDaModificare.Descrizione.Trim().ToLower();
-
-                        command1.CommandText = "UPDATE prodotto SET " + "nome='" + prodottoDaModificare.Nome.Trim().ToLower() + "', " + "descrizione='" + descrizione + "', " + "prezzo=" + prodottoDaModificare.Prezzo.ToString() + ", fk_categoria=" + id_cat + " WHERE IDprodotto=" + prodottoDaModificare.IDprodotto;
-
-                        if (command1.ExecuteNonQuery() > 0)
-                            risultato = true;
                     }
-                     t.Commit();
+                    int disp = Convert.ToInt32(prodottoDaModificare.Quantita);
+                    string descrizione;
+                    if (prodottoDaModificare.Descrizione == null)
+                        descrizione = "...";
+                    else
+                        descrizione = prodottoDaModificare.Descrizione.Trim().ToLower();
+
+                    command1.CommandText = "UPDATE prodotto SET " + "nome='" + prodottoDaModificare.Nome.Trim().ToLower() + "', " + "descrizione='" + descrizione + "', " + "prezzo=" + prodottoDaModificare.Prezzo.ToString() + ", fk_categoria=" + id_cat + " WHERE IDprodotto=" + prodottoDaModificare.IDprodotto;
+
+                    if (command1.ExecuteNonQuery() > 0)
+                        risultato = true;
                 }
                 return risultato;
-
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                try
-                {
-                    t.Rollback();
-                    Console.WriteLine("Eccezione nel commit", ex.GetType());
-                    Console.WriteLine("  Messaggio da commit:", ex.Message);
-                }
-                catch (Exception ex2)
-                {
-                    Console.WriteLine("Eccezione nel rollback", ex2.GetType());
-                    Console.WriteLine("  Messaggio del rollback", ex2.Message);
-                }
-
-                throw new Exception("errore nella modifica del prodotto");
+                throw new Exception("Errore nella selezione del prodotto da modificare");
             }
         }
 
@@ -352,38 +316,20 @@ namespace Server
         /// <returns>True se la categoria è stata creata. False in caso contrario</returns>
         public bool NuovaCategoria(string nome)
         {
-            bool risultato = false;
-            MySqlTransaction t = conn.BeginTransaction();
             try
             {
-                using (t)
+                bool risultato = false;
+                using (MySqlCommand command1 = conn.CreateCommand())
                 {
-                    
-                    using (MySqlCommand command1 = conn.CreateCommand())
-                    {
-                        command1.CommandText = "INSERT INTO categoria(nome) VALUES('" + nome.Trim().ToLower() + "')";
-                        if (command1.ExecuteNonQuery() > 0)
-                            risultato = true;
-                    }
+                    command1.CommandText = "INSERT INTO categoria(nome) VALUES('" + nome.Trim().ToLower() + "')";
+                    if (command1.ExecuteNonQuery() > 0)
+                        risultato = true;
                 }
-                t.Commit();
                 return risultato;
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                try
-                {
-                    t.Rollback();
-                    Console.WriteLine("Eccezione nel commit", ex.GetType());
-                    Console.WriteLine("  Messaggio da commit:", ex.Message);
-                }
-                catch (Exception ex2)
-                {
-                    Console.WriteLine("Eccezione nel rollback", ex2.GetType());
-                    Console.WriteLine("  Messaggio del rollback", ex2.Message);
-                }
-
-                throw new Exception("errore nella aggiunta di una nuova categoria");
+                throw new Exception("Errore nella creazione di una nuova categoria");
             }
         }
 
@@ -392,55 +338,37 @@ namespace Server
         /// <returns>True se il prodotto è stato creato. False in caso contrario</returns>
         public bool NuovoProdotto(Articolo nuovo)
         {
-            MySqlTransaction t = conn.BeginTransaction();  
-            bool risultato = false;
             try
             {
-                using (t)
+                bool risultato = false;
+                using (MySqlCommand command1 = conn.CreateCommand())
                 {
-                   
-                    using (MySqlCommand command1 = conn.CreateCommand())
+                    int id_cat = 0;
+                    command1.CommandText = "SELECT IDcategoria FROM categoria WHERE nome='" + nuovo.Categoria.Trim().ToLower() + "'";
+                    using (MySqlDataReader reader = command1.ExecuteReader())
                     {
-                        int id_cat = 0;
-                        command1.CommandText = "SELECT IDcategoria FROM categoria WHERE nome='" + nuovo.Categoria.Trim().ToLower() + "'";
-                        using (MySqlDataReader reader = command1.ExecuteReader())
+                        while (reader.Read())
                         {
-                            while (reader.Read())
-                            {
-                                id_cat = reader.GetInt32(0);
-                            }
+                            id_cat = reader.GetInt32(0);
                         }
-                        int disp = Convert.ToInt32(nuovo.Quantita);
-                        string descrizione;
-                        if (nuovo.Descrizione == null)
-                            descrizione = "...";
-                        else
-                            descrizione = nuovo.Descrizione.Trim().ToLower();
-
-                        command1.CommandText = "INSERT INTO prodotto(nome,descrizione,prezzo,quantita, fk_categoria) " + "VALUES('" + nuovo.Nome.Trim().ToLower() + "','" + descrizione + "','" + nuovo.Prezzo.ToString().Replace(",", ".") + "','" + disp + "','" + id_cat + "')";
-
-                        if (command1.ExecuteNonQuery() > 0)
-                            risultato = true;
                     }
+                    int disp = Convert.ToInt32(nuovo.Quantita);
+                    string descrizione;
+                    if (nuovo.Descrizione == null)
+                        descrizione = "...";
+                    else
+                        descrizione = nuovo.Descrizione.Trim().ToLower();
+
+                    command1.CommandText = "INSERT INTO prodotto(nome,descrizione,prezzo,quantita, fk_categoria) " + "VALUES('" + nuovo.Nome.Trim().ToLower() + "','" + descrizione + "','" + nuovo.Prezzo.ToString().Replace(",", ".") + "','" + disp + "','" + id_cat + "')";
+
+                    if (command1.ExecuteNonQuery() > 0)
+                        risultato = true;
                 }
-                t.Commit();
                 return risultato;
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                try
-                {
-                    t.Rollback();
-                    Console.WriteLine("Eccezione nel commit", ex.GetType());
-                    Console.WriteLine("  Messaggio da commit:", ex.Message);
-                }
-                catch (Exception ex2)
-                {
-                    Console.WriteLine("Eccezione nel rollback", ex2.GetType());
-                    Console.WriteLine("  Messaggio del rollback", ex2.Message);
-                }
-
-                throw new Exception("errore nella aggiunta di un nuovo prodotto");
+                throw new Exception("Errore nella creazione di un nuovo prodotto");
             }
         }
 
@@ -449,42 +377,24 @@ namespace Server
         /// <returns>True se l'utente è stato creato con successo. False in caso contrario</returns>
         public bool Registrazione(Utente nuovo)
         {
-            MySqlTransaction t = conn.BeginTransaction();
-            bool risultato = false;
+
             // tipo di query: <nomeConnessioneVar> = new MySqlConnection(<connStringVar>
             try
             {
-                using (t)
+                bool risultato = false;
+                using (MySqlCommand command1 = conn.CreateCommand())
                 {
+                    command1.CommandText = "INSERT INTO account(password,nome,cognome,email,indirizzo,data_nascita,telefono,TipoAccount) " + "VALUES('" + nuovo.Psw + "','" + nuovo.Nome.Trim().ToLower() + "','" + nuovo.Cognome.Trim().ToLower() + "','" + nuovo.Email.Trim().ToLower() + "','" + nuovo.Indirizzo.Trim().ToLower() + "','" + nuovo.Data_nascita + "','" + nuovo.Telefono.Trim() + "', '2')";
 
-                    using (MySqlCommand command1 = conn.CreateCommand())
-                    {
-                        command1.CommandText = "INSERT INTO account(password,nome,cognome,email,indirizzo,data_nascita,telefono,TipoAccount) " + "VALUES('" + nuovo.Psw + "','" + nuovo.Nome.Trim().ToLower() + "','" + nuovo.Cognome.Trim().ToLower() + "','" + nuovo.Email.Trim().ToLower() + "','" + nuovo.Indirizzo.Trim().ToLower() + "','" + nuovo.Data_nascita + "','" + nuovo.Telefono.Trim() + "', '2')";
+                    if (command1.ExecuteNonQuery() > 0)
+                        risultato = true;
 
-                        if (command1.ExecuteNonQuery() > 0)
-                            risultato = true;
-
-                    }
-
-                    t.Commit();
-                    return risultato;
                 }
+                return risultato;
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                try
-                {
-                    t.Rollback();
-                    Console.WriteLine("Eccezione nel commit", ex.GetType());
-                    Console.WriteLine("  Messaggio da commit:", ex.Message);
-                }
-                catch (Exception ex2)
-                {
-                    Console.WriteLine("Eccezione nel rollback", ex2.GetType());
-                    Console.WriteLine("  Messaggio del rollback", ex2.Message);
-                }
-
-                throw new Exception("errore nella registrazione di un nuovo utente");
+                throw new Exception("Errore nella registrazione di un nuovo account");
             }
         }
 
@@ -618,38 +528,20 @@ namespace Server
         /// Aumenta le giacenze di un prodotto tramite l'id
         public bool AumentaGiacenze(int id, int quantita)
         {
-            MySqlTransaction t = conn.BeginTransaction();
-            bool risultato = false;
             try
-            {   using (t)
+            {
+                bool risultato = false;
+                using (MySqlCommand command1 = conn.CreateCommand())
                 {
-
-                    using (MySqlCommand command1 = conn.CreateCommand())
-                    {
-                        command1.CommandText = "UPDATE prodotto SET quantita = quantita +' " + quantita + " ' WHERE IDProdotto =' " + id + " ' ";
-                        if (command1.ExecuteNonQuery() > 0)
-                            risultato = true;
-                    }
-                   
+                    command1.CommandText = "UPDATE prodotto SET quantita = quantita +' " + quantita + " ' WHERE IDProdotto =' " + id + " ' ";
+                    if (command1.ExecuteNonQuery() > 0)
+                        risultato = true;
                 }
-                t.Commit(); 
                 return risultato;
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                try
-                {
-                    t.Rollback();
-                    Console.WriteLine("Eccezione nel commit", ex.GetType());
-                    Console.WriteLine("  Messaggio da commit:", ex.Message);
-                }
-                catch (Exception ex2)
-                {
-                    Console.WriteLine("Eccezione nel rollback", ex2.GetType());
-                    Console.WriteLine("  Messaggio del rollback", ex2.Message);
-                }
-
-                throw new Exception("errore nella registrazione di un nuovo utente");
+                throw new Exception("Errore! Impossibile aumentare la giacenza del prodotto");
             }
         }
 
@@ -657,64 +549,48 @@ namespace Server
         /// <returns>risultato true or false a seconda dell'esito</returns>
         public bool DiminuisciGiacenze(int id, int quantita)
         {
-            MySqlTransaction t = conn.BeginTransaction();
             int attuale = 0;
-            bool risultato = false;
             try
             {
-                using (t)
+                bool risultato = false;
+
+                // controllo della correttezza della quantita spostato nel program
+                // in seguito a un'attenta riflessione avvenuta in doccia
+
+                using (MySqlCommand command0 = conn.CreateCommand())
                 {
-
-                    // controllo della correttezza della quantita spostato nel program
-                    // in seguito a un'attenta riflessione avvenuta in doccia
-
-                    using (MySqlCommand command0 = conn.CreateCommand())
+                    //controlla numero giacenze
+                    command0.CommandText = "SELECT quantita from prodotto where IDProdotto ='" + id + "'";
+                    using (MySqlDataReader reader = command0.ExecuteReader())
                     {
-                        //controlla numero giacenze
-                        command0.CommandText = "SELECT quantita from prodotto where IDProdotto ='" + id + "'";
-                        using (MySqlDataReader reader = command0.ExecuteReader())
+                        while (reader.Read())
                         {
-                            while (reader.Read())
-                            {
-                                attuale = reader.GetInt32(0);
-                            }
-
+                            attuale = reader.GetInt32(0);
                         }
 
-                        if (attuale < quantita)
+                    }
+
+                    if (attuale < quantita)
+                    {
+                        Console.WriteLine("impossibile diminuire giacenze, numero troppo alto");
+                        return risultato; //false perchè att < quantita e non è possibile
+                    }
+                    else
+                    {
+                        using (MySqlCommand command1 = conn.CreateCommand())
                         {
-                            Console.WriteLine("impossibile diminuire giacenze, numero troppo alto");
-                            return risultato; //false perchè att < quantita e non è possibile
-                        }
-                        else
-                        {
-                            using (MySqlCommand command1 = conn.CreateCommand())
-                            {
-                                command1.CommandText = "UPDATE prodotto SET quantita = quantita -' " + quantita + " ' WHERE IDProdotto = ' " + id + " ' ";
-                                if (command1.ExecuteNonQuery() > 0)
-                                    risultato = true;
-                            }
+                            command1.CommandText = "UPDATE prodotto SET quantita = quantita -' " + quantita + " ' WHERE IDProdotto = ' " + id + " ' ";
+                            if (command1.ExecuteNonQuery() > 0)
+                                risultato = true;
                         }
                     }
                 }
-                t.Commit();
+
                 return risultato;
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                try
-                {
-                    t.Rollback();
-                    Console.WriteLine("Eccezione nel commit", ex.GetType());
-                    Console.WriteLine("  Messaggio da commit:", ex.Message);
-                }
-                catch (Exception ex2)
-                {
-                    Console.WriteLine("Eccezione nel rollback", ex2.GetType());
-                    Console.WriteLine("  Messaggio del rollback", ex2.Message);
-                }
-
-                throw new Exception("errore nella registrazione di un nuovo utente");
+                throw new Exception("Errore! Impossibile diminuire la giacenza del prodotto");
             }
         }
     }
