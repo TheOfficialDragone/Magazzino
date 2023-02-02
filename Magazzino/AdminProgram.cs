@@ -6,6 +6,7 @@ using System.Linq;
 using System.ServiceModel;
 using System.Text;
 using System.Threading.Tasks;
+using Articolo = Magazzino.ServiceReference1.Articolo;
 
 namespace Magazzino
 {
