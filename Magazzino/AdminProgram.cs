@@ -65,30 +65,30 @@ namespace Magazzino
                                             //lista prodotti
                                             case 1:
                                                 
-                                                Console.Clear();
-                                                if (client.ListaProdotti().Count() > 0)
-                                                {
-                                                    Console.WriteLine("***LISTA PRODOTTI***");
-                                                    //stampo tutti i prodotti
-                                                    List<Articolo> prodotti = new List<Articolo>();
-                                                    prodotti = client.ListaProdotti();
+                                            Console.Clear();
+                                            if (client.ListaProdotti().Count() > 0)
+                                            {
+                                                Console.WriteLine("***LISTA PRODOTTI***");
+                                                //stampo tutti i prodotti
+                                                List<Articolo> prodotti = new List<Articolo>();
+                                                prodotti = client.ListaProdotti();
 
-                                                    foreach (var p in prodotti)
-                                                    { 
-                                                        if (p.Quantita >= 1)
-                                                            disponibile = "DISPONIBILE";
-                                                        else
-                                                            disponibile = "NON DISPONIBILE";
-                                                        Console.WriteLine(p.IDprodotto + " - " + p.Nome + " - " + String.Format("{0:0.00}", p.Prezzo) + " euro - " + disponibile + " - " + p.Quantita + " - " + p.Categoria);
-                                                    }
-                                                    
+                                                foreach (var p in prodotti)
+                                                { 
+                                                    if (p.Quantita >= 1)
+                                                        disponibile = "DISPONIBILE";
+                                                    else
+                                                        disponibile = "NON DISPONIBILE";
+                                                    Console.WriteLine(p.IDprodotto + " - " + p.Nome + " - " + String.Format("{0:0.00}", p.Prezzo) + " euro - " + disponibile + " - " + p.Quantita + " - " + p.Categoria);
                                                 }
-                                                else
-                                                    Console.WriteLine("\nNessun prodotto presente nel sistema");
+                                                    
+                                            }
+                                            else
+                                                Console.WriteLine("\nNessun prodotto presente nel sistema");
                                                 
 
-                                                Console.WriteLine("\nPremi un tasto per continuare");
-                                                Console.ReadKey();
+                                            Console.WriteLine("\nPremi un tasto per continuare");
+                                            Console.ReadKey();
                                                 break;
                                             //lista categorie    
                                             case 2:
