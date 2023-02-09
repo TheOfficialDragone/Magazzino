@@ -1,7 +1,5 @@
 ﻿using Magazzino;
 using Magazzino.ServiceReference1;
-using Org.BouncyCastle.Bcpg;
-using Org.BouncyCastle.Crypto.Generators;
 using Server;
 using System;
 using System.Globalization;

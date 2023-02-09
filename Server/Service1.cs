@@ -170,7 +170,7 @@ namespace Server
             {                 
                 Console.WriteLine("Eccezione nel commit", ex.GetType());
                 Console.WriteLine("  Messaggio da commit:", ex.Message);
-                throw new Exception("Errore nel recupero della categoria");
+                throw new Exception("Errore nel recupero del prodotto");
             }
         }
            
@@ -592,6 +592,35 @@ namespace Server
             {
                 throw new Exception("Errore! Impossibile diminuire la giacenza del prodotto");
             }
+        }
+
+        public List<Articolo> ListaProdotto()
+        {
+            List<Articolo> p = new List<Articolo>();
+           
+            using (MySqlCommand command1 = conn.CreateCommand())
+            {
+                command1.CommandText = "Select  prodotto.*, categoria.nome from prodotto,categoria where prodotto.fk_categoria=categoria.IDcategoria";
+                using (MySqlDataReader reader = command1.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        Articolo nuovo = new Articolo();
+                        nuovo.IDprodotto = reader.GetInt32(0);
+                        nuovo.Nome = reader.GetString(1);
+                        nuovo.Descrizione = reader.GetString(2);
+                        nuovo.Prezzo = reader.GetInt32(3);
+                        nuovo.Quantita = reader.GetInt32(4);
+                        nuovo.Categoria= reader.GetString(6);
+                        p.Add(nuovo);
+                        
+                    }
+                }
+
+            }
+
+            return p;
+
         }
     }
 }
