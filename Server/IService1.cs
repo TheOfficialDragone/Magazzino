@@ -20,14 +20,18 @@ namespace Server
         [OperationContract]
         string GetCategoria(int id);
 
+        /*
         [OperationContract]
         Articolo GetProdotto(int IDProdotto);
+        */
 
         [OperationContract]
-        List<int> ListaCategorie();
+        List<string> ListaCategorie();
 
+        
         [OperationContract]
-        List<int> ListaProdotti();
+        List<Articolo> ListaProdotti();
+        
 
         [OperationContract]
         bool ModificaPassword(string email, string psw);
@@ -62,6 +66,7 @@ namespace Server
         [OperationContract]
         bool DiminuisciGiacenze(int id, int quantita);
 
+        
 
     }
 }

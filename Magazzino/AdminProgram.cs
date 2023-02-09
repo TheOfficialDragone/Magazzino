@@ -1,22 +1,19 @@
 ﻿using Magazzino.ServiceReference1;
-using Server;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.ServiceModel;
-using System.Text;
-using System.Threading.Tasks;
-using Articolo = Magazzino.ServiceReference1.Articolo;
+using Server;
 
 namespace Magazzino
 {
     internal class AdminProgram
     {
-        public static void View() 
+        public static void View()
         {
             try
             {
-                Service1Client client = new Magazzino.ServiceReference1.Service1Client();
+                Service1Client client = new Service1Client();
 
                 Console.Clear();
                 Console.WriteLine("Benvenuto admin");
@@ -67,23 +64,28 @@ namespace Magazzino
                                         {
                                             //lista prodotti
                                             case 1:
+                                                
                                                 Console.Clear();
                                                 if (client.ListaProdotti().Count() > 0)
                                                 {
                                                     Console.WriteLine("***LISTA PRODOTTI***");
                                                     //stampo tutti i prodotti
-                                                    foreach (var p in client.ListaProdotti())
-                                                    {
-                                                        Articolo articolo = client.GetProdotto(p);
-                                                        if (articolo.Quantita >= 1)
+                                                    List<Articolo> prodotti = new List<Articolo>();
+                                                    prodotti = client.ListaProdotti();
+
+                                                    foreach (var p in prodotti)
+                                                    { 
+                                                        if (p.Quantita >= 1)
                                                             disponibile = "DISPONIBILE";
                                                         else
                                                             disponibile = "NON DISPONIBILE";
-                                                        Console.WriteLine(articolo.IDprodotto + " - " + articolo.Nome + " - " + String.Format("{0:0.00}", articolo.Prezzo) + " euro - " + disponibile + " - " + articolo.Quantita + " - " + articolo.Categoria);
+                                                        Console.WriteLine(p.IDprodotto + " - " + p.Nome + " - " + String.Format("{0:0.00}", p.Prezzo) + " euro - " + disponibile + " - " + p.Quantita + " - " + p.Categoria);
                                                     }
+                                                    
                                                 }
                                                 else
                                                     Console.WriteLine("\nNessun prodotto presente nel sistema");
+                                                
 
                                                 Console.WriteLine("\nPremi un tasto per continuare");
                                                 Console.ReadKey();
@@ -94,11 +96,11 @@ namespace Magazzino
                                                 if (client.ListaCategorie().Count() > 0)
                                                 {
                                                     Console.WriteLine("***LISTA CATEGORIE***");
-                                                    //stampo tutte le categorie
+                                                    client.ListaCategorie();
                                                     foreach (var c in client.ListaCategorie())
                                                     {
                                                         // verificare client e query
-                                                        Console.WriteLine("-" + client.GetCategoria(c));
+                                                        Console.WriteLine("c");
                                                     }
                                                 }
                                                 else

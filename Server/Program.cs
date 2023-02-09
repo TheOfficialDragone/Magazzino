@@ -15,7 +15,7 @@ namespace Server
         {
             try
             {
-                ServiceHost svcHost = new ServiceHost(typeof(Service1)); 
+                ServiceHost svcHost = new ServiceHost(typeof(Service1));
                 svcHost.Open(); //Apro il servizio
 
                 Service1.Conn = new MySqlConnection(Service1.ConnectionString);

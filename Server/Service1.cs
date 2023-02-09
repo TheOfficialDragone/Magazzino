@@ -4,12 +4,10 @@
  * 
  */
 using MySql.Data.MySqlClient;
-using Org.BouncyCastle.Crypto.Generators;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
-using System.Data.SqlClient;
-#pragma warning disable CS0642
+
 
 namespace Server
 {
@@ -35,7 +33,7 @@ namespace Server
             {
                 bool risultato = true;
                 using (MySqlCommand command1 = conn.CreateCommand())
-                {         
+                {
                     command1.CommandText = "SELECT * FROM account WHERE email='" + email.Trim().ToLower() + "'";
                     using (MySqlDataReader reader = command1.ExecuteReader())
                     {
@@ -43,16 +41,16 @@ namespace Server
                             risultato = false;
                     }
                 }
-                    
+
                 return risultato;
             }
             catch (Exception ex)
             {
                 Console.WriteLine(ex.GetType());
-                Console.WriteLine(ex.Message);                          
+                Console.WriteLine(ex.Message);
                 throw new Exception("Errore durante il controllo dell'email");
             }
-            
+
         }
 
 
@@ -87,7 +85,7 @@ namespace Server
                             Console.WriteLine("Eccezione nel commit", ex.GetType());
                             Console.WriteLine("  Messaggio da commit:", ex.Message);
                         }
-                        catch(Exception ex2) 
+                        catch (Exception ex2)
                         {
                             Console.WriteLine("Eccezione nel rollback", ex2.GetType());
                             Console.WriteLine("  Messaggio del rollback", ex2.Message);
@@ -131,15 +129,18 @@ namespace Server
                 Console.WriteLine(ex.Message);
                 throw new Exception("Errore nel recupero della categoria");
             }
-        }       
- 
-        
+        }
+
+
 
         /// Dati del prodotto
         /// <param name="IDProdotto">Identificativo del prodotto</param>
         /// <returns>Oggetto Articolo</returns>
+        /// 
+
+        /*
         public Articolo GetProdotto(int IDProdotto)
-        {         
+        {
             try
             {
                 //creo l'oggetto da restituire
@@ -167,47 +168,48 @@ namespace Server
                 return prodotto;
             }
             catch (Exception ex)
-            {                 
+            {
                 Console.WriteLine("Eccezione nel commit", ex.GetType());
                 Console.WriteLine("  Messaggio da commit:", ex.Message);
                 throw new Exception("Errore nel recupero del prodotto");
             }
         }
-           
+        */
 
 
-        //Lista degli identificativi delle Categorie
-        public List<int> ListaCategorie()
+        //Lista dei nomi delle categorie
+        public List<string> ListaCategorie()
         {
-            List<int> lista = new List<int>();
+            List<string> lista = new List<string>();
 
             try
             {
 
                 using (MySqlCommand command1 = conn.CreateCommand())
                 {
-                    command1.CommandText = "SELECT IDcategoria FROM categoria";
+                    command1.CommandText = "SELECT nome FROM categoria";
                     using (MySqlDataReader reader = command1.ExecuteReader())
                     {
                         while (reader.Read())
                         {
-                            lista.Add(reader.GetInt32(0));
+                            lista.Add(reader.GetString(0));
                         }
                     }
                 }
                 return lista; //ritorno la lista
             }
             catch (Exception ex)
-            {              
+            {
                 Console.WriteLine(ex.GetType());
                 Console.WriteLine(ex.Message);
-                throw new Exception("errore nel recupoero della lista delle categorie");
+                throw new Exception("errore nel recupero della lista delle categorie");
             }
-            
+
         }
 
 
         //Lista dei prodotti disponibili
+        /*
         public List<int> ListaProdotti()
         {
             try
@@ -236,6 +238,7 @@ namespace Server
                 throw new Exception("Errore! Impossibile recuperare la lista dei prodotti");
             }
         }
+        */
 
         /// Modifica la password
         /// <param name="email">Email dell'utente</param>
@@ -594,33 +597,43 @@ namespace Server
             }
         }
 
-        public List<Articolo> ListaProdotto()
+        public List<Articolo> ListaProdotti()
         {
             List<Articolo> p = new List<Articolo>();
-           
-            using (MySqlCommand command1 = conn.CreateCommand())
+            try
             {
-                command1.CommandText = "Select  prodotto.*, categoria.nome from prodotto,categoria where prodotto.fk_categoria=categoria.IDcategoria";
-                using (MySqlDataReader reader = command1.ExecuteReader())
+
+
+                using (MySqlCommand command1 = conn.CreateCommand())
                 {
-                    while (reader.Read())
+                    command1.CommandText = "Select  prodotto.*, categoria.nome from prodotto,categoria where prodotto.fk_categoria=categoria.IDcategoria";
+                    using (MySqlDataReader reader = command1.ExecuteReader())
                     {
-                        Articolo nuovo = new Articolo();
-                        nuovo.IDprodotto = reader.GetInt32(0);
-                        nuovo.Nome = reader.GetString(1);
-                        nuovo.Descrizione = reader.GetString(2);
-                        nuovo.Prezzo = reader.GetInt32(3);
-                        nuovo.Quantita = reader.GetInt32(4);
-                        nuovo.Categoria= reader.GetString(6);
-                        p.Add(nuovo);
-                        
+                        while (reader.Read())
+                        {
+                            Articolo nuovo = new Articolo();
+                            nuovo.IDprodotto = reader.GetInt32(0);
+                            nuovo.Nome = reader.GetString(1);
+                            nuovo.Descrizione = reader.GetString(2);
+                            nuovo.Prezzo = reader.GetInt32(3);
+                            nuovo.Quantita = reader.GetInt32(4);
+                            nuovo.Categoria = reader.GetString(6);
+                            p.Add(nuovo);
+
+                        }
                     }
+
                 }
+                return p;
 
             }
-
-            return p;
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                throw new Exception("Errore nel recupero della lista prodotti");
+            }
 
         }
+
     }
 }

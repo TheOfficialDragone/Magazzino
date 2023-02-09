@@ -2,15 +2,12 @@
 using Magazzino.ServiceReference1;
 using Server;
 using System;
-using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.ServiceModel;
-using System.Text;
-using System.Threading.Tasks;
-using Articolo = Magazzino.ServiceReference1.Articolo;
-using Login = Magazzino.ServiceReference1.Login;
-using Utente = Magazzino.ServiceReference1.Utente;
+//using Articolo = Magazzino.Articolo;
+//using Login = Magazzino.Login;
+//using Utente = Magazzino.ServiceReference1.Utente;
 
 namespace Magazzino
 {
@@ -20,7 +17,7 @@ namespace Magazzino
         {
             try
             {
-                Service1Client client = new Magazzino.ServiceReference1.Service1Client();
+                Service1Client client = new Service1Client();
 
                 Console.Clear();
                 Console.WriteLine("Benvenuto magazziniere " + login.Email);

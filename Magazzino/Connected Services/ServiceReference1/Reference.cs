@@ -9,336 +9,7 @@
 //------------------------------------------------------------------------------
 
 namespace Magazzino.ServiceReference1 {
-    using System.Runtime.Serialization;
-    using System;
     
-    
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="Articolo", Namespace="http://schemas.datacontract.org/2004/07/Server")]
-    [System.SerializableAttribute()]
-    public partial class Articolo : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
-        
-        [System.NonSerializedAttribute()]
-        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string CategoriaField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string DescrizioneField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private int IDprodottoField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string NomeField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private double PrezzoField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private int QuantitaField;
-        
-        [global::System.ComponentModel.BrowsableAttribute(false)]
-        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
-            get {
-                return this.extensionDataField;
-            }
-            set {
-                this.extensionDataField = value;
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string Categoria {
-            get {
-                return this.CategoriaField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.CategoriaField, value) != true)) {
-                    this.CategoriaField = value;
-                    this.RaisePropertyChanged("Categoria");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string Descrizione {
-            get {
-                return this.DescrizioneField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.DescrizioneField, value) != true)) {
-                    this.DescrizioneField = value;
-                    this.RaisePropertyChanged("Descrizione");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public int IDprodotto {
-            get {
-                return this.IDprodottoField;
-            }
-            set {
-                if ((this.IDprodottoField.Equals(value) != true)) {
-                    this.IDprodottoField = value;
-                    this.RaisePropertyChanged("IDprodotto");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string Nome {
-            get {
-                return this.NomeField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.NomeField, value) != true)) {
-                    this.NomeField = value;
-                    this.RaisePropertyChanged("Nome");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public double Prezzo {
-            get {
-                return this.PrezzoField;
-            }
-            set {
-                if ((this.PrezzoField.Equals(value) != true)) {
-                    this.PrezzoField = value;
-                    this.RaisePropertyChanged("Prezzo");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public int Quantita {
-            get {
-                return this.QuantitaField;
-            }
-            set {
-                if ((this.QuantitaField.Equals(value) != true)) {
-                    this.QuantitaField = value;
-                    this.RaisePropertyChanged("Quantita");
-                }
-            }
-        }
-        
-        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
-        
-        protected void RaisePropertyChanged(string propertyName) {
-            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
-            if ((propertyChanged != null)) {
-                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
-            }
-        }
-    }
-    
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="Utente", Namespace="http://schemas.datacontract.org/2004/07/Server")]
-    [System.SerializableAttribute()]
-    public partial class Utente : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
-        
-        [System.NonSerializedAttribute()]
-        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string CognomeField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private System.DateTime Data_nascitaField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string EmailField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string IndirizzoField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string NomeField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string PswField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string TelefonoField;
-        
-        [global::System.ComponentModel.BrowsableAttribute(false)]
-        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
-            get {
-                return this.extensionDataField;
-            }
-            set {
-                this.extensionDataField = value;
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string Cognome {
-            get {
-                return this.CognomeField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.CognomeField, value) != true)) {
-                    this.CognomeField = value;
-                    this.RaisePropertyChanged("Cognome");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public System.DateTime Data_nascita {
-            get {
-                return this.Data_nascitaField;
-            }
-            set {
-                if ((this.Data_nascitaField.Equals(value) != true)) {
-                    this.Data_nascitaField = value;
-                    this.RaisePropertyChanged("Data_nascita");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string Email {
-            get {
-                return this.EmailField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.EmailField, value) != true)) {
-                    this.EmailField = value;
-                    this.RaisePropertyChanged("Email");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string Indirizzo {
-            get {
-                return this.IndirizzoField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.IndirizzoField, value) != true)) {
-                    this.IndirizzoField = value;
-                    this.RaisePropertyChanged("Indirizzo");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string Nome {
-            get {
-                return this.NomeField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.NomeField, value) != true)) {
-                    this.NomeField = value;
-                    this.RaisePropertyChanged("Nome");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string Psw {
-            get {
-                return this.PswField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.PswField, value) != true)) {
-                    this.PswField = value;
-                    this.RaisePropertyChanged("Psw");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string Telefono {
-            get {
-                return this.TelefonoField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.TelefonoField, value) != true)) {
-                    this.TelefonoField = value;
-                    this.RaisePropertyChanged("Telefono");
-                }
-            }
-        }
-        
-        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
-        
-        protected void RaisePropertyChanged(string propertyName) {
-            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
-            if ((propertyChanged != null)) {
-                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
-            }
-        }
-    }
-    
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="Login", Namespace="http://schemas.datacontract.org/2004/07/Server")]
-    [System.SerializableAttribute()]
-    public partial class Login : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
-        
-        [System.NonSerializedAttribute()]
-        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string EmailField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string PasswordField;
-        
-        [global::System.ComponentModel.BrowsableAttribute(false)]
-        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
-            get {
-                return this.extensionDataField;
-            }
-            set {
-                this.extensionDataField = value;
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string Email {
-            get {
-                return this.EmailField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.EmailField, value) != true)) {
-                    this.EmailField = value;
-                    this.RaisePropertyChanged("Email");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string Password {
-            get {
-                return this.PasswordField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.PasswordField, value) != true)) {
-                    this.PasswordField = value;
-                    this.RaisePropertyChanged("Password");
-                }
-            }
-        }
-        
-        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
-        
-        protected void RaisePropertyChanged(string propertyName) {
-            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
-            if ((propertyChanged != null)) {
-                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
-            }
-        }
-    }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
     [System.ServiceModel.ServiceContractAttribute(ConfigurationName="ServiceReference1.IService1")]
@@ -363,10 +34,10 @@ namespace Magazzino.ServiceReference1 {
         System.Threading.Tasks.Task<string> GetCategoriaAsync(int id);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService1/GetProdotto", ReplyAction="http://tempuri.org/IService1/GetProdottoResponse")]
-        Magazzino.ServiceReference1.Articolo GetProdotto(int IDProdotto);
+        Server.Articolo GetProdotto(int IDProdotto);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService1/GetProdotto", ReplyAction="http://tempuri.org/IService1/GetProdottoResponse")]
-        System.Threading.Tasks.Task<Magazzino.ServiceReference1.Articolo> GetProdottoAsync(int IDProdotto);
+        System.Threading.Tasks.Task<Server.Articolo> GetProdottoAsync(int IDProdotto);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService1/ListaCategorie", ReplyAction="http://tempuri.org/IService1/ListaCategorieResponse")]
         int[] ListaCategorie();
@@ -387,10 +58,10 @@ namespace Magazzino.ServiceReference1 {
         System.Threading.Tasks.Task<bool> ModificaPasswordAsync(string email, string psw);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService1/ModificaProdotto", ReplyAction="http://tempuri.org/IService1/ModificaProdottoResponse")]
-        bool ModificaProdotto(Magazzino.ServiceReference1.Articolo prodottoDaModificare);
+        bool ModificaProdotto(Server.Articolo prodottoDaModificare);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService1/ModificaProdotto", ReplyAction="http://tempuri.org/IService1/ModificaProdottoResponse")]
-        System.Threading.Tasks.Task<bool> ModificaProdottoAsync(Magazzino.ServiceReference1.Articolo prodottoDaModificare);
+        System.Threading.Tasks.Task<bool> ModificaProdottoAsync(Server.Articolo prodottoDaModificare);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService1/NuovaCategoria", ReplyAction="http://tempuri.org/IService1/NuovaCategoriaResponse")]
         bool NuovaCategoria(string nome);
@@ -399,22 +70,22 @@ namespace Magazzino.ServiceReference1 {
         System.Threading.Tasks.Task<bool> NuovaCategoriaAsync(string nome);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService1/NuovoProdotto", ReplyAction="http://tempuri.org/IService1/NuovoProdottoResponse")]
-        bool NuovoProdotto(Magazzino.ServiceReference1.Articolo nuovo);
+        bool NuovoProdotto(Server.Articolo nuovo);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService1/NuovoProdotto", ReplyAction="http://tempuri.org/IService1/NuovoProdottoResponse")]
-        System.Threading.Tasks.Task<bool> NuovoProdottoAsync(Magazzino.ServiceReference1.Articolo nuovo);
+        System.Threading.Tasks.Task<bool> NuovoProdottoAsync(Server.Articolo nuovo);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService1/Registrazione", ReplyAction="http://tempuri.org/IService1/RegistrazioneResponse")]
-        bool Registrazione(Magazzino.ServiceReference1.Utente nuovo);
+        bool Registrazione(Server.Utente nuovo);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService1/Registrazione", ReplyAction="http://tempuri.org/IService1/RegistrazioneResponse")]
-        System.Threading.Tasks.Task<bool> RegistrazioneAsync(Magazzino.ServiceReference1.Utente nuovo);
+        System.Threading.Tasks.Task<bool> RegistrazioneAsync(Server.Utente nuovo);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService1/UserLogin", ReplyAction="http://tempuri.org/IService1/UserLoginResponse")]
-        int UserLogin(Magazzino.ServiceReference1.Login user);
+        int UserLogin(Server.Login user);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService1/UserLogin", ReplyAction="http://tempuri.org/IService1/UserLoginResponse")]
-        System.Threading.Tasks.Task<int> UserLoginAsync(Magazzino.ServiceReference1.Login user);
+        System.Threading.Tasks.Task<int> UserLoginAsync(Server.Login user);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService1/ListaMagazzinieri", ReplyAction="http://tempuri.org/IService1/ListaMagazzinieriResponse")]
         string[] ListaMagazzinieri();
@@ -423,10 +94,10 @@ namespace Magazzino.ServiceReference1 {
         System.Threading.Tasks.Task<string[]> ListaMagazzinieriAsync();
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService1/GetMagazziniere", ReplyAction="http://tempuri.org/IService1/GetMagazziniereResponse")]
-        Magazzino.ServiceReference1.Utente GetMagazziniere(string id);
+        Server.Utente GetMagazziniere(string id);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService1/GetMagazziniere", ReplyAction="http://tempuri.org/IService1/GetMagazziniereResponse")]
-        System.Threading.Tasks.Task<Magazzino.ServiceReference1.Utente> GetMagazziniereAsync(string id);
+        System.Threading.Tasks.Task<Server.Utente> GetMagazziniereAsync(string id);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService1/ListaProdottiDisponibili", ReplyAction="http://tempuri.org/IService1/ListaProdottiDisponibiliResponse")]
         int[] ListaProdottiDisponibili();
@@ -498,11 +169,11 @@ namespace Magazzino.ServiceReference1 {
             return base.Channel.GetCategoriaAsync(id);
         }
         
-        public Magazzino.ServiceReference1.Articolo GetProdotto(int IDProdotto) {
+        public Server.Articolo GetProdotto(int IDProdotto) {
             return base.Channel.GetProdotto(IDProdotto);
         }
         
-        public System.Threading.Tasks.Task<Magazzino.ServiceReference1.Articolo> GetProdottoAsync(int IDProdotto) {
+        public System.Threading.Tasks.Task<Server.Articolo> GetProdottoAsync(int IDProdotto) {
             return base.Channel.GetProdottoAsync(IDProdotto);
         }
         
@@ -530,11 +201,11 @@ namespace Magazzino.ServiceReference1 {
             return base.Channel.ModificaPasswordAsync(email, psw);
         }
         
-        public bool ModificaProdotto(Magazzino.ServiceReference1.Articolo prodottoDaModificare) {
+        public bool ModificaProdotto(Server.Articolo prodottoDaModificare) {
             return base.Channel.ModificaProdotto(prodottoDaModificare);
         }
         
-        public System.Threading.Tasks.Task<bool> ModificaProdottoAsync(Magazzino.ServiceReference1.Articolo prodottoDaModificare) {
+        public System.Threading.Tasks.Task<bool> ModificaProdottoAsync(Server.Articolo prodottoDaModificare) {
             return base.Channel.ModificaProdottoAsync(prodottoDaModificare);
         }
         
@@ -546,27 +217,27 @@ namespace Magazzino.ServiceReference1 {
             return base.Channel.NuovaCategoriaAsync(nome);
         }
         
-        public bool NuovoProdotto(Magazzino.ServiceReference1.Articolo nuovo) {
+        public bool NuovoProdotto(Server.Articolo nuovo) {
             return base.Channel.NuovoProdotto(nuovo);
         }
         
-        public System.Threading.Tasks.Task<bool> NuovoProdottoAsync(Magazzino.ServiceReference1.Articolo nuovo) {
+        public System.Threading.Tasks.Task<bool> NuovoProdottoAsync(Server.Articolo nuovo) {
             return base.Channel.NuovoProdottoAsync(nuovo);
         }
         
-        public bool Registrazione(Magazzino.ServiceReference1.Utente nuovo) {
+        public bool Registrazione(Server.Utente nuovo) {
             return base.Channel.Registrazione(nuovo);
         }
         
-        public System.Threading.Tasks.Task<bool> RegistrazioneAsync(Magazzino.ServiceReference1.Utente nuovo) {
+        public System.Threading.Tasks.Task<bool> RegistrazioneAsync(Server.Utente nuovo) {
             return base.Channel.RegistrazioneAsync(nuovo);
         }
         
-        public int UserLogin(Magazzino.ServiceReference1.Login user) {
+        public int UserLogin(Server.Login user) {
             return base.Channel.UserLogin(user);
         }
         
-        public System.Threading.Tasks.Task<int> UserLoginAsync(Magazzino.ServiceReference1.Login user) {
+        public System.Threading.Tasks.Task<int> UserLoginAsync(Server.Login user) {
             return base.Channel.UserLoginAsync(user);
         }
         
@@ -578,11 +249,11 @@ namespace Magazzino.ServiceReference1 {
             return base.Channel.ListaMagazzinieriAsync();
         }
         
-        public Magazzino.ServiceReference1.Utente GetMagazziniere(string id) {
+        public Server.Utente GetMagazziniere(string id) {
             return base.Channel.GetMagazziniere(id);
         }
         
-        public System.Threading.Tasks.Task<Magazzino.ServiceReference1.Utente> GetMagazziniereAsync(string id) {
+        public System.Threading.Tasks.Task<Server.Utente> GetMagazziniereAsync(string id) {
             return base.Channel.GetMagazziniereAsync(id);
         }
         

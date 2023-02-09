@@ -2,11 +2,8 @@
 using Magazzino.ServiceReference1;
 using Server;
 using System;
-using System.Globalization;
-using System.Linq;
-using System.Runtime.Remoting.Messaging;
 using System.ServiceModel;
-using System.ServiceModel.Configuration;
+
 
 
 #pragma warning disable IDE0060
@@ -93,7 +90,7 @@ namespace Client
 
                                 } while (psw == "" || psw == " "); //controllo che la password non sia vuota
 
-                                Magazzino.ServiceReference1.Login l = new Magazzino.ServiceReference1.Login()
+                                Login l = new Login()
                                 {
                                     Email = email.Trim(), //rimuovo gli spazi
                                     Password = psw
