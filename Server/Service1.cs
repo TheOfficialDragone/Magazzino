@@ -611,13 +611,15 @@ namespace Server
                     {
                         while (reader.Read())
                         {
-                            Articolo nuovo = new Articolo();
-                            nuovo.IDprodotto = reader.GetInt32(0);
-                            nuovo.Nome = reader.GetString(1);
-                            nuovo.Descrizione = reader.GetString(2);
-                            nuovo.Prezzo = reader.GetInt32(3);
-                            nuovo.Quantita = reader.GetInt32(4);
-                            nuovo.Categoria = reader.GetString(6);
+                            Articolo nuovo = new Articolo
+                            {
+                                IDprodotto = reader.GetInt32(0),
+                                Nome = reader.GetString(1),
+                                Descrizione = reader.GetString(2),
+                                Prezzo = reader.GetInt32(3),
+                                Quantita = reader.GetInt32(4),
+                                Categoria = reader.GetString(6)
+                            };
                             p.Add(nuovo);
 
                         }
