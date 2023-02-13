@@ -396,6 +396,3 @@ FodyWeavers.xsd
 
 # JetBrains Rider
 *.sln.iml
-.vs/Magazzino/v17/.suo
-.vs/VSWorkspaceState.json
-/.vs/Magazzino/v17/.suo
