@@ -71,7 +71,7 @@ namespace Magazzino
                                                 Console.WriteLine("***LISTA PRODOTTI***");
                                                 //stampo tutti i prodotti
                                                 List<Articolo> prodotti = new List<Articolo>();
-                                                prodotti = client.ListaProdotti();
+                                                prodotti = client.ListaProdotti().ToList();
 
                                                 foreach (var p in prodotti)
                                                 { 
