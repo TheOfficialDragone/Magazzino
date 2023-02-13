@@ -33,23 +33,17 @@ namespace Magazzino.ServiceReference1 {
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService1/GetCategoria", ReplyAction="http://tempuri.org/IService1/GetCategoriaResponse")]
         System.Threading.Tasks.Task<string> GetCategoriaAsync(int id);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService1/GetProdotto", ReplyAction="http://tempuri.org/IService1/GetProdottoResponse")]
-        Server.Articolo GetProdotto(int IDProdotto);
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService1/GetProdotto", ReplyAction="http://tempuri.org/IService1/GetProdottoResponse")]
-        System.Threading.Tasks.Task<Server.Articolo> GetProdottoAsync(int IDProdotto);
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService1/ListaCategorie", ReplyAction="http://tempuri.org/IService1/ListaCategorieResponse")]
+        string[] ListaCategorie();
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService1/ListaCategorie", ReplyAction="http://tempuri.org/IService1/ListaCategorieResponse")]
-        int[] ListaCategorie();
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService1/ListaCategorie", ReplyAction="http://tempuri.org/IService1/ListaCategorieResponse")]
-        System.Threading.Tasks.Task<int[]> ListaCategorieAsync();
+        System.Threading.Tasks.Task<string[]> ListaCategorieAsync();
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService1/ListaProdotti", ReplyAction="http://tempuri.org/IService1/ListaProdottiResponse")]
-        int[] ListaProdotti();
+        Server.Articolo[] ListaProdotti();
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService1/ListaProdotti", ReplyAction="http://tempuri.org/IService1/ListaProdottiResponse")]
-        System.Threading.Tasks.Task<int[]> ListaProdottiAsync();
+        System.Threading.Tasks.Task<Server.Articolo[]> ListaProdottiAsync();
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService1/ModificaPassword", ReplyAction="http://tempuri.org/IService1/ModificaPasswordResponse")]
         bool ModificaPassword(string email, string psw);
@@ -169,27 +163,19 @@ namespace Magazzino.ServiceReference1 {
             return base.Channel.GetCategoriaAsync(id);
         }
         
-        public Server.Articolo GetProdotto(int IDProdotto) {
-            return base.Channel.GetProdotto(IDProdotto);
-        }
-        
-        public System.Threading.Tasks.Task<Server.Articolo> GetProdottoAsync(int IDProdotto) {
-            return base.Channel.GetProdottoAsync(IDProdotto);
-        }
-        
-        public int[] ListaCategorie() {
+        public string[] ListaCategorie() {
             return base.Channel.ListaCategorie();
         }
         
-        public System.Threading.Tasks.Task<int[]> ListaCategorieAsync() {
+        public System.Threading.Tasks.Task<string[]> ListaCategorieAsync() {
             return base.Channel.ListaCategorieAsync();
         }
         
-        public int[] ListaProdotti() {
+        public Server.Articolo[] ListaProdotti() {
             return base.Channel.ListaProdotti();
         }
         
-        public System.Threading.Tasks.Task<int[]> ListaProdottiAsync() {
+        public System.Threading.Tasks.Task<Server.Articolo[]> ListaProdottiAsync() {
             return base.Channel.ListaProdottiAsync();
         }
         
