@@ -138,7 +138,7 @@ namespace Server
         /// <returns>Oggetto Articolo</returns>
         /// 
 
-        /*
+        
         public Articolo GetProdotto(int IDProdotto)
         {
             try
@@ -174,7 +174,7 @@ namespace Server
                 throw new Exception("Errore nel recupero del prodotto");
             }
         }
-        */
+        
 
 
         //Lista dei nomi delle categorie
@@ -207,38 +207,6 @@ namespace Server
 
         }
 
-
-        //Lista dei prodotti disponibili
-        /*
-        public List<int> ListaProdotti()
-        {
-            try
-            {
-                //lista stringhe no interi 
-                List<int> lista = new List<int>();
-                using (MySqlCommand command1 = conn.CreateCommand())
-                {   //select nome from prodotto where disponibilita > 0
-
-                    command1.CommandText = "SELECT IDprodotto FROM prodotto";
-                    using (MySqlDataReader reader = command1.ExecuteReader())
-                    {
-                        while (reader.Read())
-                        { //stile stringa
-                            lista.Add(reader.GetInt32(0));
-                        }
-                    }
-                }
-                //restituisco la lista degli identificativi dei prodotti
-                return lista;
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex.GetType());
-                Console.WriteLine(ex.Message);
-                throw new Exception("Errore! Impossibile recuperare la lista dei prodotti");
-            }
-        }
-        */
 
         /// Modifica la password
         /// <param name="email">Email dell'utente</param>
@@ -494,37 +462,6 @@ namespace Server
             catch (Exception)
             {
                 throw new Exception("Errore! Impossibile recuperare il magazziniere");
-            }
-        }
-
-        // Lista dei prodotti disponibili
-        /// <returns>Lista degli identificativi dei prodotti disponibili</returns>
-        public List<int> ListaProdottiDisponibili()
-        {
-            try
-            {
-                List<int> lista = new List<int>();
-
-                using (MySqlCommand command1 = conn.CreateCommand())
-                {
-                    // verso TODO: aggiornare query per la formula corretta di disponibilità
-                    command1.CommandText = "SELECT IDprodotto FROM prodotto WHERE quantita > 0 ORDER BY IDcategoria,nome";
-                    using (MySqlDataReader reader = command1.ExecuteReader())
-                    {
-                        while (reader.Read())
-                        {
-                            lista.Add(reader.GetInt32(0));
-                            // aggiungere altri campi?
-                        }
-                    }
-                }
-                //restituisco la lista degli identificativi dei prodotto disponibili
-                return lista;
-                // qui cerchiamo di assegnare il prodotto con i dati restituiti dalla query
-            }
-            catch (Exception)
-            {
-                throw new Exception();
             }
         }
 

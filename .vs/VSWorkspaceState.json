@@ -1,9 +1,7 @@
 {
   "ExpandedNodes": [
-    "",
-    "\\Magazzino",
-    "\\Server"
+    ""
   ],
-  "SelectedNode": "\\Server\\Server.csproj",
+  "SelectedNode": "\\Magazzino.sln",
   "PreviewInSolutionExplorer": false
 }
