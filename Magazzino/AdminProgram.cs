@@ -162,7 +162,7 @@ namespace Magazzino
                                                         foreach (var c in client.ListaCategorie())
                                                         {
                                                             // qua forse conviene stampare tutte le categorie subito
-                                                            Console.WriteLine(c + "." + client.GetCategoria(c));
+                                                            Console.WriteLine(c);
                                                         }
 
                                                         Console.WriteLine("\nInserisci codice categoria del prodotto: ");
@@ -177,7 +177,7 @@ namespace Magazzino
                                                             Console.ReadKey();
                                                         }
 
-                                                    } while (client.ListaCategorie().Contains(categoriaNuovoProdotto) == false);
+                                                    } while (client.ListaCategorie().ToList().Contains(categoriaNuovoProdotto) == false);
 
                                                     // chiedi di inserire quantità del prodotto e aggiungilo al db
                                                     int quantitaNuovoProdotto = 0;
@@ -289,7 +289,7 @@ namespace Magazzino
                                                     {
                                                         // sanificato input utente
                                                         idModifica = Convert.ToInt32(Console.ReadLine());
-                                                        if (client.ListaProdotti().Contains(idModifica))
+                                                        if (client.ListaProdotti().ToList().Contains(idModifica))
                                                         {
                                                             int sceltaModifica = 0;
                                                             Articolo prodottoDaModificare = client.GetProdotto(idModifica);

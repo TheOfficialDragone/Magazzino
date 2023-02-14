@@ -2,12 +2,10 @@
 using Magazzino.ServiceReference1;
 using Server;
 using System;
+using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.ServiceModel;
-//using Articolo = Magazzino.Articolo;
-//using Login = Magazzino.Login;
-//using Utente = Magazzino.ServiceReference1.Utente;
 
 namespace Magazzino
 {
@@ -53,15 +51,18 @@ namespace Magazzino
                                 {
                                     Console.WriteLine("***LISTA PRODOTTI***");
                                     //stampo tutti i prodotti
-                                    foreach (var p in client.ListaProdotti())
+                                    List<Articolo> prodotti = new List<Articolo>();
+                                    prodotti = client.ListaProdotti().ToList();
+
+                                    foreach (var p in prodotti)
                                     {
-                                        Articolo a = client.GetProdotto(p);
-                                        if (a.Quantita >= 1)
+                                        if (p.Quantita >= 1)
                                             disponibile = "DISPONIBILE";
                                         else
                                             disponibile = "NON DISPONIBILE";
-                                        Console.WriteLine(a.IDprodotto + " - " + a.Nome + " - " + String.Format("{0:0.00}", a.Prezzo) + " euro - " + disponibile + " - " + a.Quantita + " - " + a.Categoria);
+                                        Console.WriteLine(p.IDprodotto + " - " + p.Nome + " - " + String.Format("{0:0.00}", p.Prezzo) + " euro - " + disponibile + " - " + p.Quantita + " - " + p.Categoria);
                                     }
+
                                 }
                                 else
                                     Console.WriteLine("\nNessun prodotto presente nel sistema");
@@ -78,16 +79,18 @@ namespace Magazzino
                                 {
                                     Console.WriteLine("***LISTA PRODOTTI***");
                                     //stampo tutti i prodotti
-                                    foreach (var z in client.ListaProdotti())
+                                    List<Articolo> prodotti = new List<Articolo>();
+                                    prodotti = client.ListaProdotti().ToList();
+
+                                    foreach (var p in prodotti)
                                     {
-                                        Articolo a = client.GetProdotto(z);
-                                        if (a.Quantita >= 1)
+                                        if (p.Quantita >= 1)
                                             disponibile = "DISPONIBILE";
                                         else
                                             disponibile = "NON DISPONIBILE";
-
-                                        Console.WriteLine(a.IDprodotto + " - " + a.Nome + " - " + String.Format("{0:0.00}", a.Prezzo) + " euro - " + disponibile + " - " + a.Quantita + " - " + a.Categoria);
+                                        Console.WriteLine(p.IDprodotto + " - " + p.Nome + " - " + String.Format("{0:0.00}", p.Prezzo) + " euro - " + disponibile + " - " + p.Quantita + " - " + p.Categoria);
                                     }
+
                                 }
                                 int id = 0;
                                 int quantita = 0;
@@ -117,15 +120,18 @@ namespace Magazzino
                                     {
                                         Console.WriteLine("***LISTA PRODOTTI***");
                                         //stampo tutti i prodotti
-                                        foreach (var z in client.ListaProdotti())
+                                        List<Articolo> prodotti = new List<Articolo>();
+                                        prodotti = client.ListaProdotti().ToList();
+
+                                        foreach (var p in prodotti)
                                         {
-                                            Articolo a = client.GetProdotto(z);
-                                            if (a.Quantita >= 1)
+                                            if (p.Quantita >= 1)
                                                 disponibile = "DISPONIBILE";
                                             else
                                                 disponibile = "NON DISPONIBILE";
-                                            Console.WriteLine(a.IDprodotto + " - " + a.Nome + " - " + String.Format("{0:0.00}", a.Prezzo) + " euro - " + disponibile + " - " + a.Quantita + " - " + a.Categoria);
+                                            Console.WriteLine(p.IDprodotto + " - " + p.Nome + " - " + String.Format("{0:0.00}", p.Prezzo) + " euro - " + disponibile + " - " + p.Quantita + " - " + p.Categoria);
                                         }
+
                                     }
                                     int id_prod = 0;
                                     int quantita_diminuita = 0;
@@ -165,17 +171,18 @@ namespace Magazzino
                                 {
                                     Console.WriteLine("***LISTA PRODOTTI IN ESAURIMENTO***");
                                     //stampo tutti i prodotti
-                                    foreach (var p in client.ListaProdotti())
+                                    List<Articolo> prodotti = new List<Articolo>();
+                                    prodotti = client.ListaProdotti().ToList();
+
+                                    foreach (var p in prodotti)
                                     {
-                                        Articolo a = client.GetProdotto(p);
-                                        if (a.Quantita <= 2)
+                                        if (p.Quantita <= 2)
                                         {
                                             disponibilita = "IN ESAURIMENTO";
-                                            Console.WriteLine(a.IDprodotto + " - " + a.Nome + " - " + String.Format("{0:0.00}", a.Prezzo) + " euro - " + disponibilita + " - " + a.Quantita + " - " + a.Categoria);
+                                            Console.WriteLine(p.IDprodotto + " - " + p.Nome + " - " + String.Format("{0:0.00}", p.Prezzo) + " euro - " + disponibilita + " - " + p.Quantita + " - " + p.Categoria);
                                         }
-
-
                                     }
+
                                 }
                                 else
                                 {

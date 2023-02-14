@@ -33,6 +33,12 @@ namespace Magazzino.ServiceReference1 {
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService1/GetCategoria", ReplyAction="http://tempuri.org/IService1/GetCategoriaResponse")]
         System.Threading.Tasks.Task<string> GetCategoriaAsync(int id);
         
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService1/GetProdotto", ReplyAction="http://tempuri.org/IService1/GetProdottoResponse")]
+        Server.Articolo GetProdotto(int IDProdotto);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService1/GetProdotto", ReplyAction="http://tempuri.org/IService1/GetProdottoResponse")]
+        System.Threading.Tasks.Task<Server.Articolo> GetProdottoAsync(int IDProdotto);
+        
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService1/ListaCategorie", ReplyAction="http://tempuri.org/IService1/ListaCategorieResponse")]
         string[] ListaCategorie();
         
@@ -92,12 +98,6 @@ namespace Magazzino.ServiceReference1 {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService1/GetMagazziniere", ReplyAction="http://tempuri.org/IService1/GetMagazziniereResponse")]
         System.Threading.Tasks.Task<Server.Utente> GetMagazziniereAsync(string id);
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService1/ListaProdottiDisponibili", ReplyAction="http://tempuri.org/IService1/ListaProdottiDisponibiliResponse")]
-        int[] ListaProdottiDisponibili();
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService1/ListaProdottiDisponibili", ReplyAction="http://tempuri.org/IService1/ListaProdottiDisponibiliResponse")]
-        System.Threading.Tasks.Task<int[]> ListaProdottiDisponibiliAsync();
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService1/AumentaGiacenze", ReplyAction="http://tempuri.org/IService1/AumentaGiacenzeResponse")]
         bool AumentaGiacenze(int id, int quantita);
@@ -161,6 +161,14 @@ namespace Magazzino.ServiceReference1 {
         
         public System.Threading.Tasks.Task<string> GetCategoriaAsync(int id) {
             return base.Channel.GetCategoriaAsync(id);
+        }
+        
+        public Server.Articolo GetProdotto(int IDProdotto) {
+            return base.Channel.GetProdotto(IDProdotto);
+        }
+        
+        public System.Threading.Tasks.Task<Server.Articolo> GetProdottoAsync(int IDProdotto) {
+            return base.Channel.GetProdottoAsync(IDProdotto);
         }
         
         public string[] ListaCategorie() {
@@ -241,14 +249,6 @@ namespace Magazzino.ServiceReference1 {
         
         public System.Threading.Tasks.Task<Server.Utente> GetMagazziniereAsync(string id) {
             return base.Channel.GetMagazziniereAsync(id);
-        }
-        
-        public int[] ListaProdottiDisponibili() {
-            return base.Channel.ListaProdottiDisponibili();
-        }
-        
-        public System.Threading.Tasks.Task<int[]> ListaProdottiDisponibiliAsync() {
-            return base.Channel.ListaProdottiDisponibiliAsync();
         }
         
         public bool AumentaGiacenze(int id, int quantita) {

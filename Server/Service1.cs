@@ -137,8 +137,6 @@ namespace Server
         /// <param name="IDProdotto">Identificativo del prodotto</param>
         /// <returns>Oggetto Articolo</returns>
         /// 
-
-        
         public Articolo GetProdotto(int IDProdotto)
         {
             try
