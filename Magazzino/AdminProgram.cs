@@ -100,7 +100,7 @@ namespace Magazzino
                                                     foreach (var c in client.ListaCategorie())
                                                     {
                                                         // verificare client e query
-                                                        Console.WriteLine("c");
+                                                        Console.WriteLine(c);
                                                     }
                                                 }
                                                 else
@@ -243,7 +243,7 @@ namespace Magazzino
                                                     trovato = false; // verifico che la categoria non sia gia presente
                                                     Console.Clear();
                                                     Console.WriteLine("***AGGIUNGI CATEGORIA***");
-                                                    Console.WriteLine("\nInserisci la categoria del prodotto: ");
+                                                    Console.WriteLine("\nInserisci  il nome della categoria: ");
                                                     nuovaCategoria = Console.ReadLine();
 
                                                     foreach (var c in client.ListaCategorie())
