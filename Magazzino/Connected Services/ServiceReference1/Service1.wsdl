@@ -104,6 +104,12 @@
   <wsdl:message name="IService1_DiminuisciGiacenze_OutputMessage">
     <wsdl:part name="parameters" element="tns:DiminuisciGiacenzeResponse" />
   </wsdl:message>
+  <wsdl:message name="IService1_CheckID_InputMessage">
+    <wsdl:part name="parameters" element="tns:CheckID" />
+  </wsdl:message>
+  <wsdl:message name="IService1_CheckID_OutputMessage">
+    <wsdl:part name="parameters" element="tns:CheckIDResponse" />
+  </wsdl:message>
   <wsdl:portType name="IService1">
     <wsdl:operation name="CheckEmail">
       <wsdl:input wsaw:Action="http://tempuri.org/IService1/CheckEmail" message="tns:IService1_CheckEmail_InputMessage" />
@@ -168,6 +174,10 @@
     <wsdl:operation name="DiminuisciGiacenze">
       <wsdl:input wsaw:Action="http://tempuri.org/IService1/DiminuisciGiacenze" message="tns:IService1_DiminuisciGiacenze_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IService1/DiminuisciGiacenzeResponse" message="tns:IService1_DiminuisciGiacenze_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="CheckID">
+      <wsdl:input wsaw:Action="http://tempuri.org/IService1/CheckID" message="tns:IService1_CheckID_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IService1/CheckIDResponse" message="tns:IService1_CheckID_OutputMessage" />
     </wsdl:operation>
   </wsdl:portType>
   <wsdl:binding name="BasicHttpBinding_IService1" type="tns:IService1">
@@ -309,6 +319,15 @@
     </wsdl:operation>
     <wsdl:operation name="DiminuisciGiacenze">
       <soap:operation soapAction="http://tempuri.org/IService1/DiminuisciGiacenze" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CheckID">
+      <soap:operation soapAction="http://tempuri.org/IService1/CheckID" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>

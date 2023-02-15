@@ -151,6 +151,7 @@ namespace Magazzino
                                                     string descrizioneNuovoProdotto = Console.ReadLine();
 
                                                     int categoriaNuovoProdotto = 0;
+                                                    string nomeCategoria = "";
                                                     //categoria del prodotto
                                                     do
                                                     {
@@ -177,7 +178,9 @@ namespace Magazzino
                                                             Console.ReadKey();
                                                         }
 
-                                                    } while (client.ListaCategorie().ToList().Contains(categoriaNuovoProdotto) == false);
+                                                       nomeCategoria = client.GetCategoria(categoriaNuovoProdotto);
+
+                                                    } while (client.ListaCategorie().ToList().Contains(nomeCategoria) == false);
 
                                                     // chiedi di inserire quantità del prodotto e aggiungilo al db
                                                     int quantitaNuovoProdotto = 0;
@@ -245,7 +248,7 @@ namespace Magazzino
 
                                                     foreach (var c in client.ListaCategorie())
                                                     {
-                                                        if (trovato == false && client.GetCategoria(c) == nuovaCategoria)
+                                                        if (trovato == false && c == nuovaCategoria)
                                                         {
                                                             trovato = true;
                                                             Console.WriteLine("\nCategoria già presente!");
@@ -271,25 +274,24 @@ namespace Magazzino
                                                 if (client.ListaProdotti().Count() > 0)
                                                 {
                                                     int idModifica = 0;
-
+                                                   
                                                     Console.Clear();
                                                     Console.WriteLine("***MODIFICA PRODOTTO***");
 
                                                     foreach (var p in client.ListaProdotti())
-                                                    {
-                                                        Articolo articolo = client.GetProdotto(p);
-                                                        if (articolo.Quantita > 0)
+                                                    {  
+                                                        if (p.Quantita > 0)
                                                             disponibile = "DISPONIBILE";
                                                         else
                                                             disponibile = "NON DISPONIBILE";
-                                                        Console.WriteLine(articolo.IDprodotto + " - " + articolo.Nome + " - " + String.Format("{0:0.00}", articolo.Prezzo) + " euro - " + disponibile + " - " + articolo.Categoria);
+                                                        Console.WriteLine(p.IDprodotto + " - " + p.Nome + " - " + String.Format("{0:0.00}", p.Prezzo) + " euro - " + disponibile + " - " + p.Categoria);
                                                     }
                                                     Console.WriteLine("\nInserisci codice prodotto da modificare: ");
                                                     try
                                                     {
                                                         // sanificato input utente
                                                         idModifica = Convert.ToInt32(Console.ReadLine());
-                                                        if (client.ListaProdotti().ToList().Contains(idModifica))
+                                                        if (client.CheckID(idModifica))
                                                         {
                                                             int sceltaModifica = 0;
                                                             Articolo prodottoDaModificare = client.GetProdotto(idModifica);
@@ -362,6 +364,7 @@ namespace Magazzino
                                                                             break;
                                                                         case 4:
                                                                             int codiceCat = 0;
+                                                                            string NomeCategoria = "";
                                                                             //modifica categoria
                                                                             do
                                                                             {
@@ -371,12 +374,13 @@ namespace Magazzino
                                                                                 foreach (var c in client.ListaCategorie())
                                                                                 {
                                                                                     // anche qui metodo per stampare subito tutte le categorie
-                                                                                    Console.WriteLine(c + "." + client.GetCategoria(c));
+                                                                                    Console.WriteLine(c);
                                                                                 }
                                                                                 Console.WriteLine("Inserisci codice categoria: ");
                                                                                 try
                                                                                 {
                                                                                     codiceCat = Convert.ToInt32(Console.ReadLine());
+                                                                                    NomeCategoria = client.GetCategoria(codiceCat);
                                                                                 }
                                                                                 catch (FormatException)
                                                                                 {
@@ -384,7 +388,7 @@ namespace Magazzino
                                                                                     Console.WriteLine("\nPremi un tasto per riprovare");
                                                                                     Console.ReadKey();
                                                                                 }
-                                                                            } while (client.ListaCategorie().Contains(codiceCat) == false);
+                                                                            } while (client.ListaCategorie().ToList().Contains(NomeCategoria) == false);
                                                                             prodottoDaModificare.Categoria = client.GetCategoria(codiceCat);
                                                                             break;
                                                                         case 5:
@@ -432,19 +436,19 @@ namespace Magazzino
                                                     Console.WriteLine("***ELIMINA PRODOTTO***");
                                                     foreach (var p in client.ListaProdotti())
                                                     {
-                                                        Articolo articolo = client.GetProdotto(p);
-                                                        if (client.GetProdotto(p).Quantita > 0)
+                                                        if (p.Quantita > 0)
                                                             disponibile = "DISPONIBILE";
                                                         else
                                                             disponibile = "NON DISPONIBILE";
-                                                        Console.WriteLine(articolo.IDprodotto + " - " + articolo.Nome + " - " + String.Format("{0:0.00}", articolo.Prezzo) + " euro - " + disponibile + " - " + articolo.Categoria);
+                                                        Console.WriteLine(p.IDprodotto + " - " + p.Nome + " - " + String.Format("{0:0.00}", p.Prezzo) + " euro - " + disponibile + " - " + p.Categoria);
                                                     }
 
                                                     Console.WriteLine("\nInserisci codice prodotto da eliminare: ");
                                                     try
                                                     {
                                                         idElimina = Convert.ToInt32(Console.ReadLine());
-                                                        if (client.ListaProdotti().Contains(idElimina))
+
+                                                        if (client.CheckID(idElimina))
                                                         {
                                                             Console.Clear();
                                                             if (client.EliminaProdotto(idElimina))

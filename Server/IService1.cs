@@ -59,7 +59,10 @@ namespace Server
         [OperationContract]
         bool DiminuisciGiacenze(int id, int quantita);
 
-        
+        [OperationContract]
+        bool CheckID(int id);
+
+
 
     }
 }

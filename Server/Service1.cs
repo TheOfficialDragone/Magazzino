@@ -572,5 +572,19 @@ namespace Server
 
         }
 
+        public bool CheckID(int id)
+        {
+            using (MySqlCommand cmd = conn.CreateCommand())
+            {
+                cmd.CommandText = "Select IDProdotto from Prodotto Where IDProdotto = " + id;
+                using (MySqlDataReader reader = cmd.ExecuteReader())
+                {
+                    return reader.HasRows;
+                }
+
+            }
+               
+        }
+
     }
 }

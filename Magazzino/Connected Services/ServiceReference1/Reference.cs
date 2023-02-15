@@ -110,6 +110,12 @@ namespace Magazzino.ServiceReference1 {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService1/DiminuisciGiacenze", ReplyAction="http://tempuri.org/IService1/DiminuisciGiacenzeResponse")]
         System.Threading.Tasks.Task<bool> DiminuisciGiacenzeAsync(int id, int quantita);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService1/CheckID", ReplyAction="http://tempuri.org/IService1/CheckIDResponse")]
+        bool CheckID(int id);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService1/CheckID", ReplyAction="http://tempuri.org/IService1/CheckIDResponse")]
+        System.Threading.Tasks.Task<bool> CheckIDAsync(int id);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -265,6 +271,14 @@ namespace Magazzino.ServiceReference1 {
         
         public System.Threading.Tasks.Task<bool> DiminuisciGiacenzeAsync(int id, int quantita) {
             return base.Channel.DiminuisciGiacenzeAsync(id, quantita);
+        }
+        
+        public bool CheckID(int id) {
+            return base.Channel.CheckID(id);
+        }
+        
+        public System.Threading.Tasks.Task<bool> CheckIDAsync(int id) {
+            return base.Channel.CheckIDAsync(id);
         }
     }
 }
