@@ -146,6 +146,7 @@ namespace Magazzino
 
                                                     Console.Clear();
                                                     Console.WriteLine("prezzo: " + prezzoNuovoProdotto);
+                                                    Console.Clear();
                                                     Console.WriteLine("***AGGIUNGI PRODOTTO***");
                                                     Console.WriteLine("Inserisci una descrizione del prodotto: ");
                                                     string descrizioneNuovoProdotto = Console.ReadLine();
@@ -160,12 +161,12 @@ namespace Magazzino
 
                                                         Console.WriteLine("\nLista categorie: ");
                                                         // mostro tutte le categorie all'admin per facilitare la scelta
-                                                        foreach (var c in client.ListaCategorie())
+                                                        List<string> strings = client.ListaCategorie().ToList();
+                                                        for(int i = 0; i < strings.Count -1; i+=2)
                                                         {
-                                                            // qua forse conviene stampare tutte le categorie subito
-                                                            Console.WriteLine(c);
+                                                          Console.WriteLine(strings.ElementAt(i+1) +" "+ strings.ElementAt(i));
                                                         }
-
+                                                        
                                                         Console.WriteLine("\nInserisci codice categoria del prodotto: ");
                                                         try
                                                         {

@@ -185,12 +185,13 @@ namespace Server
 
                 using (MySqlCommand command1 = conn.CreateCommand())
                 {
-                    command1.CommandText = "SELECT nome FROM categoria";
+                    command1.CommandText = "SELECT nome,IDCategoria FROM categoria";
                     using (MySqlDataReader reader = command1.ExecuteReader())
                     {
                         while (reader.Read())
                         {
                             lista.Add(reader.GetString(0));
+                            lista.Add(reader.GetString(1));
                         }
                     }
                 }
