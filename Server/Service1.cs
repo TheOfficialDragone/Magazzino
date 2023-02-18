@@ -167,8 +167,7 @@ namespace Server
             }
             catch (Exception ex)
             {
-                Console.WriteLine("Eccezione nel commit", ex.GetType());
-                Console.WriteLine("  Messaggio da commit:", ex.Message);
+                Console.WriteLine(ex.ToString());
                 throw new Exception("Errore nel recupero del prodotto");
             }
         }

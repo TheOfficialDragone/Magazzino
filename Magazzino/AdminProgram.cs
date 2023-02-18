@@ -280,7 +280,7 @@ namespace Magazzino
                                                     Console.Clear();
                                                     Console.WriteLine("***MODIFICA PRODOTTO***");
 
-                                                    foreach (var p in client.ListaProdotti())
+                                                    foreach (var p in client.ListaProdotti().ToList())
                                                     {  
                                                         if (p.Quantita > 0)
                                                             disponibile = "DISPONIBILE";
