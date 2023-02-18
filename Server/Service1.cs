@@ -116,7 +116,7 @@ namespace Server
                     {
                         while (reader.Read())
                         {
-                            nome = reader.GetString(0).TrimEnd().ToUpper();
+                            nome = reader.GetString(0).TrimEnd();
                         }
                     }
                 }
@@ -157,7 +157,7 @@ namespace Server
                             prodotto.Descrizione = reader.GetString(2).TrimEnd().ToUpper();
                             prodotto.Quantita = reader.GetInt32(4);
                             prodotto.Prezzo = reader.GetDouble(3);
-                            prodotto.Categoria = reader.GetString(6).TrimEnd().ToUpper();
+                            prodotto.Categoria = reader.GetString(6).TrimEnd();
                         }
                     }
                 }
@@ -179,6 +179,7 @@ namespace Server
         public List<string> ListaCategorie()
         {
             List<string> lista = new List<string>();
+            string s;
 
             try
             {
@@ -190,8 +191,10 @@ namespace Server
                     {
                         while (reader.Read())
                         {
-                            lista.Add(reader.GetString(0));
-                            lista.Add(reader.GetString(1));
+                            s = reader.GetString(1) + " " + reader.GetString(0);
+                            // lista.Add(reader.GetString(0));
+                            // lista.Add(reader.GetString(1));
+                            lista.Add(s);
                         }
                     }
                 }
@@ -552,7 +555,7 @@ namespace Server
                                 IDprodotto = reader.GetInt32(0),
                                 Nome = reader.GetString(1),
                                 Descrizione = reader.GetString(2),
-                                Prezzo = reader.GetInt32(3),
+                                Prezzo = reader.GetDouble(3),
                                 Quantita = reader.GetInt32(4),
                                 Categoria = reader.GetString(6)
                             };

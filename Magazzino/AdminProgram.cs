@@ -66,7 +66,7 @@ namespace Magazzino
                                             case 1:
                                                 
                                             Console.Clear();
-                                            if (client.ListaProdotti().Count() > 0)
+                                            if (client.ListaProdotti().ToList().Count() > 0)
                                             {
                                                 Console.WriteLine("***LISTA PRODOTTI***");
                                                 //stampo tutti i prodotti
@@ -96,11 +96,10 @@ namespace Magazzino
                                                 if (client.ListaCategorie().Count() > 0)
                                                 {
                                                     Console.WriteLine("***LISTA CATEGORIE***");
-                                                    client.ListaCategorie();
-                                                    foreach (var c in client.ListaCategorie())
+                                                    List<string> strings = client.ListaCategorie().ToList();
+                                                    foreach(var p in strings)
                                                     {
-                                                        // verificare client e query
-                                                        Console.WriteLine(c);
+                                                        Console.WriteLine(p);
                                                     }
                                                 }
                                                 else
@@ -153,20 +152,20 @@ namespace Magazzino
 
                                                     int categoriaNuovoProdotto = 0;
                                                     string nomeCategoria = "";
+                                                    string c = "";
                                                     //categoria del prodotto
                                                     do
                                                     {
                                                         Console.Clear();
                                                         Console.WriteLine("***AGGIUNGI PRODOTTO***");
-
                                                         Console.WriteLine("\nLista categorie: ");
                                                         // mostro tutte le categorie all'admin per facilitare la scelta
                                                         List<string> strings = client.ListaCategorie().ToList();
-                                                        for(int i = 0; i < strings.Count -1; i+=2)
+                                                        foreach (var p in strings)
                                                         {
-                                                          Console.WriteLine(strings.ElementAt(i+1) +" "+ strings.ElementAt(i));
+                                                            Console.WriteLine(p);
                                                         }
-                                                        
+
                                                         Console.WriteLine("\nInserisci codice categoria del prodotto: ");
                                                         try
                                                         {
@@ -180,8 +179,10 @@ namespace Magazzino
                                                         }
 
                                                        nomeCategoria = client.GetCategoria(categoriaNuovoProdotto);
+                                                       c = categoriaNuovoProdotto.ToString() + " " + nomeCategoria;
+                                                       Console.WriteLine(c);
 
-                                                    } while (client.ListaCategorie().ToList().Contains(nomeCategoria) == false);
+                                                    } while (client.ListaCategorie().ToList().Contains(c) == false);
 
                                                     // chiedi di inserire quantità del prodotto e aggiungilo al db
                                                     int quantitaNuovoProdotto = 0;
