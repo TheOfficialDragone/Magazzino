@@ -279,8 +279,10 @@ namespace Magazzino
                                                    
                                                     Console.Clear();
                                                     Console.WriteLine("***MODIFICA PRODOTTO***");
+                                                    List<Articolo> prodotti = new List<Articolo>();
+                                                    prodotti = client.ListaProdotti().ToList();
 
-                                                    foreach (var p in client.ListaProdotti().ToList())
+                                                    foreach (var p in prodotti)
                                                     {  
                                                         if (p.Quantita > 0)
                                                             disponibile = "DISPONIBILE";

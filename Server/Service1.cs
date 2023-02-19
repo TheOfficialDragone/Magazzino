@@ -144,8 +144,9 @@ namespace Server
                 //creo l'oggetto da restituire
                 Articolo prodotto = new Articolo() { IDprodotto = IDProdotto };
 
-                using (MySqlCommand command1 = new MySqlCommand("SELECT prodotto.*, categoria.nome FROM prodotto, categoria WHERE prodotto.fk_categoria=categoria.IDcategoria AND IDprodotto=@IDprodotto"))
-                {
+                using (MySqlCommand command1 = conn.CreateCommand())
+                {   
+                    command1.CommandText = "SELECT prodotto.*, categoria.nome FROM prodotto, categoria WHERE prodotto.fk_categoria=categoria.IDcategoria AND IDprodotto=@IDprodotto";
                     command1.Parameters.AddWithValue("@IDprodotto", IDProdotto);
 
                     using (MySqlDataReader reader = command1.ExecuteReader())
