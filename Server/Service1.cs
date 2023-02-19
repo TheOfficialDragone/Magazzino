@@ -83,7 +83,7 @@ namespace Server
                         {
                             t.Rollback();
                             Console.WriteLine("Eccezione nel commit", ex.GetType());
-                            Console.WriteLine("  Messaggio da commit:", ex.Message);
+                            Console.WriteLine("  Messaggio da commit:", ex.Message.ToString());
                         }
                         catch (Exception ex2)
                         {
@@ -278,9 +278,10 @@ namespace Server
                 }
                 return risultato;
             }
-            catch (Exception)
+            catch (Exception e)
             {
-                throw new Exception("Errore nella selezione del prodotto da modificare");
+                Console.WriteLine(e.Message);
+                throw new Exception("Errore nella selezione del prodotto da modificare");       
             }
         }
 
