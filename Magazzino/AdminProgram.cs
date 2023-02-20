@@ -384,7 +384,7 @@ namespace Magazzino
                                                                                 try
                                                                                 {
                                                                                     codiceCat = Convert.ToInt32(Console.ReadLine());
-                                                                                    NomeCategoria = client.GetCategoria(codiceCat);
+                                                                                    NomeCategoria = codiceCat.ToString()+ " " + client.GetCategoria(codiceCat);
                                                                                 }
                                                                                 catch (FormatException)
                                                                                 {
