@@ -338,6 +338,7 @@ namespace Magazzino
                         Console.WriteLine("Scelta non valida!");
                         Console.WriteLine("\nPremi un tasto per riprovare");
                         Console.ReadKey();
+                        Console.Out.Flush();
                     }
                     catch (CommunicationException)
                     {
@@ -345,6 +346,7 @@ namespace Magazzino
                         Console.WriteLine("Errore: impossibile raggiungere il server!");
                         Console.WriteLine("\nPremi un tasto per continuare");
                         Console.ReadKey();
+                        Console.Out.Flush();
                     }
                     catch (Exception)
                     {
@@ -352,6 +354,7 @@ namespace Magazzino
                         Console.WriteLine("Errore!");
                         Console.WriteLine("\nPremi un tasto per continuare");
                         Console.ReadKey();
+                        Console.Out.Flush();
                     }
                 } while (sceltaMenuCliente != 6);
 

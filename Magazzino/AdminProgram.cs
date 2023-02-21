@@ -19,6 +19,7 @@ namespace Magazzino
                 Console.WriteLine("Benvenuto admin");
                 Console.WriteLine("\nPremi un tasto per continuare");
                 Console.ReadKey();
+                Console.Out.Flush();
 
                 int sceltaMenuAdmin = 0;
 
@@ -41,6 +42,7 @@ namespace Magazzino
                         {
                             //gestione prodotti
                             case 1:
+                                Console.Out.Flush();
                                 int sceltaMenuProdotti = 0;
                                 string disponibile;
                                 do
@@ -89,6 +91,7 @@ namespace Magazzino
 
                                             Console.WriteLine("\nPremi un tasto per continuare");
                                             Console.ReadKey();
+                                            Console.Out.Flush();
                                                 break;
                                             //lista categorie    
                                             case 2:
@@ -107,6 +110,7 @@ namespace Magazzino
 
                                                 Console.WriteLine("\nPremi un tasto per cotinuare");
                                                 Console.ReadKey();
+                                                Console.Out.Flush();
                                                 break;
                                             //aggiungi UN NUOVO prodotto
                                             case 3:
@@ -218,12 +222,14 @@ namespace Magazzino
                                                         Console.WriteLine("Prodotto aggiunto con successo!");
                                                         Console.WriteLine("\nPremi un tasto per continuare");
                                                         Console.ReadKey();
+                                                        Console.Out.Flush();
                                                     }
                                                     else
                                                     {
                                                         Console.WriteLine("Errore nell'aggiunta del prodotto!");
                                                         Console.WriteLine("\nPremi un tasto per continuare");
                                                         Console.ReadKey();
+                                                        Console.Out.Flush();
                                                     }
 
                                                 }
@@ -232,6 +238,7 @@ namespace Magazzino
                                                     Console.WriteLine("Devi prima creare una categoria!");
                                                     Console.WriteLine("\nPremi un tasto per continuare");
                                                     Console.ReadKey();
+                                                    Console.Out.Flush();
                                                 }
                                                 break;
 
@@ -268,6 +275,7 @@ namespace Magazzino
 
                                                 Console.WriteLine("\nPremi un tasto per continuare");
                                                 Console.ReadKey();
+                                                Console.Out.Flush();
                                                 break;
 
 
@@ -291,6 +299,7 @@ namespace Magazzino
                                                         Console.WriteLine(p.IDprodotto + " - " + p.Nome + " - " + String.Format("{0:0.00}", p.Prezzo) + " euro - " + disponibile + " - " + p.Categoria);
                                                     }
                                                     Console.WriteLine("\nInserisci codice prodotto da modificare: ");
+                                                    Console.Out.Flush();
                                                     try
                                                     {
                                                         // sanificato input utente
@@ -394,15 +403,20 @@ namespace Magazzino
                                                                                 }
                                                                             } while (client.ListaCategorie().ToList().Contains(NomeCategoria) == false);
                                                                             prodottoDaModificare.Categoria = client.GetCategoria(codiceCat);
+                                                                            Console.Out.Flush();
                                                                             break;
                                                                         case 5:
                                                                             Console.WriteLine("***OPERAZIONE ANNULLATA***");
                                                                             break;
                                                                         case 6:
                                                                             if (client.ModificaProdotto(prodottoDaModificare))
+                                                                            {
                                                                                 Console.WriteLine("Prodotto modificato!");
+                                                                                Console.Out.Flush();
+                                                                            }
                                                                             else
                                                                                 Console.WriteLine("Errore: eliminazione non riuscita!");
+                                                                                Console.Out.Flush();
                                                                             break;
                                                                     }
                                                                 }
@@ -411,6 +425,7 @@ namespace Magazzino
                                                                     Console.WriteLine("Scelta non valida!");
                                                                     Console.WriteLine("\nPremi un tasto per riprovare");
                                                                     Console.ReadKey();
+                                                                    Console.Out.Flush();
                                                                 }
                                                             } while (sceltaModifica != 6 && sceltaModifica != 7);
                                                         }
@@ -429,6 +444,7 @@ namespace Magazzino
 
                                                 Console.WriteLine("\nPremi un tasto per continuare");
                                                 Console.ReadKey();
+                                                Console.Out.Flush();
                                                 break;
                                             //elimina prodotto
                                             case 6:
@@ -473,6 +489,7 @@ namespace Magazzino
 
                                                 Console.WriteLine("\nPremi un tasto per continuare");
                                                 Console.ReadKey();
+                                                Console.Out.Flush();
                                                 break;
                                             //esci
                                             case 7:
@@ -484,6 +501,7 @@ namespace Magazzino
                                         Console.WriteLine("Scelta non valida!");
                                         Console.WriteLine("\nPremi un tasto per riprovare");
                                         Console.ReadKey();
+                                        Console.Out.Flush();
                                     }
                                 } while (sceltaMenuProdotti != 7);
                                 break;
@@ -507,6 +525,7 @@ namespace Magazzino
 
                                 Console.WriteLine("\nPremi un tasto per continuare");
                                 Console.ReadKey();
+                                Console.Out.Flush();
                                 break;
 
                             case 3:
@@ -519,6 +538,7 @@ namespace Magazzino
                         Console.WriteLine("Scelta non valida!");
                         Console.WriteLine("\nPremi un tasto per riprovare");
                         Console.ReadKey();
+                        Console.Out.Flush();
                     }
                     catch (CommunicationException)
                     {
@@ -526,6 +546,7 @@ namespace Magazzino
                         Console.WriteLine("Errore: impossibile raggiungere il server!");
                         Console.WriteLine("\nPremi un tasto per continuare");
                         Console.ReadKey();
+                        Console.Out.Flush();
                     }
                     catch (Exception)
                     {
@@ -533,6 +554,7 @@ namespace Magazzino
                         Console.WriteLine("Errore!");
                         Console.WriteLine("\nPremi un tasto per continuare");
                         Console.ReadKey();
+                        Console.Out.Flush();
                     }
                 } while (sceltaMenuAdmin != 3);
             }
