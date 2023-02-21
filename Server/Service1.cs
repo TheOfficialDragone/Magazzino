@@ -119,6 +119,7 @@ namespace Server
             }
         }
 
+        /// <summary>
         /// Nome di una categoria
         /// </summary>
         /// <param name="id">Identificativo della categoria</param>
@@ -159,10 +160,16 @@ namespace Server
 
 
 
-        /// Dati del prodotto
+        /// <summary>
+        /// Ritorna un prodotto in base all'id passato
+        /// </summary>
         /// <param name="IDProdotto">Identificativo del prodotto</param>
         /// <returns>Oggetto Articolo</returns>
-        /// 
+         /*
+         * In questa versione della funzione, anziché concatenare il valore della variabile id direttamente nella stringa SQL, si utilizza il parametro SQL @idProdotto. 
+         * In questo modo, il valore della variabile idProdotto verrà passato come parametro separato e verrà trattato come dato, evitando che possa essere interpretato come parte del comando SQL.
+         * Questa versione della funzione è meno vulnerabile alle SQL injection rispetto alla versione originale.
+         */
         public Articolo GetProdotto(int IDProdotto)
         {
             try
@@ -206,6 +213,9 @@ namespace Server
         /// </summary>
         /// <returns>lista di stringhe contenti id e nome categroria</returns>
         /// <exception cref="Exception"></exception>
+        /*
+         * In questa funzione non venendo passato nulla dall'utente inutile prevenire le sql injection in quanto impossibile
+         */
         public List<string> ListaCategorie()
         {
             List<string> lista = new List<string>();
@@ -240,11 +250,12 @@ namespace Server
         }
 
 
-        /// Modifica la password
+        /// <summary>
+        /// Modifica password
+        /// </summary>
         /// <param name="email">Email dell'utente</param>
         /// <param name="psw">Password dell'utente</param>
         /// <returns>True se la password è stata modificata. False in caso contrario</returns>
-        /// 
 
         /* In questa versione della funzione, le variabili email, psw e idLogin non sono concatenate direttamente nella stringa SQL,
          * ma invece utilizzate come parametri nei comandi SQL. Questo rende il codice immune all'SQL injection perché i parametri dei comandi SQL 
@@ -287,8 +298,9 @@ namespace Server
             }
         }
 
-
-        //Modifica del prodotto
+        /// <summary>
+        /// Modifica di un prodotto
+        /// </summary>
         /// <param name="prodottoDaModificare">Prodotto da modificare</param>
         /// <returns>True se il prodotto è stato modificato. False in caso contrario</returns>
         /*
@@ -339,7 +351,9 @@ namespace Server
         }
 
 
-        //Crea una nuova categoria
+        /// <summary>
+        /// Creazione di una nuova categoria data la stringa passata
+        /// </summary>
         /// <param name="nome">Nome categoria</param>
         /// <returns>True se la categoria è stata creata. False in caso contrario</returns>
         /*
@@ -370,18 +384,17 @@ namespace Server
         }
 
 
-
-        /*
-         * In questa versione, anziché concatenare i valori delle variabili direttamente nella query, si utilizzano dei parametri che vengono aggiunti al comando. 
-         * In questo modo, il valore effettivo delle variabili viene separato dalla query, eliminando il rischio di SQL injection. 
-         * Inoltre, viene utilizzato un comando separato per recuperare l'ID della categoria, anch'esso parametrizzato.
-         */
         ///<summary>
         /// Crea un nuovo prodotto
         /// </summary>
         /// <param name="nuovo"></param>
         /// <returns>true se successo o false in caso contrario</returns>
         /// <exception cref="Exception"></exception>
+        /*
+         * In questa versione, anziché concatenare i valori delle variabili direttamente nella query, si utilizzano dei parametri che vengono aggiunti al comando. 
+         * In questo modo, il valore effettivo delle variabili viene separato dalla query, eliminando il rischio di SQL injection. 
+         * Inoltre, viene utilizzato un comando separato per recuperare l'ID della categoria, anch'esso parametrizzato.
+         */
         public bool NuovoProdotto(Articolo nuovo)
         {
             try
@@ -426,7 +439,9 @@ namespace Server
         }
 
 
-        ///Registrazione magazziniere
+        /// <summary>
+        /// Registrazione di un nuovo magazziniere
+        /// </summary>
         /// <param name="nuovo">Oggetto di tipo Utente</param>
         /// <returns>True se l'utente è stato creato con successo. False in caso contrario</returns>
         /*
@@ -462,9 +477,14 @@ namespace Server
         }
 
 
-        ///Login utente magazziniere o ADMIN
+        /// <summary>
+        /// Login di un utente 
+        /// </summary>
         /// <param name="user">Oggetto di tipo Login</param>
         /// <returns>0 se le credenziali sono errate. 1 se l'accesso è stato effettuato dall'admin. 2 se l'accesso è stato effettuato dal magazziniere</returns>
+        /*
+         * In questa funzione non sono stati utilizzati meccanismi di protezione dalle sql injection in quanto il Login è controlloato con una Regex
+         */
         public int UserLogin(Login user)
         {
             try
@@ -499,6 +519,9 @@ namespace Server
         /// </summary>
         /// <returns>lista magazzinieri </returns>
         /// <exception cref="Exception"></exception>
+        /*
+         * In questa funzione non venendo passato nulla dall'utente inutile prevenire le sql injection in quanto impossibile
+         */
         
         public List<string> ListaMagazzinieri()
         {
@@ -673,10 +696,13 @@ namespace Server
 
 
         /// <summary>
-        /// lista dei prodotti presenti nel db
+        /// lista dei prodotti presenti nel DB
         /// </summary>
         /// <returns>lista di articoli p </returns>
         /// <exception cref="Exception"></exception>
+        /*
+         * In questa funzione non venendo passato nulla dall'utente inutile prevenire le sql injection in quanto impossibile
+         */
         public List<Articolo> ListaProdotti()
         {
             List<Articolo> p = new List<Articolo>();
@@ -717,19 +743,29 @@ namespace Server
 
         }
 
+        /// <summary>
+        /// controllo se l'ID del prodotto passato è presente o meno nel DB
+        /// </summary>
+        /// <param name="id">id del prodotto da cercare</param>
+        /// <returns> True or False a seconda se è presente o meno </returns>
+        /*
+         * Nella funzione modificata, la stringa di query SQL include un parametro segnaposto @id invece di concatenare direttamente il valore id.
+         * Il metodo cmd.Parameters.AddWithValue() viene quindi utilizzato per legare il valore id al parametro @id in modo sicuro. 
+         * Questo approccio aiuta a prevenire gli attacchi di SQL injection, perché il valore id viene trattato come un parametro e non come parte della stringa di query SQL.
+         */
         public bool CheckID(int id)
         {
             using (MySqlCommand cmd = conn.CreateCommand())
             {
-                cmd.CommandText = "Select IDProdotto from Prodotto Where IDProdotto = " + id;
+                cmd.CommandText = "SELECT IDProdotto FROM Prodotto WHERE IDProdotto = @id";
+                cmd.Parameters.AddWithValue("@id", id);
                 using (MySqlDataReader reader = cmd.ExecuteReader())
                 {
                     return reader.HasRows;
                 }
-
             }
-               
         }
+
 
     }
 }
