@@ -30,7 +30,7 @@ namespace Server
 
             catch (Exception ex)
             {
-                Console.WriteLine("ERRORE nel Server:" + ex.Message);
+                Console.WriteLine("ERRORE nel Server:" + ex.Message.ToString());
                 Console.ReadLine();
             }
         }
