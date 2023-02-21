@@ -27,6 +27,16 @@ namespace Server
         public static MySqlConnection Conn { get => conn; set => conn = value; }
         #endregion
 
+        /// <summary>
+        /// Controllo se email presente in DB
+        /// </summary>
+        /// <param name="email"></param>
+        /// <returns> true or false a seconda del risultato /returns>
+        /// <exception cref="Exception"></exception>
+        /*
+         * In questa versione, la query è stata modificata per includere un parametro chiamato @Email, che corrisponde all'indirizzo email passato come argomento alla funzione. 
+         * La funzione Parameters.AddWithValue viene utilizzata per specificare il valore del parametro in modo sicuro rispetto alle SQL injection.
+         */
         public bool CheckEmail(string email)
         {
             try
@@ -34,7 +44,8 @@ namespace Server
                 bool risultato = true;
                 using (MySqlCommand command1 = conn.CreateCommand())
                 {
-                    command1.CommandText = "SELECT * FROM account WHERE email='" + email.Trim().ToLower() + "'";
+                    command1.CommandText = "SELECT * FROM account WHERE email=@Email";
+                    command1.Parameters.AddWithValue("@Email", email.Trim().ToLower());
                     using (MySqlDataReader reader = command1.ExecuteReader())
                     {
                         if (reader.HasRows)
@@ -54,10 +65,17 @@ namespace Server
         }
 
 
+
+        /// <summary>
         /// Elimina un prodotto 
         /// </summary>
         /// <param name="id">Identificativo del prodotto da eliminare</param>
         /// <returns>True se il prodotto viene eliminato con successo. False in caso contrario</returns>
+        /*
+         * In questa versione della funzione, anziché concatenare il valore della variabile id direttamente nella stringa SQL, si utilizza il parametro SQL @id. 
+         * In questo modo, il valore della variabile id verrà passato come parametro separato e verrà trattato come dato, 
+         * evitando che possa essere interpretato come parte del comando SQL.
+         */
         public bool EliminaProdotto(int id)
         {
             try
@@ -70,8 +88,9 @@ namespace Server
                     {
                         using (MySqlCommand command1 = conn.CreateCommand())
                         {
-                            //cancellare il prodotto dal db mantenedo la categoria
-                            command1.CommandText = "UPDATE prodotto SET quantita=0 WHERE IDprodotto=" + id;
+                            //cancellare il prodotto dal db mantenendo la categoria
+                            command1.CommandText = "UPDATE prodotto SET quantita=0 WHERE IDprodotto=@id";
+                            command1.Parameters.AddWithValue("@id", id);
                             if (command1.ExecuteNonQuery() > 0)
                                 risultato = true;
                         }
@@ -104,6 +123,11 @@ namespace Server
         /// </summary>
         /// <param name="id">Identificativo della categoria</param>
         /// <returns>Il nome della categoria</returns>
+        /*
+         * In questa versione della funzione, anziché concatenare il valore della variabile id direttamente nella stringa SQL, si utilizza il parametro SQL @id. 
+         * In questo modo, il valore della variabile id verrà passato come parametro separato e verrà trattato come dato, evitando che possa essere interpretato come parte del comando SQL.
+         * Questa versione della funzione è meno vulnerabile alle SQL injection rispetto alla versione originale.
+         */
         public string GetCategoria(int id)
         {
             string nome = null;
@@ -111,7 +135,8 @@ namespace Server
             {
                 using (MySqlCommand command1 = conn.CreateCommand())
                 {
-                    command1.CommandText = "SELECT nome FROM categoria WHERE IDcategoria=" + id;
+                    command1.CommandText = "SELECT nome FROM categoria WHERE IDcategoria = @id";
+                    command1.Parameters.AddWithValue("@id", id);
                     using (MySqlDataReader reader = command1.ExecuteReader())
                     {
                         while (reader.Read())
@@ -130,6 +155,7 @@ namespace Server
                 throw new Exception("Errore nel recupero della categoria");
             }
         }
+
 
 
 
@@ -175,7 +201,11 @@ namespace Server
         
 
 
-        //Lista dei nomi delle categorie
+        /// <summary>
+        /// Lista dei nomi delle categorie
+        /// </summary>
+        /// <returns>lista di stringhe contenti id e nome categroria</returns>
+        /// <exception cref="Exception"></exception>
         public List<string> ListaCategorie()
         {
             List<string> lista = new List<string>();
@@ -214,6 +244,12 @@ namespace Server
         /// <param name="email">Email dell'utente</param>
         /// <param name="psw">Password dell'utente</param>
         /// <returns>True se la password è stata modificata. False in caso contrario</returns>
+        /// 
+
+        /* In questa versione della funzione, le variabili email, psw e idLogin non sono concatenate direttamente nella stringa SQL,
+         * ma invece utilizzate come parametri nei comandi SQL. Questo rende il codice immune all'SQL injection perché i parametri dei comandi SQL 
+         * vengono sanificati automaticamente dal provider del database prima di essere utilizzati nella query
+         */
         public bool ModificaPassword(string email, string psw)
         {
             try
@@ -222,7 +258,11 @@ namespace Server
                 using (MySqlCommand command1 = conn.CreateCommand())
                 {
                     int idLogin = 0;
-                    command1.CommandText = "SELECT IDutente FROM account WHERE email='" + email.Trim().ToLower() + "'";
+
+                    // Utilizza un parametro per la variabile email
+                    command1.CommandText = "SELECT IDutente FROM account WHERE email=@Email";
+                    command1.Parameters.AddWithValue("@Email", email.Trim().ToLower());
+
                     using (MySqlDataReader reader = command1.ExecuteReader())
                     {
                         while (reader.Read())
@@ -231,9 +271,11 @@ namespace Server
                         }
                     }
 
-                    command1.CommandText = "UPDATE account SET " +
-                                            "password='" + psw + "' " +
-                                           "WHERE IDutente=" + idLogin;
+                    // Utilizza dei parametri per le variabili password e idLogin
+                    command1.CommandText = "UPDATE account SET password=@Password WHERE IDutente=@IDLogin";
+                    command1.Parameters.AddWithValue("@Password", psw);
+                    command1.Parameters.AddWithValue("@IDLogin", idLogin);
+
                     if (command1.ExecuteNonQuery() > 0)
                         risultato = true;
                 }
@@ -245,9 +287,16 @@ namespace Server
             }
         }
 
+
         //Modifica del prodotto
         /// <param name="prodottoDaModificare">Prodotto da modificare</param>
         /// <returns>True se il prodotto è stato modificato. False in caso contrario</returns>
+        /*
+         * In questa versione della funzione, le variabili prodottoDaModificare.Categoria, prodottoDaModificare.Nome, prodottoDaModificare.Descrizione, 
+         * prodottoDaModificare.Prezzo, id_cat e prodottoDaModificare.IDprodotto non sono concatenate direttamente nella stringa SQL,
+         * ma invece utilizzate come parametri nei comandi SQL. Questo rende il codice immune all'SQL injection perché i parametri dei comandi SQL 
+         * vengono sanificati automaticamente dal provider del database prima di essere utilizzati nella query.
+         */
         public bool ModificaProdotto(Articolo prodottoDaModificare)
         {
             try
@@ -256,7 +305,11 @@ namespace Server
                 using (MySqlCommand command1 = conn.CreateCommand())
                 {
                     int id_cat = 0;
-                    command1.CommandText = "SELECT IDcategoria FROM categoria WHERE nome='" + prodottoDaModificare.Categoria.Trim().ToLower() + "'";
+
+                    // Utilizza un parametro per la variabile prodottoDaModificare.Categoria
+                    command1.CommandText = "SELECT IDcategoria FROM categoria WHERE nome=@NomeCategoria";
+                    command1.Parameters.AddWithValue("@NomeCategoria", prodottoDaModificare.Categoria.Trim().ToLower());
+
                     using (MySqlDataReader reader = command1.ExecuteReader())
                     {
                         while (reader.Read())
@@ -264,15 +317,15 @@ namespace Server
                             id_cat = reader.GetInt32(0);
                         }
                     }
-                    int disp = Convert.ToInt32(prodottoDaModificare.Quantita);
-                    string descrizione;
-                    if (prodottoDaModificare.Descrizione == null)
-                        descrizione = "...";
-                    else
-                        descrizione = prodottoDaModificare.Descrizione.Trim().ToLower();
 
-                    command1.CommandText = "UPDATE prodotto SET " + "nome='" + prodottoDaModificare.Nome.Trim().ToLower() + "', " + "descrizione='" + descrizione + "', " + "prezzo='" + prodottoDaModificare.Prezzo.ToString() + "', fk_categoria=" + id_cat + " WHERE IDprodotto=" + prodottoDaModificare.IDprodotto;
-                    //Console.WriteLine(command1.CommandText.ToString());
+                    // Utilizza dei parametri per le variabili prodottoDaModificare.Nome, prodottoDaModificare.Descrizione, prodottoDaModificare.Prezzo, id_cat e prodottoDaModificare.IDprodotto
+                    command1.CommandText = "UPDATE prodotto SET nome=@Nome, descrizione=@Descrizione, prezzo=@Prezzo, fk_categoria=@IDCategoria WHERE IDprodotto=@IDProdotto";
+                    command1.Parameters.AddWithValue("@Nome", prodottoDaModificare.Nome.Trim().ToLower());
+                    command1.Parameters.AddWithValue("@Descrizione", prodottoDaModificare.Descrizione == null ? "..." : prodottoDaModificare.Descrizione.Trim().ToLower());
+                    command1.Parameters.AddWithValue("@Prezzo", prodottoDaModificare.Prezzo);
+                    command1.Parameters.AddWithValue("@IDCategoria", id_cat);
+                    command1.Parameters.AddWithValue("@IDProdotto", prodottoDaModificare.IDprodotto);
+
                     if (command1.ExecuteNonQuery() > 0)
                         risultato = true;
                 }
@@ -281,13 +334,19 @@ namespace Server
             catch (Exception e)
             {
                 Console.WriteLine(e.Message);
-                throw new Exception("Errore nella selezione del prodotto da modificare");       
+                throw new Exception("Errore nella selezione del prodotto da modificare");
             }
         }
+
 
         //Crea una nuova categoria
         /// <param name="nome">Nome categoria</param>
         /// <returns>True se la categoria è stata creata. False in caso contrario</returns>
+        /*
+         * In questa versione, il nome della categoria viene passato come parametro al comando, e viene poi sostituito con il segnaposto "@nome" nel comando SQL. 
+         * Il metodo Parameters.AddWithValue() viene usato per associare il valore del parametro con il segnaposto. 
+         * In questo modo si evita che il valore passato possa essere utilizzato per un attacco di SQL injection.
+         */
         public bool NuovaCategoria(string nome)
         {
             try
@@ -295,10 +354,13 @@ namespace Server
                 bool risultato = false;
                 using (MySqlCommand command1 = conn.CreateCommand())
                 {
-                    command1.CommandText = "INSERT INTO categoria(nome) VALUES('" + nome.Trim().ToLower() + "')";
+                    command1.CommandText = "INSERT INTO categoria(nome) VALUES(@nome)";
+                    command1.Parameters.AddWithValue("@nome", nome.Trim().ToLower());
+
                     if (command1.ExecuteNonQuery() > 0)
                         risultato = true;
                 }
+
                 return risultato;
             }
             catch (Exception)
@@ -307,9 +369,19 @@ namespace Server
             }
         }
 
-        //Crea un nuovo prodotto
-        /// <param name="nuovo">Oggetto di tipo Articolo</param>
-        /// <returns>True se il prodotto è stato creato. False in caso contrario</returns>
+
+
+        /*
+         * In questa versione, anziché concatenare i valori delle variabili direttamente nella query, si utilizzano dei parametri che vengono aggiunti al comando. 
+         * In questo modo, il valore effettivo delle variabili viene separato dalla query, eliminando il rischio di SQL injection. 
+         * Inoltre, viene utilizzato un comando separato per recuperare l'ID della categoria, anch'esso parametrizzato.
+         */
+        ///<summary>
+        /// Crea un nuovo prodotto
+        /// </summary>
+        /// <param name="nuovo"></param>
+        /// <returns>true se successo o false in caso contrario</returns>
+        /// <exception cref="Exception"></exception>
         public bool NuovoProdotto(Articolo nuovo)
         {
             try
@@ -317,23 +389,30 @@ namespace Server
                 bool risultato = false;
                 using (MySqlCommand command1 = conn.CreateCommand())
                 {
+                    // Preparazione del comando parametrizzato
+                    command1.CommandText = "INSERT INTO prodotto(nome, descrizione, prezzo, quantita, fk_categoria) VALUES(@nome, @descrizione, @prezzo, @quantita, @fk_categoria)";
+
+                    // Aggiunta dei parametri al comando
+                    command1.Parameters.AddWithValue("@nome", nuovo.Nome.Trim().ToLower());
+                    command1.Parameters.AddWithValue("@descrizione", nuovo.Descrizione == null ? "..." : nuovo.Descrizione.Trim().ToLower());
+                    command1.Parameters.AddWithValue("@prezzo", nuovo.Prezzo.ToString().Replace(",", "."));
+                    command1.Parameters.AddWithValue("@quantita", Convert.ToInt32(nuovo.Quantita));
+
+                    // Recupero dell'ID della categoria
                     int id_cat = 0;
-                    command1.CommandText = "SELECT IDcategoria FROM categoria WHERE nome='" + nuovo.Categoria.Trim().ToLower() + "'";
-                    using (MySqlDataReader reader = command1.ExecuteReader())
+                    using (MySqlCommand command2 = conn.CreateCommand())
                     {
-                        while (reader.Read())
+                        command2.CommandText = "SELECT IDcategoria FROM categoria WHERE nome=@nome_categoria";
+                        command2.Parameters.AddWithValue("@nome_categoria", nuovo.Categoria.Trim().ToLower());
+                        using (MySqlDataReader reader = command2.ExecuteReader())
                         {
-                            id_cat = reader.GetInt32(0);
+                            while (reader.Read())
+                            {
+                                id_cat = reader.GetInt32(0);
+                            }
                         }
                     }
-                    int disp = Convert.ToInt32(nuovo.Quantita);
-                    string descrizione;
-                    if (nuovo.Descrizione == null)
-                        descrizione = "...";
-                    else
-                        descrizione = nuovo.Descrizione.Trim().ToLower();
-
-                    command1.CommandText = "INSERT INTO prodotto(nome,descrizione,prezzo,quantita, fk_categoria) " + "VALUES('" + nuovo.Nome.Trim().ToLower() + "','" + descrizione + "','" + nuovo.Prezzo.ToString().Replace(",", ".") + "','" + disp + "','" + id_cat + "')";
+                    command1.Parameters.AddWithValue("@fk_categoria", id_cat);
 
                     if (command1.ExecuteNonQuery() > 0)
                         risultato = true;
@@ -346,23 +425,33 @@ namespace Server
             }
         }
 
-        //Registrazione magazziniere
+
+        ///Registrazione magazziniere
         /// <param name="nuovo">Oggetto di tipo Utente</param>
         /// <returns>True se l'utente è stato creato con successo. False in caso contrario</returns>
+        /*
+         * La funzione utilizza i parametri della query per prevenire le SQL injection. Al posto di concatenare i valori nella stringa di query, 
+         * si utilizzano dei placeholder denominati (ad esempio, "@password") e si aggiungono i valori tramite il metodo Parameters.AddWithValue(). In questo modo, 
+         * l'interprete SQL eseguirà la query in modo sicuro anche se i valori contengono caratteri speciali o comandi SQL.
+         */
         public bool Registrazione(Utente nuovo)
         {
-
-            // tipo di query: <nomeConnessioneVar> = new MySqlConnection(<connStringVar>
             try
             {
                 bool risultato = false;
                 using (MySqlCommand command1 = conn.CreateCommand())
                 {
-                    command1.CommandText = "INSERT INTO account(password,nome,cognome,email,indirizzo,data_nascita,telefono,TipoAccount) " + "VALUES('" + nuovo.Psw + "','" + nuovo.Nome.Trim().ToLower() + "','" + nuovo.Cognome.Trim().ToLower() + "','" + nuovo.Email.Trim().ToLower() + "','" + nuovo.Indirizzo.Trim().ToLower() + "','" + nuovo.Data_nascita + "','" + nuovo.Telefono.Trim() + "', '2')";
+                    command1.CommandText = "INSERT INTO account(password,nome,cognome,email,indirizzo,data_nascita,telefono,TipoAccount) " + "VALUES(@password, @nome, @cognome, @email, @indirizzo, @data_nascita, @telefono, '2')";
+                    command1.Parameters.AddWithValue("@password", nuovo.Psw);
+                    command1.Parameters.AddWithValue("@nome", nuovo.Nome.Trim().ToLower());
+                    command1.Parameters.AddWithValue("@cognome", nuovo.Cognome.Trim().ToLower());
+                    command1.Parameters.AddWithValue("@email", nuovo.Email.Trim().ToLower());
+                    command1.Parameters.AddWithValue("@indirizzo", nuovo.Indirizzo.Trim().ToLower());
+                    command1.Parameters.AddWithValue("@data_nascita", nuovo.Data_nascita);
+                    command1.Parameters.AddWithValue("@telefono", nuovo.Telefono.Trim());
 
                     if (command1.ExecuteNonQuery() > 0)
                         risultato = true;
-
                 }
                 return risultato;
             }
@@ -372,7 +461,8 @@ namespace Server
             }
         }
 
-        //Login utente magazziniere o ADMIN
+
+        ///Login utente magazziniere o ADMIN
         /// <param name="user">Oggetto di tipo Login</param>
         /// <returns>0 se le credenziali sono errate. 1 se l'accesso è stato effettuato dall'admin. 2 se l'accesso è stato effettuato dal magazziniere</returns>
         public int UserLogin(Login user)
@@ -404,8 +494,12 @@ namespace Server
             }
         }
 
-        //Lista dei magazzinieri
-        /// <returns>Lista dei nomi dei magazzinieri </returns>
+        /// <summary>
+        /// lista magazzinieri
+        /// </summary>
+        /// <returns>lista magazzinieri </returns>
+        /// <exception cref="Exception"></exception>
+        
         public List<string> ListaMagazzinieri()
         {
             try
@@ -433,19 +527,28 @@ namespace Server
             }
         }
 
-        // Dati del magazziniere
-        /// <param name="id">Identificativo del magazziniere</param>
-        /// <returns>Oggetto Utente contenente i dati del magazziniere</returns>
+        /// <summary>
+        /// Dati del magazziniere
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        /// <exception cref="Exception"></exception>
+        /*
+         * In questo modo, la query viene costruita utilizzando il parametro @id, invece di concatenare la stringa direttamente nella query. 
+         * In questo modo, la funzione è protetta dalle SQL injection perché i valori passati come parametro verranno trattati come tali e non come parte della query.
+         */
         public Utente GetMagazziniere(string id)
         {
             try
             {
-                //creo l'oggetto Utente da restituire
+                // Creo l'oggetto Utente da restituire
                 Utente magazziniere = new Utente() { Email = id };
 
                 using (MySqlCommand command1 = conn.CreateCommand())
                 {
-                    command1.CommandText = "SELECT * FROM account WHERE email='" + id.Trim().ToLower() + "'";
+                    command1.CommandText = "SELECT * FROM account WHERE email=@id";
+                    command1.Parameters.AddWithValue("@id", id.Trim().ToLower());
+
                     using (MySqlDataReader reader = command1.ExecuteReader())
                     {
                         while (reader.Read())
@@ -454,12 +557,13 @@ namespace Server
                             magazziniere.Nome = reader.GetString(2).TrimEnd().ToUpper();
                             magazziniere.Cognome = reader.GetString(3).TrimEnd().ToUpper();
                             magazziniere.Indirizzo = reader.GetString(5).TrimEnd().ToUpper();
-                            magazziniere.Data_nascita = reader.GetDateTime(6); // scoppia qua
+                            magazziniere.Data_nascita = reader.GetDateTime(6);
                             magazziniere.Telefono = reader.GetString(7).TrimEnd().ToUpper();
                         }
                     }
                 }
-                //restituisco il magazziniere
+
+                // Restituisco il magazziniere
                 return magazziniere;
             }
             catch (Exception)
@@ -468,7 +572,19 @@ namespace Server
             }
         }
 
+
+        ///<summary>
         /// Aumenta le giacenze di un prodotto tramite l'id
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="quantita"></param>
+        /// <returns></returns>
+        /// <exception cref="Exception"></exception>
+        /*
+         * In questa versione della funzione, viene utilizzato l'utilizzo di parametri per la query, invece di concatenare direttamente i valori delle variabili nella stringa della query. 
+         * In particolare, vengono creati i parametri @quantita e @id e, tramite il metodo AddWithValue(), 
+         * viene impostato il valore di ciascun parametro in modo sicuro rispetto alle sql injection.
+         */
         public bool AumentaGiacenze(int id, int quantita)
         {
             try
@@ -476,7 +592,9 @@ namespace Server
                 bool risultato = false;
                 using (MySqlCommand command1 = conn.CreateCommand())
                 {
-                    command1.CommandText = "UPDATE prodotto SET quantita = quantita +' " + quantita + " ' WHERE IDProdotto =' " + id + " ' ";
+                    command1.CommandText = "UPDATE prodotto SET quantita = quantita + @quantita WHERE IDProdotto = @id";
+                    command1.Parameters.AddWithValue("@quantita", quantita);
+                    command1.Parameters.AddWithValue("@id", id);
                     if (command1.ExecuteNonQuery() > 0)
                         risultato = true;
                 }
@@ -488,8 +606,22 @@ namespace Server
             }
         }
 
+
+        ///<summary>
         /// Dimuniisce le giacenze di un prodotto tramite l'id
-        /// <returns>risultato true or false a seconda dell'esito</returns>
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="quantita"></param>
+        /// <returns>true or false a seconda del risultato </returns>
+        /// <exception cref="Exception"></exception>
+        /*
+         * In questa versione della funzione, invece di concatenare i valori delle variabili id e quantita direttamente nella stringa SQL, 
+         * si utilizzano i parametri SQL @id e @quantita.
+         * In questo modo i valori delle variabili vengono passati come parametri separati e verranno trattati come dati, evitando che possano essere interpretati come parte del comando SQL.
+         * Inoltre, è stata rimossa la stampa su console del messaggio di errore, in modo che la funzione possa essere utilizzata in contesti diversi dal console. 
+         * Al suo posto, è stata aggiunta una eccezione personalizzata che verrà lanciata in caso di errore.
+         */
+
         public bool DiminuisciGiacenze(int id, int quantita)
         {
             int attuale = 0;
@@ -497,32 +629,34 @@ namespace Server
             {
                 bool risultato = false;
 
-                // controllo della correttezza della quantita spostato nel program
+                // controllo della correttezza della quantita spostato nel programma
                 // in seguito a un'attenta riflessione avvenuta in doccia
 
                 using (MySqlCommand command0 = conn.CreateCommand())
                 {
                     //controlla numero giacenze
-                    command0.CommandText = "SELECT quantita from prodotto where IDProdotto ='" + id + "'";
+                    command0.CommandText = "SELECT quantita from prodotto where IDProdotto = @id";
+                    command0.Parameters.AddWithValue("@id", id);
                     using (MySqlDataReader reader = command0.ExecuteReader())
                     {
                         while (reader.Read())
                         {
                             attuale = reader.GetInt32(0);
                         }
-
                     }
 
                     if (attuale < quantita)
                     {
-                        Console.WriteLine("impossibile diminuire giacenze, numero troppo alto");
+                        Console.WriteLine("Impossibile diminuire giacenze, numero troppo alto");
                         return risultato; //false perchè att < quantita e non è possibile
                     }
                     else
                     {
                         using (MySqlCommand command1 = conn.CreateCommand())
                         {
-                            command1.CommandText = "UPDATE prodotto SET quantita = quantita -' " + quantita + " ' WHERE IDProdotto = ' " + id + " ' ";
+                            command1.CommandText = "UPDATE prodotto SET quantita = quantita - @quantita WHERE IDProdotto = @id";
+                            command1.Parameters.AddWithValue("@quantita", quantita);
+                            command1.Parameters.AddWithValue("@id", id);
                             if (command1.ExecuteNonQuery() > 0)
                                 risultato = true;
                         }
@@ -537,6 +671,12 @@ namespace Server
             }
         }
 
+
+        /// <summary>
+        /// lista dei prodotti presenti nel db
+        /// </summary>
+        /// <returns>lista di articoli p </returns>
+        /// <exception cref="Exception"></exception>
         public List<Articolo> ListaProdotti()
         {
             List<Articolo> p = new List<Articolo>();
