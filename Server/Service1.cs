@@ -483,7 +483,9 @@ namespace Server
         /// <param name="user">Oggetto di tipo Login</param>
         /// <returns>0 se le credenziali sono errate. 1 se l'accesso è stato effettuato dall'admin. 2 se l'accesso è stato effettuato dal magazziniere</returns>
         /*
-         * In questa funzione non sono stati utilizzati meccanismi di protezione dalle sql injection in quanto il Login è controlloato con una Regex
+         * In questa versione della funzione, la query SQL contiene il parametro "@Email" invece di concatenare direttamente l'input dell'utente.
+         * Il valore dell'input dell'utente viene quindi passato come un parametro separato alla query utilizzando il metodo Parameters.AddWithValue(). 
+         * Ciò garantisce che qualsiasi input dannoso inserito dall'utente non possa essere interpretato come parte della query SQL.
          */
         public int UserLogin(Login user)
         {
@@ -493,12 +495,12 @@ namespace Server
                 using (MySqlCommand command1 = conn.CreateCommand())
                 {
                     // check password with hash
-                    command1.CommandText = "SELECT password, TipoAccount FROM account WHERE email='" + user.Email.Trim().ToLower() + "'";
+                    command1.CommandText = "SELECT password, TipoAccount FROM account WHERE email=@Email";
+                    command1.Parameters.AddWithValue("@Email", user.Email.Trim().ToLower());
                     using (MySqlDataReader reader = command1.ExecuteReader())
                     {
                         while (reader.Read())
                         {
-
                             if (BCrypt.Net.BCrypt.Verify(user.Password, reader.GetString(0)))
                             {
                                 codice = reader.GetInt32(1);
@@ -514,6 +516,8 @@ namespace Server
             }
         }
 
+
+
         /// <summary>
         /// lista magazzinieri
         /// </summary>
@@ -522,7 +526,7 @@ namespace Server
         /*
          * In questa funzione non venendo passato nulla dall'utente inutile prevenire le sql injection in quanto impossibile
          */
-        
+
         public List<string> ListaMagazzinieri()
         {
             try
