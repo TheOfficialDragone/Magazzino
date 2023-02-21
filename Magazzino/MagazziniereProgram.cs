@@ -21,6 +21,7 @@ namespace Magazzino
                 Console.WriteLine("Benvenuto magazziniere " + login.Email);
                 Console.WriteLine("\nPremi un tasto per continuare");
                 Console.ReadKey();
+                Console.Out.Flush();
 
                 int sceltaMenuCliente = 0;
                 do
@@ -71,6 +72,7 @@ namespace Magazzino
                                 break;
 
                             case 2:
+                                Console.Out.Flush();
                                 Console.Clear();
                                 Console.WriteLine("***AUMENTA GIACENZE***");
                                 //stampo tutti i prodotti disponibili
@@ -104,12 +106,14 @@ namespace Magazzino
                                 {
                                     Console.WriteLine("GIACENZA AUMENTATA");
                                     Console.ReadLine();
+                                    Console.Out.Flush();
                                     break;
                                 }
                                 else
                                 {
                                     Console.WriteLine("ERRORE GIACENZA");
                                     Console.ReadLine();
+                                    Console.Out.Flush();
                                     break;
                                 }
 
@@ -136,7 +140,7 @@ namespace Magazzino
                                     int id_prod = 0;
                                     int quantita_diminuita = 0;
 
-                                    Console.WriteLine("\nInserire l'id del prodotto di cui si vuole aumentare la quantità");
+                                    Console.WriteLine("\nInserire l'id del prodotto di cui si vuole diminuire la quantità");
                                     id_prod = Convert.ToInt32(Console.ReadLine());
 
                                     Console.WriteLine("\nInserire la quantità da diminuire");
@@ -146,12 +150,14 @@ namespace Magazzino
                                     {
                                         Console.WriteLine("GIACENZA DIMINUITA");
                                         Console.ReadLine();
+                                        Console.Out.Flush();
                                         break;
                                     }
                                     else
                                     {
                                         Console.WriteLine("ERRORE GIACENZA");
                                         Console.ReadLine();
+                                        Console.Out.Flush();
                                         break;
                                     }
                                 }
@@ -190,6 +196,7 @@ namespace Magazzino
                                 }
                                 Console.WriteLine("\nPremi un tasto per continuare");
                                 Console.ReadKey();
+                                Console.Out.Flush();
                                 break;
 
 
@@ -227,6 +234,7 @@ namespace Magazzino
 
                                                 Console.WriteLine("\nPremi un tasto per continuare");
                                                 Console.ReadKey();
+                                                Console.Out.Flush();
                                                 break;
                                             case 2:
                                                 //modifica password
@@ -305,6 +313,7 @@ namespace Magazzino
 
                                                 Console.WriteLine("\nPremi un tasto per continuare");
                                                 Console.ReadKey();
+                                                Console.Out.Flush();
                                                 break;
                                             //esci
                                             case 3:
@@ -318,6 +327,7 @@ namespace Magazzino
                                         Console.ReadKey();
                                     }
                                 } while (sceltaMenuDati != 3);
+                                Console.Out.Flush();
                                 break;
                             case 6:
                                 break;

@@ -1,7 +1,6 @@
 ﻿/**
  * Developed by Rocco Carpi & Riccardo Versetti
- * 16/10/2022
- * 
+ * 16/10/2022s
  */
 using System.Runtime.Serialization;
 
