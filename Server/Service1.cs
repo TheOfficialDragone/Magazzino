@@ -1,7 +1,6 @@
 ﻿/**
  * Developed by Rocco Carpi & Riccardo Versetti
  * 16/10/2022
- * 
  */
 using MySql.Data.MySqlClient;
 using System;
@@ -67,7 +66,7 @@ namespace Server
 
 
         /// <summary>
-        /// Elimina un prodotto 
+        /// Elimina un prodotto dato l'ID passato 
         /// </summary>
         /// <param name="id">Identificativo del prodotto da eliminare</param>
         /// <returns>True se il prodotto viene eliminato con successo. False in caso contrario</returns>
@@ -120,7 +119,7 @@ namespace Server
         }
 
         /// <summary>
-        /// Nome di una categoria
+        /// Nome di una categoria dato l'ID passato
         /// </summary>
         /// <param name="id">Identificativo della categoria</param>
         /// <returns>Il nome della categoria</returns>
@@ -209,7 +208,7 @@ namespace Server
 
 
         /// <summary>
-        /// Lista dei nomi delle categorie
+        /// Lista dei nomi e id delle categorie presenti nel DB
         /// </summary>
         /// <returns>lista di stringhe contenti id e nome categroria</returns>
         /// <exception cref="Exception"></exception>
@@ -251,7 +250,7 @@ namespace Server
 
 
         /// <summary>
-        /// Modifica password
+        /// Modifica la password data l'email passata e la password da cambiare 
         /// </summary>
         /// <param name="email">Email dell'utente</param>
         /// <param name="psw">Password dell'utente</param>
@@ -299,7 +298,7 @@ namespace Server
         }
 
         /// <summary>
-        /// Modifica di un prodotto
+        /// Modifica di un prodotto dato l'articolo passato
         /// </summary>
         /// <param name="prodottoDaModificare">Prodotto da modificare</param>
         /// <returns>True se il prodotto è stato modificato. False in caso contrario</returns>
@@ -519,7 +518,7 @@ namespace Server
 
 
         /// <summary>
-        /// lista magazzinieri
+        /// Lista magazzinieri
         /// </summary>
         /// <returns>lista magazzinieri </returns>
         /// <exception cref="Exception"></exception>
@@ -553,6 +552,7 @@ namespace Server
                 throw new Exception("Errore durante il recupero della lista dei magazzinieri");
             }
         }
+
 
         /// <summary>
         /// Dati del magazziniere
@@ -601,7 +601,7 @@ namespace Server
 
 
         ///<summary>
-        /// Aumenta le giacenze di un prodotto tramite l'id
+        /// Aumenta le giacenze di un prodotto tramite l'ID
         /// </summary>
         /// <param name="id"></param>
         /// <param name="quantita"></param>
@@ -635,7 +635,7 @@ namespace Server
 
 
         ///<summary>
-        /// Dimuniisce le giacenze di un prodotto tramite l'id
+        /// Diminuisce le giacenze di un prodotto tramite l'id
         /// </summary>
         /// <param name="id"></param>
         /// <param name="quantita"></param>

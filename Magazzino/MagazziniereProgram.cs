@@ -165,6 +165,7 @@ namespace Magazzino
                                 {
                                     Console.WriteLine("Scelta non valida!");
                                     Console.ReadLine();
+                                    Console.Out.Flush();
                                 }
 
                                 break;

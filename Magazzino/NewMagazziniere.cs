@@ -4,7 +4,6 @@ using Server;
 using System;
 using System.Linq;
 using System.ServiceModel;
-//using Utente = Magazzino.ServiceReference1.Utente;
 
 namespace Magazzino
 {
